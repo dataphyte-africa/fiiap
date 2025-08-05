@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 
 export default function Page() {
   return (
@@ -13,6 +15,7 @@ export default function Page() {
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader>
+              <Image src="/logo.png" className="" width={100} height={100} alt="logo" />
               <CardTitle className="text-2xl">
                 Thank you for signing up!
               </CardTitle>
@@ -23,6 +26,10 @@ export default function Page() {
                 You&apos;ve successfully signed up. Please check your email to
                 confirm your account before signing in.
               </p>
+
+              <Button>
+                Login
+              </Button>
             </CardContent>
           </Card>
         </div>
