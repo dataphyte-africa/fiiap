@@ -578,7 +578,7 @@ BEGIN
                 ARRAY(SELECT key FROM jsonb_each(to_jsonb(NEW)) WHERE to_jsonb(NEW) ->> key IS DISTINCT FROM to_jsonb(OLD) ->> key)
             ELSE NULL 
         END,
-        COALESCE(NEW.created_by, NEW.updated_by, auth.uid()),
+        COALESCE(NEW.created_by, auth.uid()),
         auth.email()
     );
     RETURN COALESCE(NEW, OLD);

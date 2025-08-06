@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export const Hero = () => {
   return (
-    <div className='flex flex-col items-center justify-center min-h-[75vh] md:min-h-[85vh] bg-hero-bg bg-cover bg-center w-full'>
+    <div className='flex flex-col items-center justify-center min-h-[75vh] md:min-h-[85vh] bg-[url("/hero-bg.png")] bg-cover bg-center w-full'>
         <div className='grid md:grid-cols-2 gap-4 w-full px-3 md:px-20'>
             <div className='flex flex-col justify-center gap-4 max-w-sm md:max-w-lg'>
                 <h1 className='text-3xl md:text-4xl font-bold text-white'>

@@ -104,7 +104,7 @@ const featuredOrganizations = [
 
 export const Feature3 = () => {
   return (
-    <div className='py-16 px-4 bg-gray-50 relative overflow-hidden bg-feature-3-bg bg-cover bg-center w-full'>
+    <div className='py-16 px-4 bg-gray-50 relative overflow-hidden bg-[url("/landing/feature-3.svg")] bg-cover bg-center w-full'>
       
       
       <div className='max-w-7xl mx-auto relative z-10'>

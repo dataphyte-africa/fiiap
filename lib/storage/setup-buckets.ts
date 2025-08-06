@@ -3,12 +3,11 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { STORAGE_BUCKETS, BUCKET_CONFIGS } from '../supabase/storage-config';
-const NEXT_PUBLIC_SUPABASE_URL="https://pkbzzvstzpskwdkdvmkt.supabase.co";
-const NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYnp6dnN0enBza3dka2R2bWt0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NDMzMTkxNCwiZXhwIjoyMDY5OTA3OTE0fQ.z6OoM5dlFMMqeAITE5XCURmdSfaLUW0GGlLLvVX2kT4";
+  const NEXT_PUBLIC_SUPABASE_URL="https://pkbzzvstzpskwdkdvmkt.supabase.co";
 // Initialize Supabase client with service role key for admin operations
 export function createAdminClient() {
   const supabaseUrl = NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const serviceRoleKey = '';
 
   if (!supabaseUrl || !serviceRoleKey) {
     throw new Error('Missing required environment variables: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');

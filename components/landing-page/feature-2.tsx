@@ -27,7 +27,7 @@ const countries = [
 
 export const Feature2 = () => {
   return (
-    <div className='bg-primary py-16 px-4 relative overflow-hidden bg-feature-2-bg bg-cover bg-center w-full'>
+    <div className='bg-primary py-16 px-4 relative overflow-hidden bg-[url("/landing/feature-2.svg")] bg-cover bg-center w-full'>
       {/* Dotted background pattern */}
       
       <div className='max-w-7xl mx-auto relative z-10'>

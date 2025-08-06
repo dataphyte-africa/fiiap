@@ -24,7 +24,7 @@ export const Feature1 = () => {
             <div className='flex flex-col gap-6'>
             {features.map((feature, index) => (
               <div key={index} className='flex items-start gap-4 p-6 bg-gray-50 rounded-lg'>
-                <div className='flex-shrink-0 w-12 h-12 bg-primary rounded-full flex items-center justify-center'>
+                <div className='shrink-0 w-12 h-12 bg-primary rounded-full flex items-center justify-center'>
                   <span className='text-white font-bold text-lg'>1</span>
                 </div>
                 <div className='flex flex-col gap-2'>

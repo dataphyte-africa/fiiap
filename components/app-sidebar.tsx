@@ -3,28 +3,30 @@
 import * as React from "react"
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  LayoutDashboard,
+  LucideBookOpen,
+  LucideBriefcaseBusiness,
+  LucideBuilding,
+  LucideHelpCircle,
+  LucideImagePlus,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarMenuButton,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import Image from "next/image"
+import { useMemo } from "react"
+import { usePathname } from "next/navigation"
 
 // This is sample data.
 const data = {
@@ -52,122 +54,86 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
       isActive: true,
+    },
+    {
+      title: "My Organisation",
+      url: "/dashboard/organisation",
+      icon: LucideBuilding,
+    },
+    {
+      title: "Projects",
+      url: "/dashboard/projects",
+      icon: LucideBriefcaseBusiness,
       items: [
         {
-          title: "History",
+          title: "Water Initiative",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Another Project",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Projects Project",
           url: "#",
-        },
+        }
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "Posts",
+      url: "/dashboard/posts",
+      icon: LucideImagePlus,
+      
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Help Support",
       url: "#",
-      icon: Frame,
+      icon: LucideHelpCircle,
     },
     {
-      name: "Sales & Marketing",
+      name: "Blogs",
       url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      icon: LucideBookOpen,
     },
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & {user: {name: string, email: string, avatar: string}}) {
+  const pathname = usePathname(); 
+  const navmain = useMemo(() => {
+    return data.navMain.map((item) => {
+      return {
+        ...item,
+        isActive: pathname === item.url,
+        url: item.url,
+      }
+    })
+  }, [pathname])
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+      <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+               <Image src="/logo.png" alt="logo" width={32} height={32} />
+              </div>
+            
+            </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navmain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

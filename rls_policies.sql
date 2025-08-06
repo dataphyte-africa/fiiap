@@ -87,18 +87,22 @@ CREATE POLICY "Public can view active organisations" ON organisations
         owns_organisation(id)
     );
 
--- CSO reps can insert their own organisation
-CREATE POLICY "CSO reps can create organisations" ON organisations
+-- Authenticated users can create organisations (status cannot be approved)
+CREATE POLICY "Authenticated users can create organisations" ON organisations
     FOR INSERT WITH CHECK (
-        is_cso_rep() AND auth.uid() = created_by
+        auth.role() = 'authenticated' AND 
+        auth.uid() = created_by AND
+        (status IS NULL OR status != 'approved')
     );
 
--- CSO reps can update their own organisation, admins can update any
-CREATE POLICY "CSO reps can update own organisation" ON organisations
+-- Authenticated users can update their own organisation, admins can update any
+CREATE POLICY "Users can update own organisation" ON organisations
     FOR UPDATE USING (
-        is_admin() OR owns_organisation(id)
+        is_admin() OR 
+        (auth.role() = 'authenticated' AND auth.uid() = created_by)
     ) WITH CHECK (
-        is_admin() OR owns_organisation(id)
+        is_admin() OR 
+        (auth.role() = 'authenticated' AND auth.uid() = created_by)
     );
 
 -- Only admins can delete organisations
@@ -610,6 +614,71 @@ CREATE POLICY "Public can view forum categories" ON forum_categories
 -- Only admins can manage forum categories
 CREATE POLICY "Only admins can manage forum categories" ON forum_categories
     FOR ALL USING (is_admin()) WITH CHECK (is_admin());
+
+-- =====================================================
+-- STORAGE BUCKET POLICIES
+-- =====================================================
+
+-- Organisation Media Bucket Policies
+-- Users can view files in their own folder (/{user_id}/*)
+CREATE POLICY "Users can view own organisation media files" 
+ON storage.objects FOR SELECT 
+USING (
+    bucket_id = 'organisation-media' AND 
+    auth.role() = 'authenticated' AND
+    (storage.foldername(name))[1] = auth.uid()::text
+);
+
+-- Users can upload files to their own folder (/{user_id}/*)
+CREATE POLICY "Users can upload to own organisation media folder" 
+ON storage.objects FOR INSERT 
+WITH CHECK (
+    bucket_id = 'organisation-media' AND 
+    auth.role() = 'authenticated' AND
+    (storage.foldername(name))[1] = auth.uid()::text
+);
+
+-- Users can update files in their own folder (/{user_id}/*)
+CREATE POLICY "Users can update own organisation media files" 
+ON storage.objects FOR UPDATE 
+USING (
+    bucket_id = 'organisation-media' AND 
+    auth.role() = 'authenticated' AND
+    (storage.foldername(name))[1] = auth.uid()::text
+) WITH CHECK (
+    bucket_id = 'organisation-media' AND 
+    auth.role() = 'authenticated' AND
+    (storage.foldername(name))[1] = auth.uid()::text
+);
+
+-- Users can delete files in their own folder (/{user_id}/*)
+CREATE POLICY "Users can delete own organisation media files" 
+ON storage.objects FOR DELETE 
+USING (
+    bucket_id = 'organisation-media' AND 
+    auth.role() = 'authenticated' AND
+    (storage.foldername(name))[1] = auth.uid()::text
+);
+
+-- Admins have full access to all files in organisation-media bucket
+CREATE POLICY "Admins have full access to organisation media" 
+ON storage.objects FOR ALL 
+USING (
+    bucket_id = 'organisation-media' AND 
+    is_admin()
+) WITH CHECK (
+    bucket_id = 'organisation-media' AND 
+    is_admin()
+);
+
+-- Public can view files in public folders (/{user_id}/public/*)
+CREATE POLICY "Public can view public organisation media files" 
+ON storage.objects FOR SELECT 
+USING (
+    bucket_id = 'organisation-media' AND 
+    array_length(storage.foldername(name), 1) >= 2 AND
+    (storage.foldername(name))[2] = 'public'
+);
 
 -- =====================================================
 -- SECURITY NOTES

@@ -23,7 +23,7 @@ export const OrgCard = ({
     <div className='bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-md'>
       {/* Header with logo and name */}
       <div className='flex items-start gap-4 mb-4'>
-        <div className='flex-shrink-0'>
+        <div className='shrink-0'>
           <Image 
             src={logo} 
             alt={`${name} logo`}
@@ -44,7 +44,7 @@ export const OrgCard = ({
       </div>
 
       {/* Stats */}
-      <div className='flex items-center gap-6 mb-4 text-sm text-primary-foreground/70'>
+      <div className='flex items-center gap-6 mb-4 text-sm text-foreground/70'>
         <div className='flex items-center'>
           <Folder className='w-4 h-4 mr-1' />
           <span>{projects} Projects</span>
@@ -56,7 +56,7 @@ export const OrgCard = ({
       </div>
 
       {/* Description */}
-      <p className='text-primary-foreground/80 text-sm leading-relaxed'>
+      <p className='text-foreground/80 text-sm leading-relaxed'>
         {description}
       </p>
     </div>
