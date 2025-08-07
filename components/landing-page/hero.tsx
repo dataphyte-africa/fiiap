@@ -20,7 +20,9 @@ export const Hero = async () => {
                     <Button size="lg" asChild>
                       <Link href="auth/sign-up">{t('joinButton')}</Link>
                     </Button>
-                    <Button size="lg" variant="outline" className='hidden md:block'>{t('searchButton')}</Button>
+                    <Button size="lg" variant="outline" className='hidden md:flex' asChild>
+                      <Link href="/organisations">{t('searchButton')}</Link>
+                    </Button>
                 </div>
             </div>
             <div className=' hidden md:flex flex-col items-center justify-center'>

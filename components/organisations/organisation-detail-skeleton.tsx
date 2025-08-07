@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function OrganisationDetailSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 w-full">
       {/* Header Section Skeleton */}
       <div className="bg-gradient-to-r from-blue-900 to-blue-700">
         <div className="container mx-auto px-4 py-8">

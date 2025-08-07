@@ -3,108 +3,20 @@ import { TextSlot } from '../ui/text-slot'
 import { OrgCard } from './org-card'
 import { Button } from '../ui/button'
 import { getTranslations } from 'next-intl/server'
-
-const featuredOrganizations = [
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Health for All Initiative (HFAI)',
-    location: 'Abuja, Nigeria',
-    projects: 56,
-    blogs: 32,
-    description: 'Community healthcare, maternal health, vaccination campaigns'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Education Access Foundation',
-    location: 'Lagos, Nigeria',
-    projects: 43,
-    blogs: 28,
-    description: 'Providing quality education and literacy programs for underserved communities'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Clean Water Initiative',
-    location: 'Cotonou, Benin',
-    projects: 38,
-    blogs: 22,
-    description: 'Ensuring access to clean water and sanitation facilities across rural areas'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Women Empowerment Network',
-    location: 'Banjul, The Gambia',
-    projects: 29,
-    blogs: 35,
-    description: 'Empowering women through skills development and economic opportunities'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Youth Development Alliance',
-    location: 'Kano, Nigeria',
-    projects: 67,
-    blogs: 41,
-    description: 'Supporting youth with leadership training and entrepreneurship programs'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Environmental Conservation Society',
-    location: 'Porto-Novo, Benin',
-    projects: 52,
-    blogs: 19,
-    description: 'Protecting ecosystems and promoting sustainable environmental practices'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Agricultural Innovation Hub',
-    location: 'Serrekunda, The Gambia',
-    projects: 34,
-    blogs: 26,
-    description: 'Improving food security through modern farming techniques and training'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Community Development Partners',
-    location: 'Ibadan, Nigeria',
-    projects: 45,
-    blogs: 33,
-    description: 'Building stronger communities through infrastructure and social programs'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Digital Literacy Foundation',
-    location: 'Parakou, Benin',
-    projects: 28,
-    blogs: 24,
-    description: 'Bridging the digital divide through technology education and access'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Peace and Reconciliation Center',
-    location: 'Basse, The Gambia',
-    projects: 31,
-    blogs: 29,
-    description: 'Promoting peace, conflict resolution and community harmony'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Maternal Care Foundation',
-    location: 'Port Harcourt, Nigeria',
-    projects: 39,
-    blogs: 27,
-    description: 'Improving maternal and child health outcomes across communities'
-  },
-  {
-    logo: '/landing/hfai-logo.png',
-    name: 'Financial Inclusion Network',
-    location: 'Abomey, Benin',
-    projects: 26,
-    blogs: 31,
-    description: 'Expanding access to financial services for underbanked populations'
-  }
-]
+import { organisationService } from '@/client-services/organisations'
+import Link from 'next/link'
 
 export const Feature3 = async () => {
   const t = await getTranslations('landingPage.feature3')
+  
+  // Fetch featured organisations from the server with counts
+  const organisationsResult = await organisationService.getActiveOrganisations({
+    limit: 12,
+    sortBy: 'created_at',
+    sortOrder: 'desc'
+  });
+  
+  const organisations = organisationsResult.data;
   
   return (
     <div className='py-16 px-4 bg-gray-50 relative overflow-hidden bg-[url("/landing/feature-3.svg")] bg-cover bg-center w-full'>
@@ -119,23 +31,25 @@ export const Feature3 = async () => {
               subtitle={t('subtitle')} 
             />
           </div>
-          <Button variant="outline" className='self-start md:self-center'>
+          <Button variant="outline" className='self-start md:self-center' asChild>
+            <Link href="/organisations">
             {t('viewAllButton')}
+            </Link>
           </Button>
         </div>
 
         {/* Organizations Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {featuredOrganizations.map((org, index) => (
+          {organisations.map((org) => (
             <OrgCard
-              id={`org-${index}`}
-              key={index}
-              logo={org.logo}
+              key={org.id}
+              id={org.id}
+              logo={org.logo_url || undefined}
               name={org.name}
-              location={org.location}
-              projects={org.projects}
-              blogs={org.blogs}
-              description={org.description}
+              location={[org.city, org.region, org.country].filter(Boolean).join(', ') || org.country}
+              projects={org.projects_count || 0}
+              blogs={org.posts_count || 0}
+              description={org.mission || org.vision || 'No description available'}
               projectsLabel={t('projects')}
               blogsLabel={t('blogs')}
             />
