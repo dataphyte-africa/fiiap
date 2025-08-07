@@ -19,6 +19,9 @@ interface Organisation {
   logo_url: string | null;
   created_at: string | null;
   updated_at: string | null;
+  mission: string | null;
+  vision: string | null;
+ 
 }
 
 interface OrganisationResult {
@@ -108,7 +111,7 @@ export function OrganisationsGrid() {
     location: [org.city, org.region, org.country].filter(Boolean).join(', '),
     projects: Math.floor(Math.random() * 100), // Mock data - replace with real data
     blogs: Math.floor(Math.random() * 50), // Mock data - replace with real data
-    description: `Working to make a difference in ${org.country}`, // Mock description - replace with real data
+    description: org.mission || org.vision || 'No description available', // Mock description - replace with real data
   });
 
   if (loading) {

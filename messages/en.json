@@ -141,7 +141,9 @@
             "region": "Region",
             "selectCountry": "Select country",
             "selectThematicArea": "Select thematic area",
-            "selectRegion": "Select region"
+            "selectRegion": "Select region",
+            "selectedCount": "{count} selected",
+            "organisationCount": "{count, plural, =1 {# organisation} other {# organisations}}"
         },
         "grid": {
             "noResults": {

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 import {
@@ -42,6 +43,7 @@ export function FilterComboBox({
 }: FilterComboBoxProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('organisations.filters');
   
   // Determine if component is controlled
   const isControlled = value !== undefined;
@@ -137,7 +139,7 @@ export function FilterComboBox({
   const selectedCount = currentValues.length;
   const displayText = selectedCount > 0 
     ? multiple 
-      ? `${selectedCount} selected`
+      ? t('selectedCount', { count: selectedCount })
       : options.find(opt => opt.value === currentValues[0])?.label || placeholder
     : placeholder;
 
@@ -178,7 +180,7 @@ export function FilterComboBox({
                   <span className="text-sm">{option.label}</span>
                   {option.count !== undefined && (
                     <span className="text-xs text-muted-foreground">
-                      {option.count.toLocaleString()} organisation{option.count !== 1 ? 's' : ''}
+                      {t('organisationCount', { count: option.count })}
                     </span>
                   )}
                 </div>
