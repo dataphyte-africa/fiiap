@@ -1,26 +1,30 @@
 import React from 'react'
 import { TextSlot } from '../ui/text-slot'
 import Image from 'next/image'
-const features = [
-  {
-    title: "Find CSOs Easily",
-    description: "discover organisations by country, sector, and area of impact, all in one simple search."
-  },
-  {
-    title: "Share & Discover Resources", 
-    description: "Post your latest news, grants, events, and partnership calls, while discovering opportunities from other CSOs."
-  },
-  {
-    title: "Connect Across Borders",
-    description: "Break geographic barriers and build lasting partnerships that drive real impact across Nigeria, Benin, and Gambia."
-  }
-]
+import { getTranslations } from 'next-intl/server'
 
-export const Feature1 = () => {
+export const Feature1 = async () => {
+  const t = await getTranslations('landingPage.feature1')
+  
+  const features = [
+    {
+      title: t('features.findCsos.title'),
+      description: t('features.findCsos.description')
+    },
+    {
+      title: t('features.shareResources.title'), 
+      description: t('features.shareResources.description')
+    },
+    {
+      title: t('features.connectBorders.title'),
+      description: t('features.connectBorders.description')
+    }
+  ]
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full p-3 md:p-20'>
         <div className='flex flex-col gap-4 px-3 md:px-8'>
-            <TextSlot title="What Our CSO Collaboration Platform Is For" subtitle="To help civil society organisations across West Africa easily connect, share resources, and build powerful cross-border partnerships that drive social impact." />
+            <TextSlot title={t('title')} subtitle={t('subtitle')} />
             <div className='flex flex-col gap-6'>
             {features.map((feature, index) => (
               <div key={index} className='flex items-start gap-4 p-6 bg-gray-50 rounded-lg'>

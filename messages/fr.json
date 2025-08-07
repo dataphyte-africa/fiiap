@@ -1,0 +1,248 @@
+{
+    "landingPage": {
+        "navigation": {
+            "home": "Accueil",
+            "about": "À propos",
+            "contact": "Contact",
+            "faqs": "FAQs",
+            "organisations": "Organisations"
+        },
+        "hero": {
+            "title": "Connecter. Collaborer. Grandir :",
+            "subtitle": "Le Réseau OSC pour l'Afrique de l'Ouest",
+            "description": "Le Réseau OSC pour l'Afrique de l'Ouest est une plateforme qui connecte et soutient les organisations de la société civile en Afrique de l'Ouest.",
+            "joinButton": "Rejoindre en tant qu'Organisation",
+            "searchButton": "Rechercher des Organisations"
+        },
+        "feature1": {
+            "title": "À Quoi Sert Notre Plateforme de Collaboration OSC",
+            "subtitle": "Aider les organisations de la société civile à travers l'Afrique de l'Ouest à se connecter facilement, partager des ressources et construire de puissants partenariats transfrontaliers qui génèrent un impact social.",
+            "features": {
+                "findCsos": {
+                    "title": "Trouver des OSC Facilement",
+                    "description": "découvrir des organisations par pays, secteur et domaine d'impact, le tout en une recherche simple."
+                },
+                "shareResources": {
+                    "title": "Partager et Découvrir des Ressources",
+                    "description": "Publier vos dernières actualités, subventions, événements et appels de partenariat, tout en découvrant les opportunités d'autres OSC."
+                },
+                "connectBorders": {
+                    "title": "Connecter au-delà des Frontières",
+                    "description": "Briser les barrières géographiques et construire des partenariats durables qui génèrent un impact réel à travers le Nigeria, le Bénin et la Gambie."
+                }
+            }
+        },
+        "feature2": {
+            "title": "Connecter les OSC à travers le Nigeria, le Bénin et la Gambie",
+            "countries": {
+                "nigeria": "Nigeria",
+                "benin": "Bénin",
+                "gambia": "Gambie",
+                "organizations": "organisations",
+                "resources": "ressources"
+            },
+            "exploreButton": "Explorer les organisations →"
+        },
+        "feature3": {
+            "title": "Organisations en vedette",
+            "subtitle": "Découvrez des OSC ayant un impact qui font la différence à travers le Nigeria, le Bénin et la Gambie.",
+            "viewAllButton": "Voir tout →",
+            "projects": "Projets",
+            "blogs": "Blogs"
+        },
+        "feature4": {
+            "cta": {
+                "badge": "🔗 Commencer à se connecter",
+                "title": "Commencez à vous connecter avec les OSC à travers l'Afrique de l'Ouest",
+                "description": "Découvrez les dernières organisations, obtenez des recommandations personnalisées et accédez à tous les outils dont vous avez besoin pour construire des partenariats significatifs à travers l'Afrique de l'Ouest.",
+                "joinButton": "Rejoindre en tant qu'Organisation",
+                "searchButton": "🔍 Rechercher des Organisations"
+            },
+            "footer": {
+                "description": "Intégrez votre organisation et commencez à explorer les opportunités avec les organisations de la société civile près de chez vous et au-delà.",
+                "search": "Recherche",
+                "company": "Entreprise",
+                "social": "Social",
+                "aboutUs": "À propos de nous",
+                "faq": "FAQ",
+                "contact": "Contact",
+                "twitter": "Twitter",
+                "linkedin": "LinkedIn",
+                "facebook": "Facebook",
+                "copyright": "Copyright © fiitapp.com"
+            }
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "description": "Entrez votre email ci-dessous pour vous connecter à votre compte",
+            "email": "Email",
+            "emailPlaceholder": "m@exemple.com",
+            "password": "Mot de passe",
+            "forgotPassword": "Mot de passe oublié ?",
+            "loginButton": "Se connecter",
+            "loggingIn": "Connexion en cours...",
+            "noAccount": "Vous n'avez pas de compte ?",
+            "signUp": "S'inscrire"
+        },
+        "signUp": {
+            "title": "S'inscrire",
+            "description": "Créer un nouveau compte. Rejoignez une Communauté de Créateurs de Changement",
+            "name": "Nom",
+            "namePlaceholder": "Jean Dupont",
+            "email": "Email",
+            "emailPlaceholder": "m@exemple.com",
+            "password": "Mot de passe",
+            "repeatPassword": "Répéter le mot de passe",
+            "signUpButton": "S'inscrire",
+            "creatingAccount": "Création du compte...",
+            "haveAccount": "Vous avez déjà un compte ?",
+            "login": "Se connecter",
+            "passwordsNoMatch": "Les mots de passe ne correspondent pas"
+        },
+        "forgotPassword": {
+            "title": "Réinitialiser votre mot de passe",
+            "description": "Tapez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe",
+            "email": "Email",
+            "emailPlaceholder": "m@exemple.com",
+            "sendButton": "Envoyer l'email de réinitialisation",
+            "sending": "Envoi en cours...",
+            "haveAccount": "Vous avez déjà un compte ?",
+            "login": "Se connecter",
+            "success": {
+                "title": "Vérifiez votre email",
+                "description": "Instructions de réinitialisation du mot de passe envoyées",
+                "message": "Si vous vous êtes inscrit avec votre email et mot de passe, vous recevrez un email de réinitialisation du mot de passe."
+            }
+        },
+        "updatePassword": {
+            "title": "Réinitialiser votre mot de passe",
+            "description": "Veuillez entrer votre nouveau mot de passe ci-dessous.",
+            "newPassword": "Nouveau mot de passe",
+            "newPasswordPlaceholder": "Nouveau mot de passe",
+            "saveButton": "Enregistrer le nouveau mot de passe",
+            "saving": "Enregistrement..."
+        }
+    },
+    "organisations": {
+        "page": {
+            "title": "Découvrir les Organisations",
+            "description": "Trouvez et connectez-vous avec les organisations de la société civile travaillant au Nigeria, au Bénin et en Gambie"
+        },
+        "search": {
+            "placeholder": "Rechercher des organisations...",
+            "label": "Recherche",
+            "searchButton": "Rechercher"
+        },
+        "filters": {
+            "country": "Pays",
+            "thematicArea": "Domaine thématique",
+            "region": "Région",
+            "selectCountry": "Sélectionner un pays",
+            "selectThematicArea": "Sélectionner un domaine thématique",
+            "selectRegion": "Sélectionner une région"
+        },
+        "grid": {
+            "noResults": {
+                "title": "Aucune organisation trouvée",
+                "description": "Essayez d'ajuster vos critères de recherche ou vos filtres pour trouver plus d'organisations."
+            },
+            "results": {
+                "organisation": "Organisation",
+                "organisations": "Organisations",
+                "page": "Page",
+                "of": "sur"
+            },
+            "sort": {
+                "sortBy": "Trier par",
+                "newest": "Plus récentes d'abord",
+                "oldest": "Plus anciennes d'abord",
+                "nameAZ": "Nom A-Z",
+                "nameZA": "Nom Z-A",
+                "recentlyUpdated": "Récemment mises à jour"
+            },
+            "pagination": {
+                "previous": "Précédent",
+                "next": "Suivant"
+            },
+            "projects": "Projets",
+            "posts": "Publications"
+        },
+        "detail": {
+            "tabs": {
+                "about": "À propos de l'organisation",
+                "stories": "Histoires",
+                "projects": "Projets",
+                "documents": "Documents"
+            },
+            "header": {
+                "founded": "Fondée",
+                "yearNotSpecified": "Année non spécifiée",
+                "scope": "portée",
+                "shareProfile": "Partager le profil"
+            },
+            "about": {
+                "aboutOrganisation": "À propos de l'organisation",
+                "mission": "Mission",
+                "vision": "Vision",
+                "missionAndVision": "Mission et Vision",
+                "ourMission": "Notre Mission",
+                "ourVision": "Notre Vision",
+                "thematicFocusAreas": "Domaines d'intervention thématiques",
+                "languages": "Langues",
+                "socialMedia": "Réseaux sociaux",
+                "contactDetails": "Coordonnées"
+            },
+            "stories": {
+                "title": "Histoires",
+                "placeholder": "Les histoires et actualités de {organisationName} apparaîtront ici."
+            },
+            "projects": {
+                "title": "Projets",
+                "placeholder": "Les projets de {organisationName} apparaîtront ici."
+            },
+            "documents": {
+                "title": "Documents",
+                "placeholder": "Les documents de {organisationName} apparaîtront ici."
+            }
+        },
+        "registration": {
+            "title": "Enregistrer votre Organisation",
+            "editTitle": "Modifier l'Organisation",
+            "description": "Rejoignez notre plateforme pour vous connecter avec d'autres organisations de la société civile et présenter votre travail.",
+            "editDescription": "Mettez à jour les informations et paramètres de votre organisation.",
+            "steps": {
+                "basicInfo": {
+                    "title": "Informations de base",
+                    "description": "Nom, type et localisation de l'organisation"
+                },
+                "contactInfo": {
+                    "title": "Informations de contact",
+                    "description": "Coordonnées et adresse"
+                },
+                "details": {
+                    "title": "Détails organisationnels",
+                    "description": "Mission, vision et domaines d'intervention"
+                },
+                "legalFinancial": {
+                    "title": "Juridique et Financier",
+                    "description": "Statut juridique et informations financières"
+                },
+                "media": {
+                    "title": "Médias et Documents",
+                    "description": "Logo, images et documents"
+                }
+            },
+            "progress": {
+                "step": "Étape",
+                "of": "sur",
+                "complete": "Terminé"
+            },
+            "loading": {
+                "title": "Soumission de votre inscription...",
+                "description": "Veuillez patienter pendant que nous traitons vos informations."
+            }
+        }
+    }
+}

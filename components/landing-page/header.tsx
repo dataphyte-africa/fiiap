@@ -3,32 +3,39 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-
-const NavLinks = [
-   {
-      label: "Home",
-      href: "/"
-   },
-   {
-      label: "Organisations",
-      href: "/organisations"
-   },
-   {
-      label: "About",
-      href: "/about"
-   },
-   {
-      label: "Contact",
-      href: "/contact"
-   },
-   {
-      label: "FAQs",
-      href: "/faqs"
-   }
-]
+import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
+import { getTranslations } from 'next-intl/server'
 
 
-export const Header = () => {
+
+
+export const Header = async () => {
+   const t = await getTranslations('landingPage.navigation')
+   const cookieStore = await cookies();
+   const cookieLang = cookieStore.get('NEXT_LOCALE')?.value || 'en';
+   const NavLinks = [
+      {
+         label: t('home'),
+         href: "/"
+      },
+      {
+         label: t('organisations'),
+         href: "/organisations"
+      },
+      {
+         label: t('about'),
+         href: "/about"
+      },
+      {
+         label: t('contact'),
+         href: "/contact"
+      },
+      {
+         label: t('faqs'),
+         href: "/faqs"
+      }
+   ]
   return (
     <div className='flex justify-between items-center w-full py-4 px-8 border'>
         <div>
@@ -48,13 +55,19 @@ export const Header = () => {
 
         <div className="flex gap-8 items-center">
          
-         <Select defaultValue="en">
+         <Select defaultValue={cookieLang} onValueChange={async (value) => {
+            'use server'
+            const cookieStore = await cookies();
+            cookieStore.set('NEXT_LOCALE', value);
+            revalidatePath('/')
+         }}>
             <SelectTrigger className='border-none rounded-full bg-gray-100'>
                 <SelectValue placeholder="Select a language" />
             </SelectTrigger>
             <SelectContent>
-               <SelectItem value="en">🏴󠁧󠁢󠁥󠁮󠁧󠁿 EN</SelectItem>
-               <SelectItem value="fr">🇫🇷 FR</SelectItem>
+               <SelectItem value="en" > 🏴󠁧󠁢󠁥󠁮󠁧󠁿 EN</SelectItem>
+               <SelectItem value="fr" > 🇫🇷 FR</SelectItem>
+               <SelectItem value="es" > 🇪🇸 ES</SelectItem>
             </SelectContent>
          </Select>
          <Button variant="default" asChild>

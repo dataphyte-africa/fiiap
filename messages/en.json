@@ -1,0 +1,248 @@
+{
+    "landingPage": {
+        "navigation": {
+            "home": "Home",
+            "about": "About",
+            "contact": "Contact",
+            "faqs": "FAQs",
+            "organisations": "Organisations"
+        },
+        "hero": {
+            "title": "Connect. Collaborate. Grow:",
+            "subtitle": "The CSO Network for West Africa",
+            "description": "The CSO Network for West Africa is a platform that connects and supports civil society organisations in West Africa.",
+            "joinButton": "Join as Organisation",
+            "searchButton": "Search Organisations"
+        },
+        "feature1": {
+            "title": "What Our CSO Collaboration Platform Is For",
+            "subtitle": "To help civil society organisations across West Africa easily connect, share resources, and build powerful cross-border partnerships that drive social impact.",
+            "features": {
+                "findCsos": {
+                    "title": "Find CSOs Easily",
+                    "description": "discover organisations by country, sector, and area of impact, all in one simple search."
+                },
+                "shareResources": {
+                    "title": "Share & Discover Resources",
+                    "description": "Post your latest news, grants, events, and partnership calls, while discovering opportunities from other CSOs."
+                },
+                "connectBorders": {
+                    "title": "Connect Across Borders",
+                    "description": "Break geographic barriers and build lasting partnerships that drive real impact across Nigeria, Benin, and Gambia."
+                }
+            }
+        },
+        "feature2": {
+            "title": "Connecting CSO Across Nigeria, Benin, and The Gambia",
+            "countries": {
+                "nigeria": "Nigeria",
+                "benin": "Benin",
+                "gambia": "Gambia",
+                "organizations": "organizations",
+                "resources": "resources"
+            },
+            "exploreButton": "Explore organizations →"
+        },
+        "feature3": {
+            "title": "Featured organizations",
+            "subtitle": "Discover impactful CSOs making a difference across Nigeria, Benin, and The Gambia.",
+            "viewAllButton": "View all →",
+            "projects": "Projects",
+            "blogs": "Blogs"
+        },
+        "feature4": {
+            "cta": {
+                "badge": "🔗 Start connecting",
+                "title": "Start connecting with CSO across West Africa",
+                "description": "Discover the latest organizations, get personalized recommendations, and access all the tools you need to build meaningful partnerships across West Africa.",
+                "joinButton": "Join as Organization",
+                "searchButton": "🔍 Search Organizations"
+            },
+            "footer": {
+                "description": "Onboard your organization and start exploring opportunities with civil society organizations near you and beyond.",
+                "search": "Search",
+                "company": "Company",
+                "social": "Social",
+                "aboutUs": "About us",
+                "faq": "FAQ",
+                "contact": "Contact",
+                "twitter": "Twitter",
+                "linkedin": "LinkedIn",
+                "facebook": "Facebook",
+                "copyright": "Copyright © fiitapp.com"
+            }
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Login",
+            "description": "Enter your email below to login to your account",
+            "email": "Email",
+            "emailPlaceholder": "m@example.com",
+            "password": "Password",
+            "forgotPassword": "Forgot your password?",
+            "loginButton": "Login",
+            "loggingIn": "Logging in...",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "signUp": {
+            "title": "Sign up",
+            "description": "Create a new account. Join a Community of Change Makers",
+            "name": "Name",
+            "namePlaceholder": "John Doe",
+            "email": "Email",
+            "emailPlaceholder": "m@example.com",
+            "password": "Password",
+            "repeatPassword": "Repeat Password",
+            "signUpButton": "Sign up",
+            "creatingAccount": "Creating an account...",
+            "haveAccount": "Already have an account?",
+            "login": "Login",
+            "passwordsNoMatch": "Passwords do not match"
+        },
+        "forgotPassword": {
+            "title": "Reset Your Password",
+            "description": "Type in your email and we'll send you a link to reset your password",
+            "email": "Email",
+            "emailPlaceholder": "m@example.com",
+            "sendButton": "Send reset email",
+            "sending": "Sending...",
+            "haveAccount": "Already have an account?",
+            "login": "Login",
+            "success": {
+                "title": "Check Your Email",
+                "description": "Password reset instructions sent",
+                "message": "If you registered using your email and password, you will receive a password reset email."
+            }
+        },
+        "updatePassword": {
+            "title": "Reset Your Password",
+            "description": "Please enter your new password below.",
+            "newPassword": "New password",
+            "newPasswordPlaceholder": "New password",
+            "saveButton": "Save new password",
+            "saving": "Saving..."
+        }
+    },
+    "organisations": {
+        "page": {
+            "title": "Discover Organisations",
+            "description": "Find and connect with civil society organisations working across Nigeria, Benin, and Gambia"
+        },
+        "search": {
+            "placeholder": "Search organisations...",
+            "label": "Search",
+            "searchButton": "Search"
+        },
+        "filters": {
+            "country": "Country",
+            "thematicArea": "Thematic Area",
+            "region": "Region",
+            "selectCountry": "Select country",
+            "selectThematicArea": "Select thematic area",
+            "selectRegion": "Select region"
+        },
+        "grid": {
+            "noResults": {
+                "title": "No organisations found",
+                "description": "Try adjusting your search criteria or filters to find more organisations."
+            },
+            "results": {
+                "organisation": "Organisation",
+                "organisations": "Organisations",
+                "page": "Page",
+                "of": "of"
+            },
+            "sort": {
+                "sortBy": "Sort by",
+                "newest": "Newest first",
+                "oldest": "Oldest first",
+                "nameAZ": "Name A-Z",
+                "nameZA": "Name Z-A",
+                "recentlyUpdated": "Recently updated"
+            },
+            "pagination": {
+                "previous": "Previous",
+                "next": "Next"
+            },
+            "projects": "Projects",
+            "posts": "Posts"
+        },
+        "detail": {
+            "tabs": {
+                "about": "About organisation",
+                "stories": "Stories",
+                "projects": "Projects",
+                "documents": "Documents"
+            },
+            "header": {
+                "founded": "Founded",
+                "yearNotSpecified": "Year not specified",
+                "scope": "scope",
+                "shareProfile": "Share profile"
+            },
+            "about": {
+                "aboutOrganisation": "About Organization",
+                "mission": "Mission",
+                "vision": "Vision",
+                "missionAndVision": "Mission and Vision",
+                "ourMission": "Our Mission",
+                "ourVision": "Our Vision",
+                "thematicFocusAreas": "Thematic focus areas",
+                "languages": "Languages",
+                "socialMedia": "Social media",
+                "contactDetails": "Contact details"
+            },
+            "stories": {
+                "title": "Stories",
+                "placeholder": "Stories and updates from {organisationName} will appear here."
+            },
+            "projects": {
+                "title": "Projects",
+                "placeholder": "Projects from {organisationName} will appear here."
+            },
+            "documents": {
+                "title": "Documents",
+                "placeholder": "Documents from {organisationName} will appear here."
+            }
+        },
+        "registration": {
+            "title": "Register Your Organisation",
+            "editTitle": "Edit Organisation",
+            "description": "Join our platform to connect with other civil society organisations and showcase your work.",
+            "editDescription": "Update your organisation information and settings.",
+            "steps": {
+                "basicInfo": {
+                    "title": "Basic Information",
+                    "description": "Organisation name, type, and location"
+                },
+                "contactInfo": {
+                    "title": "Contact Information",
+                    "description": "Contact details and address"
+                },
+                "details": {
+                    "title": "Organizational Details",
+                    "description": "Mission, vision, and focus areas"
+                },
+                "legalFinancial": {
+                    "title": "Legal & Financial",
+                    "description": "Legal status and financial information"
+                },
+                "media": {
+                    "title": "Media & Documents",
+                    "description": "Logo, images, and documents"
+                }
+            },
+            "progress": {
+                "step": "Step",
+                "of": "of",
+                "complete": "Complete"
+            },
+            "loading": {
+                "title": "Submitting your registration...",
+                "description": "Please wait while we process your information."
+            }
+        }
+    }
+}

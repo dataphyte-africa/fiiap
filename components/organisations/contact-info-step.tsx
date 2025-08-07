@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Textarea } from '@/components/ui/textarea'
 import { Mail, Phone, Globe, MapPin, Languages } from 'lucide-react'
 import { 
   FormStepProps, 
@@ -132,7 +133,7 @@ export function ContactInfoStep({ onNext, onPrev, isFirstStep, currentStep, tota
             Address Information
           </CardTitle>
           <CardDescription>
-            Provide your organisation&apos;s physical address.
+            Provide your organisation&apos;s physical address and geographic coverage.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -182,6 +183,25 @@ export function ContactInfoStep({ onNext, onPrev, isFirstStep, currentStep, tota
                 placeholder="e.g. Lagos"
               />
             </div>
+          </div>
+
+          {/* Geographic Coverage */}
+          <div className="space-y-2">
+            <Label htmlFor="geographic_coverage" className="text-sm font-medium">
+              Geographic Coverage
+            </Label>
+            <Textarea
+              id="geographic_coverage"
+              {...register('geographic_coverage')}
+              placeholder="Describe the geographic scope of your operations (e.g., Local communities in Lagos State, National coverage across Nigeria, Regional presence in West Africa)"
+              className={`min-h-[100px] ${errors.geographic_coverage ? 'border-destructive' : ''}`}
+            />
+            {errors.geographic_coverage && (
+              <p className="text-sm text-destructive">{errors.geographic_coverage.message}</p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Optional: Describe where your organisation operates geographically
+            </p>
           </div>
         </CardContent>
       </Card>

@@ -203,10 +203,10 @@ export interface Profile { /* ... */ }
 **Estimated Time**: 2 days
 
 #### Checklist:
-- [ ] Create organisation registration form
-- [ ] Implement organisation profile editing
-- [ ] Add organisation logo upload
-- [ ] Create organisation approval workflow
+- [x] Create organisation registration form
+- [x] Implement organisation profile editing
+- [x] Add organisation logo upload
+- [x] Create organisation approval workflow
 - [ ] Implement organisation search
 - [ ] Add organisation status management
 - [ ] Test organisation RLS policies

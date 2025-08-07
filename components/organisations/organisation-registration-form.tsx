@@ -11,6 +11,7 @@ import { ContactInfoStep } from './contact-info-step'
 import { DetailsStep } from './details-step'
 import { LegalFinancialStep } from './legal-financial-step'
 import { MediaStep } from './media-step'
+import { useTranslations } from 'next-intl'
 
 interface OrganisationRegistrationFormProps {
   onSubmit?: (data: OrganisationFormData) => Promise<void>
@@ -25,6 +26,7 @@ export function OrganisationRegistrationForm({
   existingOrganisation,
   mode = 'create'
 }: OrganisationRegistrationFormProps) {
+  const t = useTranslations('organisation.registration');
   const [currentStep, setCurrentStep] = useState(1)
   
   const methods = useForm<OrganisationFormData>({
@@ -37,6 +39,7 @@ export function OrganisationRegistrationForm({
         country: existingOrganisation?.country || undefined,
         registration_number: existingOrganisation?.registration_number || undefined,
         establishment_year: existingOrganisation?.establishment_year || undefined,
+        other_countries: existingOrganisation?.other_countries || [],
         contact_email: existingOrganisation?.contact_email || '',
         contact_phone: existingOrganisation?.contact_phone || '',
         website_url: existingOrganisation?.website_url || '',
@@ -46,6 +49,7 @@ export function OrganisationRegistrationForm({
         city: existingOrganisation?.city || '',
         social_links: existingOrganisation?.social_links as Record<string, string> || {},
         languages_spoken: existingOrganisation?.languages_spoken || ['English'],
+        geographic_coverage: existingOrganisation?.geographic_coverage || '',
         mission: existingOrganisation?.mission || '',
         vision: existingOrganisation?.vision || '',
         thematic_focus: existingOrganisation?.thematic_focus || [],
@@ -53,12 +57,20 @@ export function OrganisationRegistrationForm({
         volunteer_count: existingOrganisation?.volunteer_count || undefined,
           partnerships: existingOrganisation?.partnerships || [],
         awards_recognition: existingOrganisation?.awards_recognition || [],
+        target_populations: existingOrganisation?.target_populations || [],
+        primary_work_methods: existingOrganisation?.primary_work_methods || [],
+        operational_levels: existingOrganisation?.operational_levels || [],
+        network_memberships: existingOrganisation?.network_memberships || [],
+        has_digital_tools: existingOrganisation?.has_digital_tools || false,
+        digital_tools: (existingOrganisation?.digital_tools as { name: string; description?: string; category: string; url?: string }[]) || [],
         legal_status: existingOrganisation?.legal_status || '',
         tax_exemption_status: existingOrganisation?.tax_exemption_status || false,
         certifications: existingOrganisation?.certifications || [],
         annual_budget: existingOrganisation?.annual_budget || undefined,
         logo_url: existingOrganisation?.logo_url || '',
-        cover_image_url: existingOrganisation?.cover_image_url || ''
+        cover_image_url: existingOrganisation?.cover_image_url || '',
+        media_platforms: existingOrganisation?.media_platforms || [],
+        media_work_types: existingOrganisation?.media_work_types || []
     }
   })
 
@@ -67,32 +79,32 @@ export function OrganisationRegistrationForm({
   const steps: FormStep[] = [
     {
       id: 'basic-info',
-      title: 'Basic Information',
-      description: 'Organisation name, type, and location',
+      title: t('steps.basicInfo.title'),
+      description: t('steps.basicInfo.description'),
       component: BasicInfoStep
     },
     {
       id: 'contact-info',
-      title: 'Contact Information',
-      description: 'Contact details and address',
+      title: t('steps.contactInfo.title'),
+      description: t('steps.contactInfo.description'),
       component: ContactInfoStep
     },
     {
       id: 'details',
-      title: 'Organizational Details',
-      description: 'Mission, vision, and focus areas',
+      title: t('steps.details.title'),
+      description: t('steps.details.description'),
       component: DetailsStep
     },
     {
       id: 'legal-financial',
-      title: 'Legal & Financial',
-      description: 'Legal status and financial information',
+      title: t('steps.legalFinancial.title'),
+      description: t('steps.legalFinancial.description'),
       component: LegalFinancialStep
     },
     {
       id: 'media',
-      title: 'Media & Documents',
-      description: 'Logo, images, and documents',
+      title: t('steps.media.title'),
+      description: t('steps.media.description'),
       component: MediaStep
     }
   ]
@@ -131,12 +143,12 @@ export function OrganisationRegistrationForm({
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">
-          {mode === 'edit' ? 'Edit Organisation' : 'Register Your Organisation'}
+          {mode === 'edit' ? t('editTitle') : t('title')}
         </h1>
         <p className="text-muted-foreground">
           {mode === 'edit' 
-            ? 'Update your organisation information and settings.' 
-            : 'Join our platform to connect with other civil society organisations and showcase your work.'
+            ? t('editDescription')
+            : t('description')
           }
         </p>
       </div>
@@ -146,8 +158,8 @@ export function OrganisationRegistrationForm({
         <CardContent className="pt-6">
           <div className="space-y-4">
             <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Step {currentStep} of {totalSteps}</span>
-              <span>{Math.round(progressPercentage)}% Complete</span>
+              <span>{t('progress.step')} {currentStep} {t('progress.of')} {totalSteps}</span>
+              <span>{Math.round(progressPercentage)}% {t('progress.complete')}</span>
             </div>
             <Progress value={progressPercentage} className="h-2" />
             
@@ -213,8 +225,8 @@ export function OrganisationRegistrationForm({
             <div className="flex items-center space-x-4">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
               <div>
-                <p className="font-medium">Submitting your registration...</p>
-                <p className="text-sm text-muted-foreground">Please wait while we process your information.</p>
+                <p className="font-medium">{t('loading.title')}</p>
+                <p className="text-sm text-muted-foreground">{t('loading.description')}</p>
               </div>
             </div>
           </Card>

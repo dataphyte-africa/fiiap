@@ -2,8 +2,11 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
-export const Feature4 = () => {
+export const Feature4 = async () => {
+  const t = await getTranslations('landingPage.feature4')
+  
   return (
     <div className='bg-primary py-24 px-24 rounded-tr-[100px] rounded-tl-[100px] w-full'>
       <div className='w-full mx-auto'>
@@ -27,26 +30,26 @@ export const Feature4 = () => {
             <div className='space-y-6'>
               {/* Badge */}
               <div className='inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-primary text-sm font-medium'>
-                🔗 Start connecting
+                {t('cta.badge')}
               </div>
               
               {/* Heading */}
               <h2 className='text-3xl lg:text-4xl font-bold leading-tight'>
-                Start connecting with CSO across West Africa
+                {t('cta.title')}
               </h2>
               
               {/* Description */}
               <p className='text-primary-foreground/70 text-lg leading-relaxed'>
-                Discover the latest organizations, get personalized recommendations, and access all the tools you need to build meaningful partnerships across West Africa.
+                {t('cta.description')}
               </p>
               
               {/* Buttons */}
               <div className='flex flex-col sm:flex-row gap-4'>
                 <Button className='bg-primary text-white hover:bg-primary/90 px-6 py-3'>
-                  Join as Organization
+                  {t('cta.joinButton')}
                 </Button>
                 <Button variant="outline" className='border-primary text-primary hover:bg-primary hover:text-white px-6 py-3'>
-                  🔍 Search Organizations
+                  {t('cta.searchButton')}
                 </Button>
               </div>
             </div>
@@ -62,7 +65,7 @@ export const Feature4 = () => {
                 <Image src="/logo-white.png" alt="fiap" width={100} height={100} />
               </div>
               <p className='text-white/70 text-sm leading-relaxed'>
-                Onboard your organization and start exploring opportunities with civil society organizations near you and beyond.
+                {t('footer.description')}
               </p>
               <div className='flex space-x-4'>
                 <Facebook className='w-5 h-5 text-white/70 hover:text-white cursor-pointer' />
@@ -73,7 +76,7 @@ export const Feature4 = () => {
             
             {/* Search Column */}
             <div className='space-y-4'>
-              <h3 className='font-semibold text-white'>Search</h3>
+              <h3 className='font-semibold text-white'>{t('footer.search')}</h3>
               <div className='space-y-2 text-sm text-white/70'>
                 <div className='hover:text-white cursor-pointer'>Nigeria</div>
                 <div className='hover:text-white cursor-pointer'>Benin</div>
@@ -83,28 +86,28 @@ export const Feature4 = () => {
             
             {/* Company Column */}
             <div className='space-y-4'>
-              <h3 className='font-semibold text-white'>Company</h3>
+              <h3 className='font-semibold text-white'>{t('footer.company')}</h3>
               <div className='space-y-2 text-sm text-white/70'>
-                <div className='hover:text-white cursor-pointer'>About us</div>
-                <div className='hover:text-white cursor-pointer'>FAQ</div>
-                <div className='hover:text-white cursor-pointer'>Contact</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.aboutUs')}</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.faq')}</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.contact')}</div>
               </div>
             </div>
             
             {/* Social Column */}
             <div className='space-y-4'>
-              <h3 className='font-semibold text-white'>Social</h3>
+              <h3 className='font-semibold text-white'>{t('footer.social')}</h3>
               <div className='space-y-2 text-sm text-white/70'>
-                <div className='hover:text-white cursor-pointer'>Twitter</div>
-                <div className='hover:text-white cursor-pointer'>LinkedIn</div>
-                <div className='hover:text-white cursor-pointer'>Facebook</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.twitter')}</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.linkedin')}</div>
+                <div className='hover:text-white cursor-pointer'>{t('footer.facebook')}</div>
               </div>
             </div>
           </div>
           
           {/* Copyright */}
           <div className='border-t border-white/20 pt-6 text-center text-white/60 text-sm'>
-            Copyright © fiitapp.com
+            {t('footer.copyright')}
           </div>
         </footer>
       </div>

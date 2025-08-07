@@ -13,6 +13,24 @@ export { OrganisationView } from './organisation-view'
 export { OrganisationCard } from './organisation-card'
 export { OrganisationStatusBadge, getStatusDescription } from './organisation-status-badge'
 
+// Filter components
+export { FilterComboBox } from './filter-combo-box'
+export type { ComboBoxOption } from './filter-combo-box'
+export { SearchBox } from './search-box'
+export { OrganisationFilterBar } from './organisation-filter-bar'
+export { OrganisationFilterBarServer } from './organisation-filter-bar-server'
+export { OrganisationFilterBarSkeleton } from './organisation-filter-bar-skeleton'
+
+// Grid components
+export { OrganisationsGrid } from './organisations-grid'
+export { OrganisationsGridServer } from './organisations-grid-server'
+export { OrganisationsGridSkeleton } from './organisations-grid-skeleton'
+
+// Detail components
+export { OrganisationDetailView } from './organisation-detail-view'
+export { OrganisationDetailServer } from './organisation-detail-server'
+export { OrganisationDetailSkeleton } from './organisation-detail-skeleton'
+
 // Dashboard components
 export { 
   OrganisationDashboard, 

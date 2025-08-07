@@ -2,6 +2,7 @@ import React from 'react'
 import { TextSlot } from '../ui/text-slot'
 import { OrgCard } from './org-card'
 import { Button } from '../ui/button'
+import { getTranslations } from 'next-intl/server'
 
 const featuredOrganizations = [
   {
@@ -102,7 +103,9 @@ const featuredOrganizations = [
   }
 ]
 
-export const Feature3 = () => {
+export const Feature3 = async () => {
+  const t = await getTranslations('landingPage.feature3')
+  
   return (
     <div className='py-16 px-4 bg-gray-50 relative overflow-hidden bg-[url("/landing/feature-3.svg")] bg-cover bg-center w-full'>
       
@@ -112,12 +115,12 @@ export const Feature3 = () => {
         <div className='flex flex-col md:flex-row md:items-center md:justify-between mb-12'>
           <div className='mb-6 md:mb-0'>
             <TextSlot 
-              title="Featured organizations" 
-              subtitle="Discover impactful CSOs making a difference across Nigeria, Benin, and The Gambia." 
+              title={t('title')} 
+              subtitle={t('subtitle')} 
             />
           </div>
           <Button variant="outline" className='self-start md:self-center'>
-            View all →
+            {t('viewAllButton')}
           </Button>
         </div>
 
@@ -125,6 +128,7 @@ export const Feature3 = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
           {featuredOrganizations.map((org, index) => (
             <OrgCard
+              id={`org-${index}`}
               key={index}
               logo={org.logo}
               name={org.name}
@@ -132,6 +136,8 @@ export const Feature3 = () => {
               projects={org.projects}
               blogs={org.blogs}
               description={org.description}
+              projectsLabel={t('projects')}
+              blogsLabel={t('blogs')}
             />
           ))}
         </div>

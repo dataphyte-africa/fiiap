@@ -1,31 +1,35 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
-const countries = [
-  {
-    name: "Nigeria",
-    flag: "🇳🇬",
-    organizations: "1,246 organizations",
-    resources: "12,00 resources",
-    image: "nigeria.png"
-  },
-  {
-    name: "Benin", 
-    flag: "🇧🇯",
-    organizations: "1,246 organizations",
-    resources: "12,00 resources",
-    image: "benin.png"
-  },
-  {
-    name: "Gambia",
-    flag: "🇬🇲", 
-    organizations: "1,246 organizations",
-    resources: "12,00 resources",
-    image: "gambia.png"
-  }
-]
+import { getTranslations } from 'next-intl/server'
 
-export const Feature2 = () => {
+export const Feature2 = async () => {
+  const t = await getTranslations('landingPage.feature2')
+  
+  const countries = [
+    {
+      name: t('countries.nigeria'),
+      flag: "🇳🇬",
+      organizations: `1,246 ${t('countries.organizations')}`,
+      resources: `12,00 ${t('countries.resources')}`,
+      image: "nigeria.png"
+    },
+    {
+      name: t('countries.benin'), 
+      flag: "🇧🇯",
+      organizations: `1,246 ${t('countries.organizations')}`,
+      resources: `12,00 ${t('countries.resources')}`,
+      image: "benin.png"
+    },
+    {
+      name: t('countries.gambia'),
+      flag: "🇬🇲", 
+      organizations: `1,246 ${t('countries.organizations')}`,
+      resources: `12,00 ${t('countries.resources')}`,
+      image: "gambia.png"
+    }
+  ]
+
   return (
     <div className='bg-primary py-16 px-4 relative overflow-hidden bg-[url("/landing/feature-2.svg")] bg-cover bg-center w-full'>
       {/* Dotted background pattern */}
@@ -33,7 +37,7 @@ export const Feature2 = () => {
       <div className='max-w-7xl mx-auto relative z-10'>
         <div className='text-center mb-12'>
           <h2 className='text-3xl md:text-4xl font-bold text-white mb-4 max-w-2xl mx-auto'>
-            Connecting CSO Across Nigeria, Benin, and The Gambia
+            {t('title')}
           </h2>
         </div>
         
@@ -73,7 +77,7 @@ export const Feature2 = () => {
                   variant="outline" 
                   className='w-full border-primary text-primary hover:bg-primary hover:text-white transition-colors'
                 >
-                  Explore organizations →
+                  {t('exploreButton')}
                 </Button>
               </div>
             </div>

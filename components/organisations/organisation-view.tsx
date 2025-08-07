@@ -20,7 +20,14 @@ import {
   Handshake,
   DollarSign,
   Languages,
-  Target
+  Target,
+  Laptop,
+  Radio,
+  Video,
+  Network,
+  Briefcase,
+  UserCheck,
+  Map
 } from 'lucide-react'
 import { Organisation } from './types'
 import { OrganisationStatusBadge, getStatusDescription } from './organisation-status-badge'
@@ -64,6 +71,13 @@ export function OrganisationView({
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount)
+  }
+
+  const formatEnumValue = (value: string) => {
+    return value
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
   }
 
   return (
@@ -120,6 +134,15 @@ export function OrganisationView({
                       </Badge>
                     )}
                   </div>
+                  
+                  {/* Other Countries */}
+                  {organisation.other_countries && organisation.other_countries.length > 0 && (
+                    <div className="mt-2">
+                      <p className="text-sm text-muted-foreground">
+                        Also operates in: {organisation.other_countries.join(', ')}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col sm:items-end gap-3">
@@ -180,6 +203,23 @@ export function OrganisationView({
             </Card>
           )}
 
+          {/* Geographic Coverage */}
+          {organisation.geographic_coverage && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Map className="h-5 w-5 text-primary" />
+                  Geographic Coverage
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed">
+                  {organisation.geographic_coverage}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Thematic Focus */}
           {organisation.thematic_focus && organisation.thematic_focus.length > 0 && (
             <Card>
@@ -194,6 +234,116 @@ export function OrganisationView({
                     </Badge>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Target Populations */}
+          {organisation.target_populations && organisation.target_populations.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UserCheck className="h-5 w-5 text-primary" />
+                  Target Populations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {organisation.target_populations.map((population, index) => (
+                    <Badge key={index} variant="outline">
+                      {formatEnumValue(population)}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Media Platforms & Work Types */}
+          {((organisation.media_platforms && organisation.media_platforms.length > 0) || 
+            (organisation.media_work_types && organisation.media_work_types.length > 0)) && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Radio className="h-5 w-5 text-primary" />
+                  Media & Communications
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {organisation.media_platforms && organisation.media_platforms.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                      <Radio className="h-4 w-4" />
+                      Media Platforms
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {organisation.media_platforms.map((platform, index) => (
+                        <Badge key={index} variant="secondary">
+                          {platform}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {organisation.media_work_types && organisation.media_work_types.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2 flex items-center gap-2">
+                      <Video className="h-4 w-4" />
+                      Media Work Types
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {organisation.media_work_types.map((workType, index) => (
+                        <Badge key={index} variant="outline">
+                          {workType}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Primary Work Methods */}
+          {organisation.primary_work_methods && organisation.primary_work_methods.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Briefcase className="h-5 w-5 text-primary" />
+                  Primary Work Methods
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {organisation.primary_work_methods.map((method, index) => (
+                    <Badge key={index} variant="outline">
+                      {formatEnumValue(method)}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Network Memberships */}
+          {organisation.network_memberships && organisation.network_memberships.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Network className="h-5 w-5 text-primary" />
+                  Network Memberships
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {organisation.network_memberships.map((network, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                      <span className="text-muted-foreground">{network}</span>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
             </Card>
           )}
@@ -303,6 +453,27 @@ export function OrganisationView({
             </CardContent>
           </Card>
 
+          {/* Operational Levels */}
+          {organisation.operational_levels && organisation.operational_levels.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  Operational Levels
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {organisation.operational_levels.map((level, index) => (
+                    <Badge key={index} variant="secondary">
+                      {level}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Organisation Details */}
           <Card>
             <CardHeader>
@@ -387,6 +558,48 @@ export function OrganisationView({
               </div>
             </CardContent>
           </Card>
+
+          {/* Digital Tools */}
+          {organisation.has_digital_tools && organisation.digital_tools && Array.isArray(organisation.digital_tools) && organisation.digital_tools.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Laptop className="h-5 w-5 text-primary" />
+                  Digital Tools
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {(organisation.digital_tools as Array<{name: string; description?: string; category: string; url?: string}>).map((tool, index) => (
+                    <div key={index} className="border rounded-lg p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-semibold text-sm">{tool.name}</h4>
+                        <Badge variant="outline" className="text-xs">
+                          {tool.category}
+                        </Badge>
+                      </div>
+                      {tool.description && (
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {tool.description}
+                        </p>
+                      )}
+                      {tool.url && (
+                        <a
+                          href={tool.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary hover:underline inline-flex items-center gap-1"
+                        >
+                          <Globe className="h-3 w-3" />
+                          Visit Tool
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Certifications */}
           {organisation.certifications && organisation.certifications.length > 0 && (

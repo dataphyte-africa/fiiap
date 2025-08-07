@@ -6,10 +6,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { ImageIcon, Upload, FileText, Check, X, Camera } from 'lucide-react'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ImageIcon, Upload, FileText, Check, X, Camera, Radio, Video } from 'lucide-react'
 import { 
   FormStepProps, 
   OrganisationFormData,
+  MEDIA_PLATFORMS,
+  MEDIA_WORK_TYPES,
   mediaSchema
 } from './types'
 
@@ -39,6 +42,26 @@ export function MediaStep({ onNext, onPrev, isLastStep, currentStep, totalSteps 
   const coverImageUrl = watch('cover_image_url')
   const logoFile = watch('logo_file')
   const coverImageFile = watch('cover_image_file')
+  const selectedMediaPlatforms = watch('media_platforms') || []
+  const selectedMediaWorkTypes = watch('media_work_types') || []
+
+  const handleMediaPlatformChange = (platform: string, checked: boolean) => {
+    const current = selectedMediaPlatforms
+    if (checked) {
+      setValue('media_platforms', [...current, platform])
+    } else {
+      setValue('media_platforms', current.filter(p => p !== platform))
+    }
+  }
+
+  const handleMediaWorkTypeChange = (workType: string, checked: boolean) => {
+    const current = selectedMediaWorkTypes
+    if (checked) {
+      setValue('media_work_types', [...current, workType])
+    } else {
+      setValue('media_work_types', current.filter(w => w !== workType))
+    }
+  }
 
   // Handle logo file upload
   const handleLogoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -365,6 +388,62 @@ export function MediaStep({ onNext, onPrev, isLastStep, currentStep, totalSteps 
             <p className="text-xs text-muted-foreground">
               Recommended size: 1200x400px or similar wide format
             </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Radio className="h-5 w-5 text-primary" />
+            Media Platforms
+          </CardTitle>
+          <CardDescription>
+            Select the media platforms your organisation uses for communication and outreach.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {MEDIA_PLATFORMS.map((platform) => (
+              <div key={platform} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`platform-${platform}`}
+                  checked={selectedMediaPlatforms.includes(platform)}
+                  onCheckedChange={(checked) => handleMediaPlatformChange(platform, checked as boolean)}
+                />
+                <Label htmlFor={`platform-${platform}`} className="text-sm">
+                  {platform}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Video className="h-5 w-5 text-primary" />
+            Media Work Types
+          </CardTitle>
+          <CardDescription>
+            Select the types of media work your organisation engages in.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {MEDIA_WORK_TYPES.map((workType) => (
+              <div key={workType} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`work-type-${workType}`}
+                  checked={selectedMediaWorkTypes.includes(workType)}
+                  onCheckedChange={(checked) => handleMediaWorkTypeChange(workType, checked as boolean)}
+                />
+                <Label htmlFor={`work-type-${workType}`} className="text-sm">
+                  {workType}
+                </Label>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
