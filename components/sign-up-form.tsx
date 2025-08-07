@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { newProfile } from "@/client-services/auth";
+// import { newProfile } from "@/client-services/auth";
 
 export function SignUpForm({
   className,
@@ -56,7 +56,7 @@ export function SignUpForm({
       });
       if (error) throw error;
       if (!data.user) throw new Error("User not created")
-      await newProfile(data.user?.id, name)
+      // await newProfile(data.user?.id, name)
       router.push("/auth/sign-up-success");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");

@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -19,7 +20,7 @@ export default function Page() {
               <CardTitle className="text-2xl">
                 Thank you for signing up!
               </CardTitle>
-              <CardDescription>Check your email to confirm</CardDescription>
+              {/* <CardDescription>Check your email to confirm</CardDescription> */}
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
@@ -27,8 +28,10 @@ export default function Page() {
                 confirm your account before signing in.
               </p>
 
-              <Button>
-                Login
+              <Button asChild className="mt-4 w-full">
+                <Link href="/dashboard">
+                  Go to Dashboard
+                </Link>
               </Button>
             </CardContent>
           </Card>

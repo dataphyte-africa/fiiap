@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Card, CardContent } from '@/components/ui/card'
@@ -31,53 +31,38 @@ export function OrganisationRegistrationForm({
     resolver: zodResolver(organisationFormSchema),
     mode: 'onChange',
     defaultValues: {
-      languages_spoken: ['English'],
-      thematic_focus: [],
-      partnerships: [],
-      awards_recognition: [],
-      certifications: [],
-      social_links: {},
-      tax_exemption_status: false
+      name: existingOrganisation?.name || '',
+        type: existingOrganisation?.type || undefined,
+        size: existingOrganisation?.size || undefined,
+        country: existingOrganisation?.country || undefined,
+        registration_number: existingOrganisation?.registration_number || undefined,
+        establishment_year: existingOrganisation?.establishment_year || undefined,
+        contact_email: existingOrganisation?.contact_email || '',
+        contact_phone: existingOrganisation?.contact_phone || '',
+        website_url: existingOrganisation?.website_url || '',
+        address: existingOrganisation?.address || '',
+        region: existingOrganisation?.region || '',
+        state_province: existingOrganisation?.state_province || '',
+        city: existingOrganisation?.city || '',
+        social_links: existingOrganisation?.social_links as Record<string, string> || {},
+        languages_spoken: existingOrganisation?.languages_spoken || ['English'],
+        mission: existingOrganisation?.mission || '',
+        vision: existingOrganisation?.vision || '',
+        thematic_focus: existingOrganisation?.thematic_focus || [],
+        staff_count: existingOrganisation?.staff_count || undefined,
+        volunteer_count: existingOrganisation?.volunteer_count || undefined,
+          partnerships: existingOrganisation?.partnerships || [],
+        awards_recognition: existingOrganisation?.awards_recognition || [],
+        legal_status: existingOrganisation?.legal_status || '',
+        tax_exemption_status: existingOrganisation?.tax_exemption_status || false,
+        certifications: existingOrganisation?.certifications || [],
+        annual_budget: existingOrganisation?.annual_budget || undefined,
+        logo_url: existingOrganisation?.logo_url || '',
+        cover_image_url: existingOrganisation?.cover_image_url || ''
     }
   })
 
-  // Populate form with existing data when editing
-  useEffect(() => {
-    if (mode === 'edit' && existingOrganisation) {
-      const formData: Partial<OrganisationFormData> = {
-        name: existingOrganisation.name,
-        type: existingOrganisation.type,
-        size: existingOrganisation.size,
-        country: existingOrganisation.country,
-        registration_number: existingOrganisation.registration_number || '',
-        establishment_year: existingOrganisation.establishment_year || undefined,
-        contact_email: existingOrganisation.contact_email || '',
-        contact_phone: existingOrganisation.contact_phone || '',
-        website_url: existingOrganisation.website_url || '',
-        address: existingOrganisation.address || '',
-        region: existingOrganisation.region || '',
-        state_province: existingOrganisation.state_province || '',
-        city: existingOrganisation.city || '',
-        social_links: existingOrganisation.social_links as Record<string, string> || {},
-        languages_spoken: existingOrganisation.languages_spoken || ['English'],
-        mission: existingOrganisation.mission || '',
-        vision: existingOrganisation.vision || '',
-        thematic_focus: existingOrganisation.thematic_focus || [],
-        staff_count: existingOrganisation.staff_count || undefined,
-        volunteer_count: existingOrganisation.volunteer_count || undefined,
-        partnerships: existingOrganisation.partnerships || [],
-        awards_recognition: existingOrganisation.awards_recognition || [],
-        legal_status: existingOrganisation.legal_status || '',
-        tax_exemption_status: existingOrganisation.tax_exemption_status || false,
-        certifications: existingOrganisation.certifications || [],
-        annual_budget: existingOrganisation.annual_budget || undefined,
-        logo_url: existingOrganisation.logo_url || '',
-        cover_image_url: existingOrganisation.cover_image_url || ''
-      }
-      
-      methods.reset(formData)
-    }
-  }, [existingOrganisation, mode, methods])
+  // Populate form with existin
 
   const steps: FormStep[] = [
     {

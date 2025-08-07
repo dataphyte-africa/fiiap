@@ -120,15 +120,22 @@ export function OrganisationEditExample({ organisationId }: { organisationId: st
 }
 
 // Alternative usage with custom success handling
-export function OrganisationRegistrationWithCustomSuccess() {
+export function OrganisationRegistrationWithCustomSuccess( {existingOrganisation, mode = 'create'}: {existingOrganisation?: Organisation, mode?: 'create' | 'edit'}) {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-
+  const router = useRouter()
   const handleSubmit = async (formData: OrganisationFormData) => {
     setIsLoading(true)
     
     try {
-      await organisationService.registerOrganisation(formData)
+      if (mode === 'create') {
+        await organisationService.registerOrganisation(formData)
+      } else {
+        if(!existingOrganisation) {
+          throw new Error('Organisation not found')
+        }
+        await organisationService.updateOrganisationWithFormData(existingOrganisation.id, formData)
+      }
       setIsSuccess(true)
     } catch (error) {
       console.error('Registration error:', error)
@@ -154,10 +161,10 @@ export function OrganisationRegistrationWithCustomSuccess() {
             Your organisation has been submitted for review. We&apos;ll notify you once it&apos;s approved.
           </p>
           <button 
-            onClick={() => setIsSuccess(false)}
+            onClick={() => router.push('/dashboard/organisation')}
             className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90"
           >
-            Register Another Organisation
+            Ok, got it!
           </button>
         </div>
       </div>
@@ -169,6 +176,8 @@ export function OrganisationRegistrationWithCustomSuccess() {
       <OrganisationRegistrationForm 
         onSubmit={handleSubmit}
         isLoading={isLoading}
+        existingOrganisation={existingOrganisation}
+        mode={mode}
       />
     </div>
   )
@@ -182,7 +191,7 @@ export function OrganisationViewExample({   organisation  }: { organisation: Org
   
 
   const handleEdit = () => {
-    router.push(`/organisations/${organisation.id}/edit`)
+    router.push(`/dashboard/organisation/edit`)
   }
 
   if (!organisation) {
@@ -210,8 +219,8 @@ export function OrganisationDashboardExample({ userId }: { userId: string }) {
     router.push('/organisations/register')
   }
 
-  const handleEditOrganisation = (organisationId: string) => {
-    router.push(`/organisations/${organisationId}/edit`)
+  const handleEditOrganisation = () => {
+    router.push(`/organisations/edit`)
   }
 
   const handleViewOrganisation = (organisationId: string) => {
