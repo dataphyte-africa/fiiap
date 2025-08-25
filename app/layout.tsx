@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import { Toaster } from "sonner";
+import { ReactQueryProvider } from "@/components/providers/react-query-provider";
 // import { cookies } from "next/headers";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -41,9 +43,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>
-            {children}
-          </NextIntlClientProvider>
+          <ReactQueryProvider>
+            <NextIntlClientProvider>
+              {children}
+              <Toaster position="top-right" richColors />
+            </NextIntlClientProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>

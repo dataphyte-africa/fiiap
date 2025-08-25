@@ -26,7 +26,7 @@ export function OrganisationRegistrationForm({
   existingOrganisation,
   mode = 'create'
 }: OrganisationRegistrationFormProps) {
-  const t = useTranslations('organisation.registration');
+  const t = useTranslations('organisations.registration');
   const [currentStep, setCurrentStep] = useState(1)
   
   const methods = useForm<OrganisationFormData>({
@@ -139,7 +139,7 @@ export function OrganisationRegistrationForm({
   const progressPercentage = (currentStep / totalSteps) * 100
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="mx-auto p-6">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">

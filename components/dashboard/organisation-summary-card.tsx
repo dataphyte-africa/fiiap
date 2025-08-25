@@ -1,4 +1,4 @@
-import { Building2, Users, MapPin, ExternalLink } from "lucide-react"
+import { Building2, Users, MapPin, ExternalLink, UserPlus } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import Image from "next/image"
+import { AffiliationRequestDialog } from "@/components/organisations/affiliation-request-dialog"
 
 
 
@@ -41,11 +42,22 @@ export async function OrganisationSummaryCard({
           </div>
           <h3 className="font-semibold text-sm mb-2">No Organisation Linked</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Register your organisation to start collaborating with other CSOs in the region.
+            Register your organisation or join an existing one to start collaborating with other CSOs in the region.
           </p>
-          <Button asChild size="sm">
-            <Link href={`/dashboard/organisation/`}>Register Organisation</Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <Button asChild size="sm">
+              <Link href={`/dashboard/organisation/`}>Register Organisation</Link>
+            </Button>
+            <AffiliationRequestDialog 
+              userId={userId}
+              trigger={
+                <Button variant="outline" size="sm">
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Join Organisation
+                </Button>
+              }
+            />
+          </div>
         </CardContent>
       </Card>
     )

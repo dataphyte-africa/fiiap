@@ -7,7 +7,8 @@ import type { FileUploadProgress, UseFileUploadOptions, UseFileUploadReturn } fr
 
 export function useFileUpload(
   bucket: StorageBucket,
-  options: Omit<UseFileUploadOptions, 'bucket'> = {}
+  options: Omit<UseFileUploadOptions, 'bucket'> = {},
+  customPath?: string
 ): UseFileUploadReturn {
   const [files, setFiles] = useState<FileUploadProgress[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -63,6 +64,7 @@ export function useFileUpload(
           const result = await storage.uploadFile(file, bucket, {
             organisationId: options.organisationId,
             userId: options.userId,
+            customPath: customPath,
           });
 
           if (result.success && result.data) {
@@ -125,7 +127,7 @@ export function useFileUpload(
     } finally {
       setIsUploading(false);
     }
-  }, [bucket, files.length, options]);
+  }, [bucket, files, options, customPath]);
 
   const removeFile = useCallback((index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
