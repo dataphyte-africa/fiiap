@@ -80,6 +80,10 @@ export class ServerStorageClient {
           path: data.path,
           publicUrl,
           id: data.id,
+          file_name: file.name,
+          file_size: file.size,
+          file_type: file.type.split('/')[0],
+          mime_type: file.type,
         },
       };
     } catch (error) {

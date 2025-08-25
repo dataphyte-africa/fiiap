@@ -45,7 +45,7 @@ const getStatusColor = (status: string) => {
 }
 
 export function AffiliationRequestsCard({ userId, className }: AffiliationRequestsCardProps) {
-  const { request, loading, error, refreshRequests } = useUserAffiliationRequest(userId)
+  const { data: request, isLoading: loading, error, refetch: refreshRequests } = useUserAffiliationRequest(userId)
 
   if (loading) {
     return (
@@ -76,8 +76,8 @@ export function AffiliationRequestsCard({ userId, className }: AffiliationReques
           </div>
         </CardHeader>
         <CardContent className="text-center py-8">
-          <div className="text-sm text-red-600 mb-4">{error}</div>
-          <Button variant="outline" size="sm" onClick={refreshRequests}>
+          <div className="text-sm text-red-600 mb-4">{error.message}</div>
+          <Button variant="outline" size="sm" onClick={() => refreshRequests()}>
             Try Again
           </Button>
         </CardContent>
