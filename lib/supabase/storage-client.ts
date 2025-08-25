@@ -14,6 +14,10 @@ export interface StorageUploadResult {
     path: string;
     publicUrl?: string;
     id: string;
+    file_name: string;
+    file_size: number;
+    file_type: string;
+    mime_type: string;
   };
   error?: string;
 }
@@ -137,6 +141,10 @@ export class StorageClient {
         data: {
           path: data.path,
           publicUrl,
+          file_name: file.name,
+          file_size: file.size,
+          file_type: file.type.split('/')[0],
+          mime_type: file.type,
           id: data.id,
         },
       };
@@ -262,6 +270,58 @@ export class StorageClient {
         signedUrl: data?.signedUrl || '',
         error: error?.message,
       }));
+  }
+  extractFilePathFromUrl(url: string, bucketName?: string): string | null {
+    if (!url || typeof url !== 'string') {
+      return null;
+    }
+  
+    try {
+      // Handle different Supabase storage URL formats
+      
+      // Format 1: Standard Supabase storage URL
+      // https://[project].supabase.co/storage/v1/object/public/[bucket]/[path]
+      const standardPattern = /\/storage\/v1\/object\/public\/([^\/]+)\/(.+)$/;
+      const standardMatch = url.match(standardPattern);
+      
+      if (standardMatch) {
+        const [, bucket, path] = standardMatch;
+        
+        // If bucketName is provided, verify it matches
+        if (bucketName && bucket !== bucketName) {
+          console.warn(`Bucket mismatch: expected ${bucketName}, got ${bucket}`);
+          return null;
+        }
+        
+        return decodeURIComponent(path);
+      }
+      
+      // Format 2: Custom domain storage URL
+      // https://[custom-domain]/storage/[bucket]/[path]
+      const customPattern = /\/storage\/([^\/]+)\/(.+)$/;
+      const customMatch = url.match(customPattern);
+      
+      if (customMatch) {
+        const [, bucket, path] = customMatch;
+        
+        if (bucketName && bucket !== bucketName) {
+          console.warn(`Bucket mismatch: expected ${bucketName}, got ${bucket}`);
+          return null;
+        }
+        
+        return decodeURIComponent(path);
+      }
+      
+      // Format 3: Direct file path (if URL is already just the path)
+      if (!url.includes('http') && !url.includes('://')) {
+        return url;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('Error extracting file path from URL:', error);
+      return null;
+    }
   }
 }
 

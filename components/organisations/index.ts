@@ -1,6 +1,9 @@
 // Main form component
 export { OrganisationRegistrationForm } from './organisation-registration-form'
 
+// Affiliation components
+export { AffiliationRequestDialog } from './affiliation-request-dialog'
+
 // Step components
 export { BasicInfoStep } from './basic-info-step'
 export { ContactInfoStep } from './contact-info-step'

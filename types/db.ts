@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -22,10 +22,10 @@ export type Database = {
     Functions: {
       graphql: {
         Args: {
+          extensions?: Json
           operationName?: string
           query?: string
           variables?: Json
-          extensions?: Json
         }
         Returns: Json
       }
@@ -167,11 +167,13 @@ export type Database = {
           color_hex: string | null
           created_at: string | null
           description_en: string | null
+          description_es: string | null
           description_fr: string | null
           icon: string | null
           id: string
           is_active: boolean | null
           name_en: string
+          name_es: string | null
           name_fr: string
           sort_order: number | null
         }
@@ -179,11 +181,13 @@ export type Database = {
           color_hex?: string | null
           created_at?: string | null
           description_en?: string | null
+          description_es?: string | null
           description_fr?: string | null
           icon?: string | null
           id?: string
           is_active?: boolean | null
           name_en: string
+          name_es?: string | null
           name_fr: string
           sort_order?: number | null
         }
@@ -191,15 +195,83 @@ export type Database = {
           color_hex?: string | null
           created_at?: string | null
           description_en?: string | null
+          description_es?: string | null
           description_fr?: string | null
           icon?: string | null
           id?: string
           is_active?: boolean | null
           name_en?: string
+          name_es?: string | null
           name_fr?: string
           sort_order?: number | null
         }
         Relationships: []
+      }
+      forum_media: {
+        Row: {
+          alt_text: string | null
+          file_name: string | null
+          file_size: number | null
+          file_type: string | null
+          file_url: string
+          id: string
+          is_featured: boolean | null
+          mime_type: string | null
+          reply_id: string | null
+          sort_order: number | null
+          storage_path: string | null
+          thread_id: string | null
+          uploaded_at: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          alt_text?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_featured?: boolean | null
+          mime_type?: string | null
+          reply_id?: string | null
+          sort_order?: number | null
+          storage_path?: string | null
+          thread_id?: string | null
+          uploaded_at?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          alt_text?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_featured?: boolean | null
+          mime_type?: string | null
+          reply_id?: string | null
+          sort_order?: number | null
+          storage_path?: string | null
+          thread_id?: string | null
+          uploaded_at?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_media_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_media_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       forum_replies: {
         Row: {
@@ -252,6 +324,64 @@ export type Database = {
           },
         ]
       }
+      forum_reply_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          reply_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          reply_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          reply_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_reply_likes_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_thread_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_thread_likes_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       forum_threads: {
         Row: {
           author_id: string
@@ -264,6 +394,8 @@ export type Database = {
           language: Database["public"]["Enums"]["language_enum"] | null
           last_reply_at: string | null
           last_reply_by: string | null
+          like_count: number | null
+          organisation_id: string | null
           reply_count: number | null
           search_vector: unknown | null
           tags: string[] | null
@@ -282,6 +414,8 @@ export type Database = {
           language?: Database["public"]["Enums"]["language_enum"] | null
           last_reply_at?: string | null
           last_reply_by?: string | null
+          like_count?: number | null
+          organisation_id?: string | null
           reply_count?: number | null
           search_vector?: unknown | null
           tags?: string[] | null
@@ -300,6 +434,8 @@ export type Database = {
           language?: Database["public"]["Enums"]["language_enum"] | null
           last_reply_at?: string | null
           last_reply_by?: string | null
+          like_count?: number | null
+          organisation_id?: string | null
           reply_count?: number | null
           search_vector?: unknown | null
           tags?: string[] | null
@@ -313,6 +449,20 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "forum_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_threads_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_threads_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
         ]
@@ -349,6 +499,97 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      organisation_affiliation_requests: {
+        Row: {
+          admin_response: string | null
+          created_at: string | null
+          id: string
+          organisation_id: string
+          request_message: string | null
+          request_status:
+            | Database["public"]["Enums"]["organisation_affiliation_status_enum"]
+            | null
+          requested_at: string | null
+          responded_at: string | null
+          responded_by: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_response?: string | null
+          created_at?: string | null
+          id?: string
+          organisation_id: string
+          request_message?: string | null
+          request_status?:
+            | Database["public"]["Enums"]["organisation_affiliation_status_enum"]
+            | null
+          requested_at?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_response?: string | null
+          created_at?: string | null
+          id?: string
+          organisation_id?: string
+          request_message?: string | null
+          request_status?:
+            | Database["public"]["Enums"]["organisation_affiliation_status_enum"]
+            | null
+          requested_at?: string | null
+          responded_at?: string | null
+          responded_by?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organisation_affiliation_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_affiliation_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_affiliation_requests_responded_by_fkey"
+            columns: ["responded_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_affiliation_requests_responded_by_fkey"
+            columns: ["responded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_affiliation_requests_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_affiliation_requests_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       organisation_collaborations: {
         Row: {
@@ -389,7 +630,21 @@ export type Database = {
             foreignKeyName: "organisation_collaborations_organisation1_id_fkey"
             columns: ["organisation1_id"]
             isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_collaborations_organisation1_id_fkey"
+            columns: ["organisation1_id"]
+            isOneToOne: false
             referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_collaborations_organisation2_id_fkey"
+            columns: ["organisation2_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
             referencedColumns: ["id"]
           },
           {
@@ -413,7 +668,7 @@ export type Database = {
           country: Database["public"]["Enums"]["country_enum"]
           cover_image_url: string | null
           created_at: string | null
-          created_by: string
+          created_by: string | null
           digital_tools: Json | null
           establishment_year: number | null
           featured: boolean | null
@@ -468,7 +723,7 @@ export type Database = {
           country: Database["public"]["Enums"]["country_enum"]
           cover_image_url?: string | null
           created_at?: string | null
-          created_by: string
+          created_by?: string | null
           digital_tools?: Json | null
           establishment_year?: number | null
           featured?: boolean | null
@@ -525,7 +780,7 @@ export type Database = {
           country?: Database["public"]["Enums"]["country_enum"]
           cover_image_url?: string | null
           created_at?: string | null
-          created_by?: string
+          created_by?: string | null
           digital_tools?: Json | null
           establishment_year?: number | null
           featured?: boolean | null
@@ -621,108 +876,20 @@ export type Database = {
         }
         Relationships: []
       }
-      posts: {
-        Row: {
-          author_id: string
-          category: string | null
-          comment_count: number | null
-          content: string
-          created_at: string | null
-          excerpt: string | null
-          featured_image_url: string | null
-          id: string
-          is_featured: boolean | null
-          language: Database["public"]["Enums"]["language_enum"] | null
-          like_count: number | null
-          organisation_id: string | null
-          project_id: string | null
-          published_at: string | null
-          search_vector: unknown | null
-          status: Database["public"]["Enums"]["post_status_enum"] | null
-          tags: string[] | null
-          title: string
-          updated_at: string | null
-          view_count: number | null
-        }
-        Insert: {
-          author_id: string
-          category?: string | null
-          comment_count?: number | null
-          content: string
-          created_at?: string | null
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          language?: Database["public"]["Enums"]["language_enum"] | null
-          like_count?: number | null
-          organisation_id?: string | null
-          project_id?: string | null
-          published_at?: string | null
-          search_vector?: unknown | null
-          status?: Database["public"]["Enums"]["post_status_enum"] | null
-          tags?: string[] | null
-          title: string
-          updated_at?: string | null
-          view_count?: number | null
-        }
-        Update: {
-          author_id?: string
-          category?: string | null
-          comment_count?: number | null
-          content?: string
-          created_at?: string | null
-          excerpt?: string | null
-          featured_image_url?: string | null
-          id?: string
-          is_featured?: boolean | null
-          language?: Database["public"]["Enums"]["language_enum"] | null
-          like_count?: number | null
-          organisation_id?: string | null
-          project_id?: string | null
-          published_at?: string | null
-          search_vector?: unknown | null
-          status?: Database["public"]["Enums"]["post_status_enum"] | null
-          tags?: string[] | null
-          title?: string
-          updated_at?: string | null
-          view_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "posts_organisation_id_fkey"
-            columns: ["organisation_id"]
-            isOneToOne: false
-            referencedRelation: "organisations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       profiles: {
         Row: {
           avatar_url: string | null
           bio: string | null
           created_at: string | null
           department: string | null
-          email_verified: boolean | null
           id: string
           language_preference:
             | Database["public"]["Enums"]["language_enum"]
             | null
-          last_login: string | null
           name: string
           notification_preferences: Json | null
-          onboarding_completed: boolean | null
           organisation_id: string | null
           phone: string | null
-          role: Database["public"]["Enums"]["user_role_enum"] | null
           social_links: Json | null
           timezone: string | null
           title: string | null
@@ -733,18 +900,14 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           department?: string | null
-          email_verified?: boolean | null
           id: string
           language_preference?:
             | Database["public"]["Enums"]["language_enum"]
             | null
-          last_login?: string | null
           name: string
           notification_preferences?: Json | null
-          onboarding_completed?: boolean | null
           organisation_id?: string | null
           phone?: string | null
-          role?: Database["public"]["Enums"]["user_role_enum"] | null
           social_links?: Json | null
           timezone?: string | null
           title?: string | null
@@ -755,24 +918,27 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           department?: string | null
-          email_verified?: boolean | null
           id?: string
           language_preference?:
             | Database["public"]["Enums"]["language_enum"]
             | null
-          last_login?: string | null
           name?: string
           notification_preferences?: Json | null
-          onboarding_completed?: boolean | null
           organisation_id?: string | null
           phone?: string | null
-          role?: Database["public"]["Enums"]["user_role_enum"] | null
           social_links?: Json | null
           timezone?: string | null
           title?: string | null
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "profiles_organisation_id_fkey"
             columns: ["organisation_id"]
@@ -1165,6 +1331,13 @@ export type Database = {
             foreignKeyName: "projects_organisation_id_fkey"
             columns: ["organisation_id"]
             isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
             referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
@@ -1305,9 +1478,122 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admin_organisations: {
+        Row: {
+          address: string | null
+          annual_budget: number | null
+          awards_recognition: string[] | null
+          certifications: string[] | null
+          city: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          country: Database["public"]["Enums"]["country_enum"] | null
+          cover_image_url: string | null
+          created_at: string | null
+          created_by: string | null
+          creator_name: string | null
+          digital_tools: Json | null
+          establishment_year: number | null
+          featured: boolean | null
+          geographic_coverage: string | null
+          has_digital_tools: boolean | null
+          id: string | null
+          languages_spoken:
+            | Database["public"]["Enums"]["language_enum"][]
+            | null
+          legal_status: string | null
+          logo_url: string | null
+          media_platforms: string[] | null
+          media_uploads: Json | null
+          media_work_types: string[] | null
+          mission: string | null
+          name: string | null
+          network_memberships: string[] | null
+          operational_levels: string[] | null
+          other_countries: string[] | null
+          partnerships: string[] | null
+          primary_work_methods:
+            | Database["public"]["Enums"]["work_method_enum"][]
+            | null
+          region: string | null
+          registration_number: string | null
+          search_vector: unknown | null
+          size: Database["public"]["Enums"]["organisation_size_enum"] | null
+          social_links: Json | null
+          staff_count: number | null
+          state_province: string | null
+          status: Database["public"]["Enums"]["organisation_status_enum"] | null
+          target_populations:
+            | Database["public"]["Enums"]["target_population_enum"][]
+            | null
+          tax_exemption_status: boolean | null
+          thematic_focus: string[] | null
+          type: Database["public"]["Enums"]["organisation_type_enum"] | null
+          updated_at: string | null
+          verified: boolean | null
+          vision: string | null
+          volunteer_count: number | null
+          website_url: string | null
+        }
+        Relationships: []
+      }
+      admin_users_view: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          department: string | null
+          email: string | null
+          id: string | null
+          name: string | null
+          organisation_id: string | null
+          organisation_name: string | null
+          role: Database["public"]["Enums"]["user_role_enum"] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      admin_set_user_organisation: {
+        Args: { new_organisation_id: string; target_user_id: string }
+        Returns: Json
+      }
+      admin_set_user_role: {
+        Args: {
+          assigned_by?: string
+          new_role: Database["public"]["Enums"]["user_role_enum"]
+          target_user_id: string
+        }
+        Returns: Json
+      }
+      change_organisation_status: {
+        Args: {
+          admin_notes?: string
+          new_status: Database["public"]["Enums"]["organisation_status_enum"]
+          org_id: string
+        }
+        Returns: boolean
+      }
+      check_user_role: {
+        Args: { target_role?: Database["public"]["Enums"]["user_role_enum"] }
+        Returns: boolean
+      }
       citext: {
         Args: { "": boolean } | { "": string } | { "": unknown }
         Returns: string
@@ -1332,9 +1618,140 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
+      create_forum_reply: {
+        Args: {
+          content_param: string
+          parent_reply_id_param?: string
+          thread_id_param: string
+        }
+        Returns: Json
+      }
       custom_access_token_hook: {
         Args: { event: Json }
         Returns: Json
+      }
+      get_forum_categories_with_counts: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          color_hex: string
+          description_en: string
+          description_es: string
+          description_fr: string
+          icon: string
+          id: string
+          is_active: boolean
+          name_en: string
+          name_es: string
+          name_fr: string
+          organization_count: number
+          post_count: number
+          sort_order: number
+        }[]
+      }
+      get_forum_reply_children: {
+        Args: {
+          limit_param?: number
+          offset_param?: number
+          parent_reply_id_param: string
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          is_solution: boolean
+          like_count: number
+          parent_reply_id: string
+          thread_id: string
+          updated_at: string
+          user_has_liked: boolean
+        }[]
+      }
+      get_forum_thread_replies: {
+        Args: {
+          limit_param?: number
+          offset_param?: number
+          thread_id_param: string
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          child_replies_count: number
+          content: string
+          created_at: string
+          id: string
+          is_solution: boolean
+          like_count: number
+          parent_reply_id: string
+          thread_id: string
+          updated_at: string
+          user_has_liked: boolean
+        }[]
+      }
+      get_forum_thread_with_likes: {
+        Args: { thread_id_param: string }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          category_color_hex: string
+          category_icon: string
+          category_id: string
+          category_name_en: string
+          category_name_es: string
+          category_name_fr: string
+          content: string
+          created_at: string
+          id: string
+          language: string
+          like_count: number
+          media: Json
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          reply_count: number
+          tags: string[]
+          title: string
+          updated_at: string
+          user_has_liked: boolean
+          view_count: number
+        }[]
+      }
+      get_forum_threads_with_likes: {
+        Args: {
+          category_id_param?: string
+          limit_param?: number
+          offset_param?: number
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          category_color_hex: string
+          category_icon: string
+          category_id: string
+          category_name_en: string
+          category_name_es: string
+          category_name_fr: string
+          content: string
+          created_at: string
+          id: string
+          language: string
+          like_count: number
+          media: Json
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          reply_count: number
+          tags: string[]
+          title: string
+          updated_at: string
+          user_has_liked: boolean
+          view_count: number
+        }[]
       }
       get_user_organisation_id: {
         Args: Record<PropertyKey, never>
@@ -1344,6 +1761,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["Enums"]["user_role_enum"]
       }
+      has_user_liked_thread: {
+        Args: { thread_id_param: string }
+        Returns: boolean
+      }
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -1351,6 +1772,10 @@ export type Database = {
       is_cso_rep: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      like_forum_thread: {
+        Args: { thread_id_param: string }
+        Returns: Json
       }
       owns_organisation: {
         Args: { org_id: string }
@@ -1367,6 +1792,11 @@ export type Database = {
         | "in_progress"
         | "achieved"
         | "delayed"
+        | "cancelled"
+      organisation_affiliation_status_enum:
+        | "pending"
+        | "approved"
+        | "rejected"
         | "cancelled"
       organisation_size_enum:
         | "Local"
@@ -1586,6 +2016,12 @@ export const Constants = {
         "in_progress",
         "achieved",
         "delayed",
+        "cancelled",
+      ],
+      organisation_affiliation_status_enum: [
+        "pending",
+        "approved",
+        "rejected",
         "cancelled",
       ],
       organisation_size_enum: [

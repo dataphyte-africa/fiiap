@@ -45,7 +45,7 @@ export const BUCKET_CONFIGS = {
     description: 'Public logos for CSO organisations',
   },
   [STORAGE_BUCKETS.ORGANISATION_MEDIA]: {
-    public: false,
+    public: true,
     allowedFileTypes: [...ALLOWED_FILE_TYPES.IMAGES, ...ALLOWED_FILE_TYPES.DOCUMENTS],
     maxFileSize: FILE_SIZE_LIMITS.DOCUMENT,
     description: 'Private media files for organisations',

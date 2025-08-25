@@ -1,12 +1,11 @@
 
-import { OrganisationSummaryCard } from "@/components/dashboard/organisation-summary-card"
+import { OrganisationStatusCard } from "@/components/dashboard/organisation-status-card"
 import { ProjectSummaryCard } from "@/components/dashboard/project-summary-card"
 import { PostActivityCard } from "@/components/dashboard/post-activity-card"
 import { NotificationsCard } from "@/components/dashboard/notifications-card"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
-import { OrganisationLoadingCard } from "@/components/dashboard/organisation-loading-card"
 import { ProjectLoadingCard } from "@/components/dashboard/project-loading-card"
 
 
@@ -55,8 +54,12 @@ export default async function DashboardPage() {
     redirect("/auth/login")
   }
 
-  
-
+  // Fetch user profile to get organisation_id
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('organisation_id')
+    .eq('id', user.id)
+    .single()
 
   const unreadNotifications = mockNotifications.filter(n => !n.read_at).length
 
@@ -75,20 +78,15 @@ export default async function DashboardPage() {
 
       {/* Dashboard Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-        <Suspense fallback={<OrganisationLoadingCard />}>
-          <OrganisationSummaryCard userId={user.id} />
-        </Suspense>
-        
+        <OrganisationStatusCard userId={user.id} />
         
         <Suspense fallback={<ProjectLoadingCard />}>
           <ProjectSummaryCard userId={user.id} />
         </Suspense>
         
-        <PostActivityCard
-         
-          totalPosts={8}
-          loading={false}
-        />
+        {profile?.organisation_id && (
+          <PostActivityCard organisationId={profile.organisation_id} />
+        )}
         
         <NotificationsCard
           notifications={mockNotifications}

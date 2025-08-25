@@ -132,12 +132,12 @@ export interface Profile { /* ... */ }
 **Estimated Time**: 1 day
 
 #### Checklist:
-- [ ] Install i18n libraries (next-i18next or similar)
-- [ ] Create translation files structure
-- [ ] Implement language switching
-- [ ] Set up translation helpers
-- [ ] Test English/French switching
-- [ ] Configure fallback languages
+- [x] Install i18n libraries (next-i18next or similar)
+- [x] Create translation files structure
+- [x] Implement language switching
+- [x] Set up translation helpers
+- [x] Test English/French switching
+- [x] Configure fallback languages
 
 ---
 
@@ -151,8 +151,8 @@ export interface Profile { /* ... */ }
 **Estimated Time**: 2 days
 
 #### Checklist:
-- [ ] Create login page with form validation
-- [ ] Create signup page with terms acceptance
+- [x] Create login page with form validation
+- [x] Create signup page with terms acceptance
 - [ ] Implement forgot password flow
 - [ ] Create update password functionality
 - [ ] Add email confirmation handling
@@ -206,7 +206,7 @@ export interface Profile { /* ... */ }
 - [x] Create organisation registration form
 - [x] Implement organisation profile editing
 - [x] Add organisation logo upload
-- [x] Create organisation approval workflow
+- [] Create organisation approval workflow
 - [ ] Implement organisation search
 - [ ] Add organisation status management
 - [ ] Test organisation RLS policies
@@ -458,8 +458,8 @@ export interface Profile { /* ... */ }
 **Estimated Time**: 2 days
 
 #### Checklist:
-- [ ] Implement dynamic translation interface
-- [ ] Create translation management system
+- [x] Implement dynamic translation interface
+- [x] Create translation management system
 - [ ] Add translator role and permissions
 - [ ] Implement translation approval workflow
 - [ ] Create translation progress tracking

@@ -303,7 +303,7 @@ export class OrganisationService {
       .select(`
         *,
         projects:projects!organisation_id(count),
-        posts:posts!organisation_id(count)
+        forum_threads:forum_threads!organisation_id(count)
       `)
       .eq('status', 'active')
 
@@ -357,9 +357,9 @@ export class OrganisationService {
     const transformedData = (data || []).map(org => ({
       ...org,
       projects_count: Array.isArray(org.projects) ? org.projects.length : 0,
-      posts_count: Array.isArray(org.posts) ? org.posts.length : 0,
+      posts_count: Array.isArray(org.forum_threads) ? org.forum_threads.length : 0,
       projects: undefined, // Remove the nested data
-      posts: undefined, // Remove the nested data
+      forum_threads: undefined, // Remove the nested data
     }))
 
     const totalCount = count || 0

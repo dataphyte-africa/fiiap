@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../ui/button'
@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
+import LoginButton from './login-button'
 
 
 
@@ -34,6 +35,10 @@ export const Header = async () => {
       {
          label: t('faqs'),
          href: "/faqs"
+      },
+      {
+         label: t('posts'),
+         href: "/posts"
       }
    ]
   return (
@@ -70,9 +75,9 @@ export const Header = async () => {
                <SelectItem value="es" > 🇪🇸 ES</SelectItem>
             </SelectContent>
          </Select>
-         <Button variant="default" asChild>
-            <Link href="/auth/login">Login</Link>
-         </Button>
+         <Suspense>
+            <LoginButton />
+         </Suspense>
         </div>
     </div>
   )
