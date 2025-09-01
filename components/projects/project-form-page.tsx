@@ -28,14 +28,13 @@ import {
     transformProjectDataToInsert,
     transformProjectMediaDataToInsert,
     transformProjectEventDataToInsert,
-    transformProjectMilestoneDataToInsert,
 } from './project-form-schemas';
 import { ProjectBasicInfoSection } from './project-basic-info-section';
 import { ProjectMediaSection } from './project-media-section';
 import { ProjectEventsSection } from './project-events-section';
 import { ProjectMilestonesSection } from './project-milestones-section';
 import { createClient } from '@/lib/supabase/client';
-import { getProjectById, updateProjectMedia } from '@/lib/data/projects';
+import { getProjectById, updateProjectMedia, updateProjectMilestones } from '@/lib/data/projects';
 import { storage } from '@/lib/supabase/storage-client';
 import { STORAGE_BUCKETS } from '@/lib/supabase/storage-config';
 
@@ -328,7 +327,7 @@ export function ProjectFormPage({
             // Save events
             if (data.events && data.events.length > 0) {
                 // Delete existing events if editing
-                if (isEditing && projectId) {
+                if (projectId) {
                     await supabase
                         .from('project_events')
                         .delete()
@@ -336,10 +335,7 @@ export function ProjectFormPage({
                 }
 
                 const eventsData = data.events.map((item) =>
-                    transformProjectEventDataToInsert({
-                        ...item,
-                        project_id: projectId,
-                    })
+                    transformProjectEventDataToInsert(item, projectId)
                 );
                 const { error: eventsError } = await supabase
                     .from('project_events')
@@ -350,23 +346,9 @@ export function ProjectFormPage({
             // Save milestones
             if (data.milestones && data.milestones.length > 0) {
                 // Delete existing milestones if editing
-                if (isEditing && projectId) {
-                    await supabase
-                        .from('project_milestones')
-                        .delete()
-                        .eq('project_id', projectId);
+                if (projectId) {
+                    await updateProjectMilestones(projectId, data.milestones);
                 }
-
-                const milestonesData = data.milestones.map((item) =>
-                    transformProjectMilestoneDataToInsert(
-                        { ...item, project_id: projectId },
-                        userId
-                    )
-                );
-                const { error: milestonesError } = await supabase
-                    .from('project_milestones')
-                    .insert(milestonesData);
-                if (milestonesError) throw milestonesError;
             }
 
             // Delete cleanup files
@@ -549,6 +531,7 @@ export function ProjectFormPage({
                                 <ProjectMilestonesSection
                                     isEditing={isEditing}
                                     projectId={projectId}
+                                    userId={userId}
                                 />
                             </TabsContent>
                         </Tabs>

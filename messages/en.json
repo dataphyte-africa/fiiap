@@ -6,7 +6,11 @@
             "contact": "Contact",
             "faqs": "FAQs",
             "organisations": "Organisations",
-            "posts": "Posts"
+            "posts": "Posts",
+            "blogs": "Blogs",
+            "events": "Events",
+            "resources": "Resources",
+            "courses": "Courses"
         },
         "hero": {
             "title": "Connect. Collaborate. Grow:",
@@ -246,6 +250,162 @@
                 "title": "Submitting your registration...",
                 "description": "Please wait while we process your information."
             }
+        }
+    },
+    "resources": {
+        "page": {
+            "title": "Resource Library",
+            "description": "Access toolkits, research papers, guides, templates, and educational materials from CSOs across West Africa."
+        },
+        "hero": {
+            "title": "Resource Library",
+            "description": "Access toolkits, research papers, guides, templates, and educational materials from CSOs across West Africa."
+        },
+        "featured": {
+            "title": "Featured Resources",
+            "description": "Discover essential toolkits, research papers, and educational materials curated by our community."
+        },
+        "all": {
+            "title": "All Resources",
+            "description": "Explore our comprehensive collection of resources"
+        },
+        "search": {
+            "placeholder": "Search resources by title, description, author, or tags..."
+        },
+        "filters": {
+            "type": "Resource Type"
+        },
+        "results": {
+            "showing": "Showing {count} of {total} resources",
+            "showingFiltered": "Showing {count} of {total} resources for",
+            "ofType": "of type"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the resources. Please try again later."
+        }
+    },
+    "events": {
+        "page": {
+            "title": "Events & Activities",
+            "description": "Discover upcoming conferences, workshops, webinars, and community events from CSOs across West Africa."
+        },
+        "hero": {
+            "title": "Events & Activities",
+            "description": "Discover upcoming conferences, workshops, webinars, and community events from CSOs across West Africa."
+        },
+        "featured": {
+            "title": "Featured Events",
+            "description": "Don't miss these highlighted events and activities from our community partners."
+        },
+        "upcoming": {
+            "title": "Upcoming Events",
+            "description": "Explore upcoming events and activities"
+        },
+        "results": {
+            "showing": "Showing {count} of {total} events",
+            "showingFiltered": "Showing {count} of {total} events for",
+            "inCategory": "in",
+            "virtualOnly": "(virtual events only)",
+            "upcomingEvents": "Showing {count} of {total} upcoming events"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the events. Please try again later."
+        }
+    },
+    "courses": {
+        "page": {
+            "title": "Online Courses",
+            "description": "Access professional development courses, training programs, and educational content from FIAP and partner organizations."
+        },
+        "hero": {
+            "title": "Online Courses",
+            "description": "Access professional development courses, training programs, and educational content from FIAP and partner organizations."
+        },
+        "featured": {
+            "title": "Featured Courses",
+            "description": "Discover our most popular and recommended online courses and training programs."
+        },
+        "all": {
+            "title": "All Courses",
+            "description": "Explore our comprehensive collection of online courses"
+        },
+        "search": {
+            "placeholder": "Search courses by title, description, instructor, or tags..."
+        },
+        "filters": {
+            "difficulty": "Difficulty Level"
+        },
+        "results": {
+            "showing": "Showing {count} of {total} courses",
+            "showingFiltered": "Showing {count} of {total} courses for",
+            "atLevel": "at {level} level"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the courses. Please try again later."
+        }
+    },
+    "blogs": {
+        "page": {
+            "title": "Stories from Our Community",
+            "description": "Discover inspiring stories, insights, and opportunities shared by CSOs across West Africa."
+        },
+        "hero": {
+            "title": "Features Stories from community",
+            "description": "Discover inspiring stories, success stories, and opportunities shared by CSOs across West Africa."
+        },
+        "featured": {
+            "title": "Featured Stories",
+            "description": "Discover inspiring stories, insights, and opportunities shared by CSOs across West Africa."
+        },
+        "latest": {
+            "title": "Latest Stories",
+            "description": "Explore news from FIAP"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the blog posts. Please try again later."
+        }
+    },
+    "posts": {
+        "page": {
+            "title": "Community Posts",
+            "description": "Join the conversation with posts from CSOs across West Africa"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "Failed to fetch posts. Please try again.",
+            "tryAgain": "Try Again"
+        },
+        "empty": {
+            "title": "No posts found",
+            "descriptionAll": "No posts available yet.",
+            "descriptionCategory": "No posts in this category yet.",
+            "refresh": "Refresh"
+        },
+        "loadMore": "Load More",
+        "loading": "Loading...",
+        "pagination": {
+            "showing": "Showing {count} of {total} posts",
+            "inCategory": "in selected category"
         }
     }
 }

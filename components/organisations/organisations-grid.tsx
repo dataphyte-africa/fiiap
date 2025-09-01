@@ -25,7 +25,7 @@ interface Organisation {
 }
 
 interface OrganisationResult {
-  data: Organisation[];
+  data: (Partial<Organisation> & { projects_count: number; posts_count: number; blog_posts_count: number })[];
   count: number;
   totalPages: number;
   currentPage: number;
@@ -69,7 +69,7 @@ export function OrganisationsGrid() {
           limit: 12,
         };
 
-        const data = await organisationService.getActiveOrganisations(filters);
+        const data = await organisationService.getActiveOrganisationsRPC(filters);
         setResult(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch organisations');
@@ -104,13 +104,14 @@ export function OrganisationsGrid() {
   const sortValue = `${searchParams.get('sortBy') || 'created_at'}-${searchParams.get('sortOrder') || 'desc'}`;
 
   // Helper function to format organisation data for OrgCard
-  const formatOrganisationForCard = (org: Organisation) => ({
-    id: org.id,
+  const formatOrganisationForCard = (org: Partial<Organisation> & { projects_count: number; posts_count: number; blog_posts_count: number }) => ({
+    id: org.id || '',
     logo: org.logo_url || '/landing/hfai-logo.png', // Fallback logo
-    name: org.name,
-    location: [org.city, org.region, org.country].filter(Boolean).join(', '),
-    projects: Math.floor(Math.random() * 100), // Mock data - replace with real data
-    blogs: Math.floor(Math.random() * 50), // Mock data - replace with real data
+    name: org.name || '',
+    posts: org.posts_count,
+    location: [org.city || '', org.region || '', org.country || ''].filter(Boolean).join(', '),
+    projects: org.projects_count, // Mock data - replace with real data
+    blogs: org.blog_posts_count, // Mock data - replace with real data
     description: org.mission || org.vision || 'No description available', // Mock description - replace with real data
   });
 

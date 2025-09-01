@@ -6,7 +6,11 @@
             "contact": "Contact",
             "faqs": "FAQs",
             "organisations": "Organisations",
-            "posts": "Publications"
+            "posts": "Publications",
+            "blogs": "Blogs",
+            "events": "Événements",
+            "resources": "Ressources",
+            "courses": "Cours"
         },
         "hero": {
             "title": "Connecter. Collaborer. Grandir :",
@@ -246,6 +250,162 @@
                 "title": "Soumission de votre inscription...",
                 "description": "Veuillez patienter pendant que nous traitons vos informations."
             }
+        }
+    },
+    "resources": {
+        "page": {
+            "title": "Bibliothèque de Ressources",
+            "description": "Accédez aux boîtes à outils, documents de recherche, guides, modèles et matériels éducatifs des OSC à travers l'Afrique de l'Ouest."
+        },
+        "hero": {
+            "title": "Bibliothèque de Ressources",
+            "description": "Accédez aux boîtes à outils, documents de recherche, guides, modèles et matériels éducatifs des OSC à travers l'Afrique de l'Ouest."
+        },
+        "featured": {
+            "title": "Ressources en Vedette",
+            "description": "Découvrez les boîtes à outils essentielles, documents de recherche et matériels éducatifs sélectionnés par notre communauté."
+        },
+        "all": {
+            "title": "Toutes les Ressources",
+            "description": "Explorez notre collection complète de ressources"
+        },
+        "search": {
+            "placeholder": "Rechercher des ressources par titre, description, auteur ou tags..."
+        },
+        "filters": {
+            "type": "Type de Ressource"
+        },
+        "results": {
+            "showing": "Affichage de {count} sur {total} ressources",
+            "showingFiltered": "Affichage de {count} sur {total} ressources pour",
+            "ofType": "de type"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Nous n'avons pas pu charger les ressources. Veuillez réessayer plus tard."
+        }
+    },
+    "events": {
+        "page": {
+            "title": "Événements et Activités",
+            "description": "Découvrez les conférences à venir, ateliers, webinaires et événements communautaires des OSC à travers l'Afrique de l'Ouest."
+        },
+        "hero": {
+            "title": "Événements et Activités",
+            "description": "Découvrez les conférences à venir, ateliers, webinaires et événements communautaires des OSC à travers l'Afrique de l'Ouest."
+        },
+        "featured": {
+            "title": "Événements en Vedette",
+            "description": "Ne manquez pas ces événements et activités mis en avant par nos partenaires communautaires."
+        },
+        "upcoming": {
+            "title": "Événements à Venir",
+            "description": "Explorez les événements et activités à venir"
+        },
+        "results": {
+            "showing": "Affichage de {count} sur {total} événements",
+            "showingFiltered": "Affichage de {count} sur {total} événements pour",
+            "inCategory": "dans",
+            "virtualOnly": "(événements virtuels uniquement)",
+            "upcomingEvents": "Affichage de {count} sur {total} événements à venir"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Nous n'avons pas pu charger les événements. Veuillez réessayer plus tard."
+        }
+    },
+    "courses": {
+        "page": {
+            "title": "Cours en Ligne",
+            "description": "Accédez aux cours de développement professionnel, programmes de formation et contenu éducatif de FIAP et organisations partenaires."
+        },
+        "hero": {
+            "title": "Cours en Ligne",
+            "description": "Accédez aux cours de développement professionnel, programmes de formation et contenu éducatif de FIAP et organisations partenaires."
+        },
+        "featured": {
+            "title": "Cours en Vedette",
+            "description": "Découvrez nos cours en ligne et programmes de formation les plus populaires et recommandés."
+        },
+        "all": {
+            "title": "Tous les Cours",
+            "description": "Explorez notre collection complète de cours en ligne"
+        },
+        "search": {
+            "placeholder": "Rechercher des cours par titre, description, instructeur ou tags..."
+        },
+        "filters": {
+            "difficulty": "Niveau de Difficulté"
+        },
+        "results": {
+            "showing": "Affichage de {count} sur {total} cours",
+            "showingFiltered": "Affichage de {count} sur {total} cours pour",
+            "atLevel": "au niveau {level}"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Nous n'avons pas pu charger les cours. Veuillez réessayer plus tard."
+        }
+    },
+    "blogs": {
+        "page": {
+            "title": "Histoires de Notre Communauté",
+            "description": "Découvrez des histoires inspirantes, perspectives et opportunités partagées par les OSC à travers l'Afrique de l'Ouest."
+        },
+        "hero": {
+            "title": "Histoires en Vedette de la communauté",
+            "description": "Découvrez des histoires inspirantes, histoires de succès et opportunités partagées par les OSC à travers l'Afrique de l'Ouest."
+        },
+        "featured": {
+            "title": "Histoires en Vedette",
+            "description": "Découvrez des histoires inspirantes, perspectives et opportunités partagées par les OSC à travers l'Afrique de l'Ouest."
+        },
+        "latest": {
+            "title": "Dernières Histoires",
+            "description": "Explorez les actualités de FIAP"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Nous n'avons pas pu charger les articles de blog. Veuillez réessayer plus tard."
+        }
+    },
+    "posts": {
+        "page": {
+            "title": "Publications Communautaires",
+            "description": "Rejoignez la conversation avec les publications des OSC à travers l'Afrique de l'Ouest"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Échec de récupération des publications. Veuillez réessayer.",
+            "tryAgain": "Réessayer"
+        },
+        "empty": {
+            "title": "Aucune publication trouvée",
+            "descriptionAll": "Aucune publication disponible pour le moment.",
+            "descriptionCategory": "Aucune publication dans cette catégorie pour le moment.",
+            "refresh": "Actualiser"
+        },
+        "loadMore": "Charger Plus",
+        "loading": "Chargement...",
+        "pagination": {
+            "showing": "Affichage de {count} sur {total} publications",
+            "inCategory": "dans la catégorie sélectionnée"
         }
     }
 }

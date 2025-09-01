@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import React from 'react'
 import { Button } from '../ui/button';
-import { Link } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import Link from 'next/link';
 
 export default async function LoginButton() {
    const supabase = await createClient();
@@ -10,11 +10,13 @@ export default async function LoginButton() {
    const user = data?.claims
    
    return user ? (
-      <Avatar>
+      <Avatar asChild>
+         <Link href="/dashboard">
          <AvatarImage src={user.user_metadata.avatar_url} />
          <AvatarFallback>
             {user.user_metadata.displayName?.charAt(0)}
          </AvatarFallback>
+         </Link>
       </Avatar>
    ) : (
       <Button variant="default" asChild>

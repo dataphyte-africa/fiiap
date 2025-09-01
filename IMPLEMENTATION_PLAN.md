@@ -241,16 +241,15 @@ export interface Profile { /* ... */ }
 - [ ] Create project editing interface
 - [ ] Implement project status workflow
 - [ ] Add project deletion with confirmations
-- [ ] Test project RLS policies
-- [ ] Add project ownership verification
+- [x] Test project RLS policies
 
 ### ✅ **Task 3.2: Project Viewing & Discovery**
 **Estimated Time**: 3 days
 
 #### Checklist:
-- [ ] Create project detail page
-- [ ] Implement project listing with filters
-- [ ] Add search functionality
+- [x] Create project detail page
+- [x] Implement project listing with filters
+- [x] Add search functionality
 - [ ] Create project cards/grid layout
 - [ ] Implement pagination
 - [ ] Add sort options (date, status, sector)
@@ -315,20 +314,7 @@ export interface Profile { /* ... */ }
 
 ---
 
-## Week 9-10: Advanced Project Features
 
-### ✅ **Task 3.7: Project Analytics & Reporting**
-**Estimated Time**: 2 days
-
-#### Checklist:
-- [ ] Implement project view tracking
-- [ ] Create project analytics dashboard
-- [ ] Add impact metrics visualization
-- [ ] Create project reports generation
-- [ ] Implement export functionality
-- [ ] Add performance insights
-- [ ] Create funder reports
-- [ ] Test analytics data privacy
 
 ### ✅ **Task 3.8: Project Search & Filtering**
 **Estimated Time**: 2 days

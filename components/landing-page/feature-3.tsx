@@ -43,12 +43,12 @@ export const Feature3 = async () => {
           {organisations.map((org) => (
             <OrgCard
               key={org.id}
-              id={org.id}
+              id={org.id || ''}
               logo={org.logo_url || undefined}
-              name={org.name}
-              location={[org.city, org.region, org.country].filter(Boolean).join(', ') || org.country}
+              name={org.name || ''}
+              location={[org.city || '', org.region || '', org.country || ''].filter(Boolean).join(', ') || org.country || ''}
               projects={org.projects_count || 0}
-              blogs={org.posts_count || 0}
+              blogs={org.blog_posts_count || 0}
               description={org.mission || org.vision || 'No description available'}
               projectsLabel={t('projects')}
               blogsLabel={t('blogs')}

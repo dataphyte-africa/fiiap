@@ -6,28 +6,30 @@ import {
     LucideBookOpen,
     LucideBriefcaseBusiness,
     LucideBuilding,
-    LucideHelpCircle,
+    LucideGraduationCap,
     LucideIcon,
     LucideImagePlus,
+    LucideShieldCheck,
     LucideUserPlus,
     LucideUsers,
 } from 'lucide-react';
-
+import Link from 'next/link';
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
+import { NavBarSecondary } from '@/components/nav-projects';
 import { NavUser } from '@/components/nav-user';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarMenuButton,
+   
     SidebarRail,
 } from '@/components/ui/sidebar';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { Database } from '@/types/db';
+import LanguageSwitcher from './landing-page/langauage-switcher';
 type NavItem = {
     title: string;
     url: string;
@@ -48,7 +50,7 @@ const defaultNavItems: NavItem[] = [
         icon: LucideBuilding,
     },
     {
-        title: 'Projects',
+        title: 'Manage Projects',
         url: '/dashboard/projects',
         icon: LucideBriefcaseBusiness,
         // items: [
@@ -67,23 +69,17 @@ const defaultNavItems: NavItem[] = [
         // ],
     },
     {
-        title: 'Posts',
+        title: 'Manage Posts',
         url: '/dashboard/posts',
         icon: LucideImagePlus,
     },
-];
-const defaultProjects: NavItem[] = [
     {
-        title: 'Help Support',
-        url: '#',
-        icon: LucideHelpCircle,
-    },
-    {
-        title: 'Blogs',
-        url: '#',
+        title: 'Manage Blogs',
+        url: '/dashboard/blogs',
         icon: LucideBookOpen,
     },
 ];
+
 const adminNavItems = [
   {
       title: 'Manage Organisations',
@@ -96,16 +92,37 @@ const adminNavItems = [
       icon: LucideUsers,
   },
   {
+      title: 'Manage Blog Posts',
+      url: '/admin/blogs',
+      icon: LucideBookOpen,
+  },
+  {
       title: 'Manage Posts',
       url: '/admin/posts',
       icon: LucideImagePlus,
+  },
+  {
+      title: "Manage Resource Library",
+      url: '/admin/resource-library',
+      icon: LucideBookOpen,
+  },
+  {
+      title: "Manage Online Courses",
+      url: '/admin/online-courses',
+      icon:  LucideGraduationCap,
+  },
+  {
+      title: "Manage Events",
+      url: '/admin/events',
+      icon: LucideUsers,
   },
 ];  
 
 export function AppSidebar({
     user,
     navItems = defaultNavItems,
-    projects = defaultProjects,
+    // projects = defaultProjects,
+    cookieLang,
     ...props
 }: React.ComponentProps<typeof Sidebar> & {
     user: {
@@ -117,6 +134,7 @@ export function AppSidebar({
     };
     navItems?: NavItem[];
     projects?: NavItem[];
+    cookieLang: string;
 }) {
     const pathname = usePathname();
     const isAdmin = user.isAdmin && pathname.includes('/admin');
@@ -140,26 +158,46 @@ export function AppSidebar({
         }
         return items;
     }, [pathname, navItems, isAdmin, user.role]);
+    const navsecondary = useMemo(() => {
+        const projects = [];
+        if (user.isAdmin && !pathname.includes('/admin')) {
+            projects.push({
+                title: "Goto Admin",
+                url: "/admin",
+                icon: LucideShieldCheck,
+            });
+        }
+        if(user.isAdmin && pathname.includes('/admin')) {
+            projects.push({
+                title: "Goto Dashboard",
+                url: "/dashboard",
+                icon: LayoutDashboard,
+            });
+        }
+        return projects;
+    }, [pathname, user.isAdmin]);
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <SidebarMenuButton
-                    size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                <div
+                    className="flex flex-row items-center justify-between"
                 >
-                    <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                        <Image
+                    <div className="text-sidebar-primary-foreground flex aspect-auto size-12 items-center justify-center rounded-lg">
+                        <Link href="/"> <Image
                             src="/logo.png"
                             alt="logo"
-                            width={32}
-                            height={32}
-                        />
+                            // className='w-full h-full'
+                            width={250}
+                            height={90}
+                        /></Link>
+                    
                     </div>
-                </SidebarMenuButton>
+                    <LanguageSwitcher cookieLang={cookieLang} />
+                </div>
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={navmain} />
-                <NavProjects projects={projects} />
+                <NavBarSecondary projects={navsecondary} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />

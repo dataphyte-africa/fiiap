@@ -9,6 +9,7 @@ import {
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import BreadCrumb from '@/components/bread-crumb';
+import { cookies } from 'next/headers';
 
 
 export default async function Page({
@@ -17,7 +18,8 @@ export default async function Page({
     children: React.ReactNode;
 }) {
     const supabase = await createClient();
-
+    const cookieStore = await cookies();
+    const cookieLang = cookieStore.get('NEXT_LOCALE')?.value || 'en';
     const { data, error } = await supabase.auth.getClaims();
     const role = data?.claims.user_role;
     if (error || role !== 'admin') {
@@ -33,6 +35,7 @@ export default async function Page({
                     avatar: data?.claims.user_metadata?.avatar_url,
                     isAdmin: true,
                 }}
+                cookieLang={cookieLang}
               
                
             />

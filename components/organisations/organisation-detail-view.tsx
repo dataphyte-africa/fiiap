@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Database } from "@/types/db";
+import { OrganisationProjectsList } from "./organisation-projects-list";
 
 type Organisation = Database['public']['Tables']['organisations']['Row'];
 
@@ -46,7 +47,6 @@ export function OrganisationDetailView({ organisation }: OrganisationDetailViewP
     { id: "documents", label: t('tabs.documents'), icon: FileText },
   ];
 
-  console.log(organisation.cover_image_url);
   return (
     <div className="min-h-screen bg-gray-50 w-full">
       {/* Header Section */}
@@ -329,12 +329,9 @@ function StoriesTab({ organisation }: { organisation: Organisation }) {
 }
 
 function ProjectsTab({ organisation }: { organisation: Organisation }) {
-  const t = useTranslations('organisations.detail.projects');
-  
   return (
-    <div className="bg-white rounded-lg shadow-sm border p-6">
-      <h2 className="text-xl font-semibold mb-4">{t('title')}</h2>
-      <p className="text-gray-500">{t('placeholder', { organisationName: organisation.name })}</p>
+    <div className="space-y-6">
+      <OrganisationProjectsList organisationId={organisation.id} />
     </div>
   );
 }

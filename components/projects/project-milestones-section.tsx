@@ -11,36 +11,43 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { PlusIcon, X, Save, Target, Calendar, CheckCircle, Clock, AlertCircle, XCircle, Trash2 } from 'lucide-react';
-import { ProjectMilestoneFormData, ProjectFullFormData, MILESTONE_STATUS_OPTIONS } from './project-form-schemas';
+import { ProjectMilestoneFormData, ProjectFullFormData, MILESTONE_STATUS_OPTIONS, transformProjectMilestoneDataToInsert  } from './project-form-schemas';
 import { useMutation } from '@tanstack/react-query';
+import { updateProjectMilestones } from '@/lib/data/projects';
+import { toast } from 'sonner';
 
 interface ProjectMilestonesSectionProps {
   onSave?: (data: ProjectMilestoneFormData[]) => Promise<void>;
   isEditing?: boolean;
-  projectId?: string;
+  projectId: string;
+  userId: string;
 }
 
-export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestonesSectionProps) {
+export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestonesSectionProps) {
   const {
     control,
     getValues,
+    register,
+    watch,
   } = useFormContext<ProjectFullFormData>();
 
-  const { fields, append, remove, update } = useFieldArray({
+  const {  append, remove, update } = useFieldArray({
     control,
     name: 'milestones',
   });
+
+  const fields = watch('milestones') || [];
 
   const [expandedMilestones, setExpandedMilestones] = useState<{ [key: number]: boolean }>({});
 
   const saveMilestonesMutation = useMutation({
     mutationFn: async (data: ProjectMilestoneFormData[]) => {
-      if (onSave) {
-        await onSave(data);
-      }
+      const dataToInsert = data.map((milestone) => transformProjectMilestoneDataToInsert(milestone, userId, projectId));
+      await updateProjectMilestones(projectId, dataToInsert);
     },
     onSuccess: () => {
       console.log('Milestones saved successfully');
+      toast.success('Milestones saved successfully');
     },
     onError: (error) => {
       console.error('Error saving milestones:', error);
@@ -152,7 +159,6 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
         <CardTitle className="text-lg flex items-center gap-2">
           <Target className="h-5 w-5" />
           Project Milestones
-          {onSave && (
             <Button
               type="button"
               variant="outline"
@@ -164,7 +170,6 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
               <Save className="h-4 w-4 mr-2" />
               {saveMilestonesMutation.isPending ? 'Saving...' : 'Save Section'}
             </Button>
-          )}
         </CardTitle>
         <CardDescription>
           Track key milestones, deliverables, and progress markers for your project
@@ -186,7 +191,7 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
         ) : (
           <div className="space-y-4">
             {fields.map((field, index) => (
-              <Card key={field.id} className="border-muted">
+              <Card key={`${field.title}-${index}`} className="border-muted">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -258,10 +263,7 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                           <Label htmlFor={`milestone-title-${index}`}>Milestone Title *</Label>
                           <Input
                             id={`milestone-title-${index}`}
-                            value={field.title}
-                            onChange={(e) => {
-                              update(index, { ...field, title: e.target.value });
-                            }}
+                            {...register(`milestones.${index}.title`)}
                             placeholder="Enter milestone title"
                           />
                         </div>
@@ -269,18 +271,18 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                         <div>
                           <Label htmlFor={`milestone-status-${index}`}>Status</Label>
                           <Select
-                            value={field.status}
+                            defaultValue={field.status}
+                            {...register(`milestones.${index}.status`)}
                             onValueChange={(value) => {
-                              const updatedField = { ...field, status: value as ProjectMilestoneFormData['status'] };
                               // Auto-update progress when status changes
                               if (value === 'achieved') {
-                                updatedField.progress_percentage = 100;
-                                updatedField.completion_date = new Date().toISOString().split('T')[0];
+                                register(`milestones.${index}.progress_percentage`).onChange({ target: { value: 100 } });
+                                register(`milestones.${index}.completion_date`).onChange({ target: { value: new Date().toISOString().split('T')[0] } });
                               } else if (value === 'planned') {
-                                updatedField.progress_percentage = 0;
-                                updatedField.completion_date = '';
+                                register(`milestones.${index}.progress_percentage`).onChange({ target: { value: 0 } });
+                                register(`milestones.${index}.completion_date`).onChange({ target: { value: '' } });
                               }
-                              update(index, updatedField);
+                              register(`milestones.${index}.status`).onChange({ target: { value: value as ProjectMilestoneFormData['status'] } });
                             }}
                           >
                             <SelectTrigger>
@@ -301,10 +303,7 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                           <Input
                             id={`milestone-due-date-${index}`}
                             type="date"
-                            value={field.due_date || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, due_date: e.target.value });
-                            }}
+                            {...register(`milestones.${index}.due_date`)}
                           />
                         </div>
 
@@ -313,10 +312,8 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                           <Input
                             id={`milestone-completion-date-${index}`}
                             type="date"
-                            value={field.completion_date || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, completion_date: e.target.value });
-                            }}
+                            {...register(`milestones.${index}.completion_date`)}
+                            
                           />
                         </div>
                       </div>
@@ -326,10 +323,7 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                         <Label htmlFor={`milestone-description-${index}`}>Description</Label>
                         <Textarea
                           id={`milestone-description-${index}`}
-                          value={field.description || ''}
-                          onChange={(e) => {
-                            update(index, { ...field, description: e.target.value });
-                          }}
+                          {...register(`milestones.${index}.description`)}
                           placeholder="Describe this milestone"
                           rows={3}
                         />
@@ -344,12 +338,8 @@ export function ProjectMilestonesSection({ onSave, projectId }: ProjectMilestone
                             type="number"
                             min="0"
                             max="100"
-                            value={field.progress_percentage}
-                            onChange={(e) => {
-                              const value = parseInt(e.target.value) || 0;
-                              const clampedValue = Math.max(0, Math.min(100, value));
-                              update(index, { ...field, progress_percentage: clampedValue });
-                            }}
+                            {...register(`milestones.${index}.progress_percentage`)}
+                            
                             className="w-24"
                           />
                           <Progress value={field.progress_percentage} className="flex-1" />

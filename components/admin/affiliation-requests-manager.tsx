@@ -59,6 +59,7 @@ export function AffiliationRequestsManager({ organisationId, adminUserId }: Affi
 
   useEffect(() => {
     fetchRequests()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organisationId])
 
   const fetchRequests = async () => {

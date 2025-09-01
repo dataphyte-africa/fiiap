@@ -242,7 +242,7 @@ export class OrganisationService {
   /**
    * Get all active organisations (for public listing) with posts and projects counts
    */
-  async getActiveOrganisations(filters?: {
+  async getActiveOrganisationsRPC(filters?: {
     name?: string
     countries?: string[]
     thematic_areas?: string[]
@@ -254,11 +254,11 @@ export class OrganisationService {
     sortBy?: 'name' | 'created_at' | 'updated_at'
     sortOrder?: 'asc' | 'desc'
     page?: number
-  }): Promise<{ data: (Organisation & { projects_count: number; posts_count: number })[], count: number; totalPages: number; currentPage: number; hasNextPage: boolean; hasPrevPage: boolean }> {
+  }): Promise<{ data: (Organisation & { projects_count: number; posts_count: number; blog_posts_count: number })[], count: number; totalPages: number; currentPage: number; hasNextPage: boolean; hasPrevPage: boolean }> {
     const limit = filters?.limit || 12
     const page = filters?.page || 1
     const offset = (page - 1) * limit
-
+    //
     // First, get the total count for pagination
     let countQuery = this.supabase
       .from('organisations')
@@ -303,7 +303,8 @@ export class OrganisationService {
       .select(`
         *,
         projects:projects!organisation_id(count),
-        forum_threads:forum_threads!organisation_id(count)
+        forum_threads:forum_threads!organisation_id(count),
+        blog_posts:blog_posts!organisation_id(count)
       `)
       .eq('status', 'active')
 
@@ -352,21 +353,22 @@ export class OrganisationService {
     if (error) {
       throw new Error(`Failed to fetch organisations: ${error.message}`)
     }
-
+    console.log(data, "😀 data")
     // Transform the data to include counts
     const transformedData = (data || []).map(org => ({
       ...org,
       projects_count: Array.isArray(org.projects) ? org.projects.length : 0,
       posts_count: Array.isArray(org.forum_threads) ? org.forum_threads.length : 0,
       projects: undefined, // Remove the nested data
-      forum_threads: undefined, // Remove the nested data
+      blog_posts_count: Array.isArray(org.blog_posts) ? org.blog_posts.length : 0,
+      // Remove the nested data
     }))
 
     const totalCount = count || 0
     const totalPages = Math.ceil(totalCount / limit)
 
     return {
-      data: transformedData as (Organisation & { projects_count: number; posts_count: number })[],
+      data: transformedData as (Organisation & { projects_count: number; posts_count: number; blog_posts_count: number })[],
       count: totalCount,
       totalPages,
       currentPage: page,
@@ -431,6 +433,86 @@ export class OrganisationService {
     }
 
     return data.created_by === userId
+  }
+
+  /**
+   * Get active organisations using RPC function (optimized server-side filtering and pagination)
+   */
+  async getActiveOrganisations(filters?: {
+    name?: string
+    countries?: string[]
+    thematic_areas?: string[]
+    regions?: string[]
+    type?: string
+    size?: string
+    limit?: number
+    page?: number
+    sortBy?: 'name' | 'created_at' | 'updated_at'
+    sortOrder?: 'asc' | 'desc'
+  }): Promise<{ 
+    data: (Partial<Organisation> & { 
+      projects_count: number; 
+      posts_count: number; 
+      blog_posts_count: number 
+    })[], 
+    count: number; 
+    totalPages: number; 
+    currentPage: number; 
+    hasNextPage: boolean; 
+    hasPrevPage: boolean 
+  }> {
+    const limit = filters?.limit || 12
+    const page = filters?.page || 1
+    const offset = (page - 1) * limit
+
+    const { data, error } = await this.supabase.rpc('get_active_organisations_with_counts', {
+      name_filter: filters?.name?.trim() || undefined,
+      countries_filter: filters?.countries || undefined,
+      thematic_areas_filter: filters?.thematic_areas || undefined,
+      regions_filter: filters?.regions || undefined,
+      type_filter: filters?.type || undefined,
+      size_filter: filters?.size || undefined,
+      limit_param: limit,
+      offset_param: offset,
+      sort_by_param: filters?.sortBy || 'created_at',
+      sort_order_param: filters?.sortOrder || 'desc'
+    })
+
+    if (error) {
+      throw new Error(`Failed to fetch organisations: ${error.message}`)
+    }
+
+    if (!data || data.length === 0) {
+      return {
+        data: [],
+        count: 0,
+        totalPages: 0,
+        currentPage: page,
+        hasNextPage: false,
+        hasPrevPage: false
+      }
+    }
+
+    // Extract pagination metadata from first row (same for all rows)
+    const firstRow = data[0]
+    const totalCount = firstRow.total_count || 0
+    const totalPages = firstRow.total_pages || 0
+    const hasNextPage = firstRow.has_next_page || false
+    const hasPrevPage = firstRow.has_prev_page || false
+
+    // Transform data to match expected format (remove pagination metadata from each row)
+    const transformedData = data.map(row => {
+       return row;    
+    }) as (Partial<Organisation> & { projects_count: number; posts_count: number; blog_posts_count: number })[]
+
+    return {
+      data: transformedData,
+      count: totalCount,
+      totalPages,
+      currentPage: page,
+      hasNextPage,
+      hasPrevPage
+    }
   }
 }
 

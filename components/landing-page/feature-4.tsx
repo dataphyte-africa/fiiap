@@ -3,6 +3,7 @@ import { Button } from '../ui/button'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
 
 export const Feature4 = async () => {
   const t = await getTranslations('landingPage.feature4')
@@ -45,11 +46,15 @@ export const Feature4 = async () => {
               
               {/* Buttons */}
               <div className='flex flex-col sm:flex-row gap-4'>
-                <Button className='bg-primary text-white hover:bg-primary/90 px-6 py-3'>
+                <Button className='bg-primary text-white hover:bg-primary/90 px-6 py-3' asChild>
+                  <Link href="/auth/sign-up">
                   {t('cta.joinButton')}
+                  </Link>
                 </Button>
-                <Button variant="outline" className='border-primary text-primary hover:bg-primary hover:text-white px-6 py-3'>
+                <Button variant="outline" className='border-primary text-primary hover:bg-primary hover:text-white px-6 py-3' asChild>
+                  <Link href="/organisations">
                   {t('cta.searchButton')}
+                  </Link>
                 </Button>
               </div>
             </div>

@@ -43,7 +43,6 @@ export const projectMediaFormSchema = z.object({
 
 // Project events form schema
 export const projectEventFormSchema = z.object({
-  project_id: z.string().uuid('Invalid project ID'),
   title: z.string().min(1, 'Event title is required').max(200, 'Title must be less than 200 characters'),
   description: z.string().max(2000, 'Description must be less than 2000 characters').optional(),
   event_type: z.string().max(100, 'Event type must be less than 100 characters').optional(),
@@ -151,11 +150,12 @@ export function transformProjectMediaDataToInsert(
 }
 
 export function transformProjectEventDataToInsert(
-  formData: ProjectEventFormData
+  formData: ProjectEventFormData,
+  projectId: string
 ): Database['public']['Tables']['project_events']['Insert'] {
   return {
-    project_id: formData.project_id,
     title: formData.title,
+    project_id: projectId,
     description: formData.description || null,
     event_type: formData.event_type || null,
     event_date: formData.event_date,
@@ -177,10 +177,11 @@ export function transformProjectEventDataToInsert(
 
 export function transformProjectMilestoneDataToInsert(
   formData: ProjectMilestoneFormData,
-  userId: string
+  userId: string,
+  projectId: string
 ): Database['public']['Tables']['project_milestones']['Insert'] {
   return {
-    project_id: formData.project_id,
+    project_id: projectId,
     title: formData.title,
     description: formData.description || null,
     due_date: formData.due_date || null,

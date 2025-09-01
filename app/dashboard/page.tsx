@@ -2,7 +2,7 @@
 import { OrganisationStatusCard } from "@/components/dashboard/organisation-status-card"
 import { ProjectSummaryCard } from "@/components/dashboard/project-summary-card"
 import { PostActivityCard } from "@/components/dashboard/post-activity-card"
-import { NotificationsCard } from "@/components/dashboard/notifications-card"
+// import { NotificationsCard } from "@/components/dashboard/notifications-card"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
@@ -13,39 +13,39 @@ import { ProjectLoadingCard } from "@/components/dashboard/project-loading-card"
 
 
 
-const mockNotifications = [
-  {
-    id: "1",
-    title: "New collaboration request",
-    message: "Green Future Foundation wants to collaborate on your water project. Review their proposal and respond.",
-    type: "info" as const,
-    created_at: "2024-01-20T09:30:00Z",
-    action_url: "/collaborations/1"
-  },
-  {
-    id: "2", 
-    title: "Project milestone achieved",
-    message: "Congratulations! Your Clean Water Access Program has reached 75% completion.",
-    type: "success" as const,
-    created_at: "2024-01-19T16:45:00Z",
-    read_at: "2024-01-19T17:00:00Z"
-  },
-  {
-    id: "3",
-    title: "Funding opportunity available", 
-    message: "A new grant opportunity matching your focus areas is now open for applications. Deadline: Feb 15th.",
-    type: "warning" as const,
-    created_at: "2024-01-18T11:20:00Z"
-  },
-  {
-    id: "4",
-    title: "Welcome to the platform!",
-    message: "Get started by completing your organisation profile and creating your first project.",
-    type: "info" as const,
-    created_at: "2024-01-15T08:00:00Z",
-    read_at: "2024-01-15T08:30:00Z"
-  }
-]
+// const mockNotifications = [
+//   {
+//     id: "1",
+//     title: "New collaboration request",
+//     message: "Green Future Foundation wants to collaborate on your water project. Review their proposal and respond.",
+//     type: "info" as const,
+//     created_at: "2024-01-20T09:30:00Z",
+//     action_url: "/collaborations/1"
+//   },
+//   {
+//     id: "2", 
+//     title: "Project milestone achieved",
+//     message: "Congratulations! Your Clean Water Access Program has reached 75% completion.",
+//     type: "success" as const,
+//     created_at: "2024-01-19T16:45:00Z",
+//     read_at: "2024-01-19T17:00:00Z"
+//   },
+//   {
+//     id: "3",
+//     title: "Funding opportunity available", 
+//     message: "A new grant opportunity matching your focus areas is now open for applications. Deadline: Feb 15th.",
+//     type: "warning" as const,
+//     created_at: "2024-01-18T11:20:00Z"
+//   },
+//   {
+//     id: "4",
+//     title: "Welcome to the platform!",
+//     message: "Get started by completing your organisation profile and creating your first project.",
+//     type: "info" as const,
+//     created_at: "2024-01-15T08:00:00Z",
+//     read_at: "2024-01-15T08:30:00Z"
+//   }
+// ]
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -61,7 +61,7 @@ export default async function DashboardPage() {
     .eq('id', user.id)
     .single()
 
-  const unreadNotifications = mockNotifications.filter(n => !n.read_at).length
+  // const unreadNotifications = mockNotifications.filter(n => !n.read_at).length
 
   return (
     <div className="space-y-6">
@@ -88,11 +88,11 @@ export default async function DashboardPage() {
           <PostActivityCard organisationId={profile.organisation_id} />
         )}
         
-        <NotificationsCard
+        {/* <NotificationsCard
           notifications={mockNotifications}
           unreadCount={unreadNotifications}
           loading={false}
-        />
+        /> */}
       </div>
 
       

@@ -126,6 +126,491 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_post_comment_likes: {
+        Row: {
+          anonymous_identifier: string | null
+          comment_id: string
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          anonymous_identifier?: string | null
+          comment_id: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          anonymous_identifier?: string | null
+          comment_id?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_comment_likes_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_post_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comment_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comment_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_comments: {
+        Row: {
+          anonymous_identifier: string | null
+          author_email: string | null
+          author_id: string | null
+          author_name: string | null
+          blog_post_id: string
+          content: string
+          created_at: string | null
+          id: string
+          like_count: number | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          moderation_status:
+            | Database["public"]["Enums"]["comment_moderation_status_enum"]
+            | null
+          parent_comment_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          anonymous_identifier?: string | null
+          author_email?: string | null
+          author_id?: string | null
+          author_name?: string | null
+          blog_post_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["comment_moderation_status_enum"]
+            | null
+          parent_comment_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          anonymous_identifier?: string | null
+          author_email?: string | null
+          author_id?: string | null
+          author_name?: string | null
+          blog_post_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["comment_moderation_status_enum"]
+            | null
+          parent_comment_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comments_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comments_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comments_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_comments_parent_comment_id_fkey"
+            columns: ["parent_comment_id"]
+            isOneToOne: false
+            referencedRelation: "blog_post_comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_likes: {
+        Row: {
+          anonymous_identifier: string | null
+          blog_post_id: string
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          anonymous_identifier?: string | null
+          blog_post_id: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          anonymous_identifier?: string | null
+          blog_post_id?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_likes_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_media: {
+        Row: {
+          alt_text: string | null
+          blog_post_id: string
+          caption: string | null
+          file_name: string | null
+          file_size: number | null
+          file_type: Database["public"]["Enums"]["file_type_enum"] | null
+          file_url: string
+          id: string
+          mime_type: string | null
+          sort_order: number | null
+          storage_path: string | null
+          uploaded_at: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          alt_text?: string | null
+          blog_post_id: string
+          caption?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: Database["public"]["Enums"]["file_type_enum"] | null
+          file_url: string
+          id?: string
+          mime_type?: string | null
+          sort_order?: number | null
+          storage_path?: string | null
+          uploaded_at?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          alt_text?: string | null
+          blog_post_id?: string
+          caption?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: Database["public"]["Enums"]["file_type_enum"] | null
+          file_url?: string
+          id?: string
+          mime_type?: string | null
+          sort_order?: number | null
+          storage_path?: string | null
+          uploaded_at?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_media_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_media_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_media_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_posts: {
+        Row: {
+          author_id: string
+          comment_count: number | null
+          content: Json
+          content_html: string | null
+          created_at: string | null
+          excerpt: string | null
+          featured_image_alt: string | null
+          featured_image_url: string | null
+          id: string
+          is_featured: boolean | null
+          language: Database["public"]["Enums"]["language_enum"] | null
+          like_count: number | null
+          meta_description: string | null
+          meta_title: string | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          moderation_status:
+            | Database["public"]["Enums"]["blog_moderation_status_enum"]
+            | null
+          organisation_id: string
+          published_at: string | null
+          reading_time_minutes: number | null
+          scheduled_for: string | null
+          search_vector: unknown | null
+          slug: string
+          status: Database["public"]["Enums"]["post_status_enum"] | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          author_id: string
+          comment_count?: number | null
+          content: Json
+          content_html?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image_alt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          language?: Database["public"]["Enums"]["language_enum"] | null
+          like_count?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["blog_moderation_status_enum"]
+            | null
+          organisation_id: string
+          published_at?: string | null
+          reading_time_minutes?: number | null
+          scheduled_for?: string | null
+          search_vector?: unknown | null
+          slug: string
+          status?: Database["public"]["Enums"]["post_status_enum"] | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          author_id?: string
+          comment_count?: number | null
+          content?: Json
+          content_html?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image_alt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          language?: Database["public"]["Enums"]["language_enum"] | null
+          like_count?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["blog_moderation_status_enum"]
+            | null
+          organisation_id?: string
+          published_at?: string | null
+          reading_time_minutes?: number | null
+          scheduled_for?: string | null
+          search_vector?: unknown | null
+          slug?: string
+          status?: Database["public"]["Enums"]["post_status_enum"] | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "admin_organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_posts_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          contact_email: string | null
+          contact_person: string | null
+          contact_phone: string | null
+          created_at: string | null
+          description: string | null
+          event_date: string
+          event_end_date: string | null
+          event_type: string | null
+          event_website: string | null
+          id: string
+          image_url: string | null
+          is_featured: boolean | null
+          is_virtual: boolean | null
+          is_visible: boolean | null
+          location: string | null
+          max_participants: number | null
+          meeting_url: string | null
+          registration_url: string | null
+          tags: string | null
+          title: string
+          updated_at: string | null
+          venue_name: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          contact_person?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          event_date: string
+          event_end_date?: string | null
+          event_type?: string | null
+          event_website?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          is_virtual?: boolean | null
+          is_visible?: boolean | null
+          location?: string | null
+          max_participants?: number | null
+          meeting_url?: string | null
+          registration_url?: string | null
+          tags?: string | null
+          title: string
+          updated_at?: string | null
+          venue_name?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          contact_person?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          description?: string | null
+          event_date?: string
+          event_end_date?: string | null
+          event_type?: string | null
+          event_website?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          is_virtual?: boolean | null
+          is_visible?: boolean | null
+          location?: string | null
+          max_participants?: number | null
+          meeting_url?: string | null
+          registration_url?: string | null
+          tags?: string | null
+          title?: string
+          updated_at?: string | null
+          venue_name?: string | null
+        }
+        Relationships: []
+      }
       export_jobs: {
         Row: {
           completed_at: string | null
@@ -497,6 +982,57 @@ export type Database = {
           title?: string
           type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      online_courses: {
+        Row: {
+          course_url: string
+          created_at: string | null
+          description: string | null
+          difficulty_level: string | null
+          duration_hours: number | null
+          id: string
+          image_url: string | null
+          instructor_name: string | null
+          is_featured: boolean | null
+          is_visible: boolean | null
+          platform_name: string | null
+          tags: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          course_url: string
+          created_at?: string | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_hours?: number | null
+          id?: string
+          image_url?: string | null
+          instructor_name?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          platform_name?: string | null
+          tags?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          course_url?: string
+          created_at?: string | null
+          description?: string | null
+          difficulty_level?: string | null
+          duration_hours?: number | null
+          id?: string
+          image_url?: string | null
+          instructor_name?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          platform_name?: string | null
+          tags?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -1350,6 +1886,51 @@ export type Database = {
           },
         ]
       }
+      resource_library: {
+        Row: {
+          author_name: string | null
+          created_at: string | null
+          description: string | null
+          file_url: string | null
+          id: string
+          image_url: string | null
+          is_featured: boolean | null
+          is_visible: boolean | null
+          resource_type: string
+          tags: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string | null
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          resource_type: string
+          tags?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string | null
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          is_visible?: boolean | null
+          resource_type?: string
+          tags?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       roles: {
         Row: {
           assigned_at: string | null
@@ -1570,13 +2151,21 @@ export type Database = {
       }
     }
     Functions: {
+      admin_moderate_blog_post: {
+        Args: {
+          admin_notes?: string
+          blog_post_id_param: string
+          new_moderation_status: Database["public"]["Enums"]["blog_moderation_status_enum"]
+        }
+        Returns: boolean
+      }
       admin_set_user_organisation: {
         Args: { new_organisation_id: string; target_user_id: string }
         Returns: Json
       }
       admin_set_user_role: {
         Args: {
-          assigned_by?: string
+          assigned_by_user_id?: string
           new_role: Database["public"]["Enums"]["user_role_enum"]
           target_user_id: string
         }
@@ -1629,6 +2218,84 @@ export type Database = {
       custom_access_token_hook: {
         Args: { event: Json }
         Returns: Json
+      }
+      flag_blog_post: {
+        Args: { blog_post_id_param: string; reason?: string }
+        Returns: boolean
+      }
+      generate_anonymous_identifier: {
+        Args: { ip_address: unknown; user_agent: string }
+        Returns: string
+      }
+      get_active_organisations_with_counts: {
+        Args: {
+          countries_filter?: string[]
+          limit_param?: number
+          name_filter?: string
+          offset_param?: number
+          regions_filter?: string[]
+          size_filter?: string
+          sort_by_param?: string
+          sort_order_param?: string
+          thematic_areas_filter?: string[]
+          type_filter?: string
+        }
+        Returns: {
+          address: string
+          annual_budget: number
+          awards_recognition: string[]
+          blog_posts_count: number
+          certifications: string[]
+          city: string
+          contact_email: string
+          contact_phone: string
+          country: string
+          cover_image_url: string
+          created_at: string
+          created_by: string
+          current_page: number
+          digital_tools: Json
+          establishment_year: number
+          featured: boolean
+          geographic_coverage: string
+          has_digital_tools: boolean
+          has_next_page: boolean
+          has_prev_page: boolean
+          id: string
+          languages_spoken: string[]
+          legal_status: string
+          logo_url: string
+          media_platforms: string[]
+          media_uploads: Json
+          media_work_types: string[]
+          mission: string
+          name: string
+          network_memberships: string[]
+          operational_levels: string[]
+          other_countries: string[]
+          partnerships: string[]
+          posts_count: number
+          primary_work_methods: string[]
+          projects_count: number
+          region: string
+          registration_number: string
+          size: string
+          social_links: Json
+          staff_count: number
+          state_province: string
+          status: string
+          target_populations: string[]
+          tax_exemption_status: boolean
+          thematic_focus: string[]
+          total_count: number
+          total_pages: number
+          type: string
+          updated_at: string
+          verified: boolean
+          vision: string
+          volunteer_count: number
+          website_url: string
+        }[]
       }
       get_forum_categories_with_counts: {
         Args: Record<PropertyKey, never>
@@ -1765,6 +2432,10 @@ export type Database = {
         Args: { thread_id_param: string }
         Returns: boolean
       }
+      increment_blog_post_view_count: {
+        Args: { blog_post_id_param: string }
+        Returns: number
+      }
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -1777,12 +2448,22 @@ export type Database = {
         Args: { thread_id_param: string }
         Returns: Json
       }
+      moderate_blog_comment: {
+        Args: {
+          comment_id_param: string
+          moderator_notes?: string
+          new_status: Database["public"]["Enums"]["comment_moderation_status_enum"]
+        }
+        Returns: boolean
+      }
       owns_organisation: {
         Args: { org_id: string }
         Returns: boolean
       }
     }
     Enums: {
+      blog_moderation_status_enum: "approved" | "flagged" | "rejected"
+      comment_moderation_status_enum: "approved" | "flagged" | "hidden"
       country_enum: "Nigeria" | "Benin" | "Gambia"
       export_status_enum: "pending" | "processing" | "completed" | "failed"
       file_type_enum: "image" | "pdf" | "video" | "audio" | "document" | "other"
@@ -2007,6 +2688,8 @@ export const Constants = {
   },
   public: {
     Enums: {
+      blog_moderation_status_enum: ["approved", "flagged", "rejected"],
+      comment_moderation_status_enum: ["approved", "flagged", "hidden"],
       country_enum: ["Nigeria", "Benin", "Gambia"],
       export_status_enum: ["pending", "processing", "completed", "failed"],
       file_type_enum: ["image", "pdf", "video", "audio", "document", "other"],

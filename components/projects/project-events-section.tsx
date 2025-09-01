@@ -11,19 +11,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { PlusIcon, X, Save, Calendar, MapPin, Users, Trash2, Clock } from 'lucide-react';
-import { ProjectEventFormData, ProjectFullFormData, EVENT_TYPES, EVENT_STATUS_OPTIONS } from './project-form-schemas';
+import { ProjectEventFormData, ProjectFullFormData, EVENT_TYPES, EVENT_STATUS_OPTIONS, transformProjectEventDataToInsert } from './project-form-schemas';
 import { useMutation } from '@tanstack/react-query';
+import { updateProjectEvents } from '@/lib/data/projects';
+import { toast } from 'sonner';
 
 interface ProjectEventsSectionProps {
   onSave?: (data: ProjectEventFormData[]) => Promise<void>;
   isEditing?: boolean;
-  projectId?: string;
+  projectId: string;
 }
 
-export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSectionProps) {
+export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
   const {
     control,
     getValues,
+    register,
   } = useFormContext<ProjectFullFormData>();
 
   const { fields, append, remove, update } = useFieldArray({
@@ -35,14 +38,14 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
 
   const saveEventsMutation = useMutation({
     mutationFn: async (data: ProjectEventFormData[]) => {
-      if (onSave) {
-        await onSave(data);
-      }
+      const dataToInsert = data.map((event) => transformProjectEventDataToInsert(event, projectId));
+      await updateProjectEvents(projectId, dataToInsert);
     },
     onSuccess: () => {
       console.log('Events saved successfully');
     },
     onError: (error) => {
+      toast.error('Error saving events');
       console.error('Error saving events:', error);
     },
   });
@@ -54,7 +57,6 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
 
   const addEvent = () => {
     const newEvent: ProjectEventFormData = {
-      project_id: projectId || '',
       title: '',
       description: '',
       event_type: '',
@@ -107,7 +109,7 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
         <CardTitle className="text-lg flex items-center gap-2">
           <Calendar className="h-5 w-5" />
           Project Events
-          {onSave && (
+          
             <Button
               type="button"
               variant="outline"
@@ -119,7 +121,7 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
               <Save className="h-4 w-4 mr-2" />
               {saveEventsMutation.isPending ? 'Saving...' : 'Save Section'}
             </Button>
-          )}
+        
         </CardTitle>
         <CardDescription>
           Manage events, workshops, meetings, and other activities related to your project
@@ -211,10 +213,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Label htmlFor={`event-title-${index}`}>Event Title *</Label>
                           <Input
                             id={`event-title-${index}`}
-                            value={field.title}
-                            onChange={(e) => {
-                              update(index, { ...field, title: e.target.value });
-                            }}
+                            {...register(`events.${index}.title`)}
+                            
                             placeholder="Enter event title"
                           />
                         </div>
@@ -222,10 +222,9 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                         <div>
                           <Label htmlFor={`event-type-${index}`}>Event Type</Label>
                           <Select
-                            value={field.event_type || ''}
-                            onValueChange={(value) => {
-                              update(index, { ...field, event_type: value });
-                            }}
+                            {...register(`events.${index}.event_type`)}
+                            defaultValue={field.event_type}
+                            onValueChange={(value) => register(`events.${index}.event_type`).onChange({ target: { value } })}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Select event type" />
@@ -243,10 +242,9 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                         <div>
                           <Label htmlFor={`event-status-${index}`}>Status</Label>
                           <Select
-                            value={field.event_status}
-                            onValueChange={(value) => {
-                              update(index, { ...field, event_status: value });
-                            }}
+                            {...register(`events.${index}.event_status`)}
+                            defaultValue={field.event_status}
+                            onValueChange={(value) => register(`events.${index}.event_status`).onChange({ target: { value } })}
                           >
                             <SelectTrigger>
                               <SelectValue />
@@ -265,9 +263,7 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Checkbox
                             id={`event-virtual-${index}`}
                             checked={field.is_virtual}
-                            onCheckedChange={(checked) => {
-                              update(index, { ...field, is_virtual: !!checked });
-                            }}
+                            onCheckedChange={(checked) => register(`events.${index}.is_virtual`).onChange({ target: { value: !!checked } })}
                           />
                           <Label htmlFor={`event-virtual-${index}`} className="text-sm">
                             Virtual Event
@@ -279,11 +275,10 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                       <div>
                         <Label htmlFor={`event-description-${index}`}>Description</Label>
                         <Textarea
+                          
                           id={`event-description-${index}`}
-                          value={field.description || ''}
-                          onChange={(e) => {
-                            update(index, { ...field, description: e.target.value });
-                          }}
+                          {...register(`events.${index}.description`)}
+                          defaultValue={field.description}
                           placeholder="Describe the event"
                           rows={3}
                         />
@@ -296,10 +291,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-date-${index}`}
                             type="datetime-local"
-                            value={field.event_date}
-                            onChange={(e) => {
-                              update(index, { ...field, event_date: e.target.value });
-                            }}
+                            {...register(`events.${index}.event_date`)}
+                            
                           />
                         </div>
 
@@ -308,10 +301,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-end-date-${index}`}
                             type="datetime-local"
-                            value={field.event_end_date || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, event_end_date: e.target.value });
-                            }}
+                            {...register(`events.${index}.event_end_date`)}
+                            
                           />
                         </div>
                       </div>
@@ -322,10 +313,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Label htmlFor={`event-location-${index}`}>Location</Label>
                           <Input
                             id={`event-location-${index}`}
-                            value={field.event_location || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, event_location: e.target.value });
-                            }}
+                            {...register(`events.${index}.event_location`)}
+                            
                             placeholder={field.is_virtual ? "Online platform" : "Physical address"}
                           />
                         </div>
@@ -336,10 +325,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                             <Input
                               id={`event-meeting-link-${index}`}
                               type="url"
-                              value={field.meeting_link || ''}
-                              onChange={(e) => {
-                                update(index, { ...field, meeting_link: e.target.value });
-                              }}
+                              {...register(`events.${index}.meeting_link`)}
+                              
                               placeholder="https://zoom.us/j/..."
                             />
                           </div>
@@ -353,10 +340,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-registration-link-${index}`}
                             type="url"
-                            value={field.registration_link || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, registration_link: e.target.value });
-                            }}
+                            {...register(`events.${index}.registration_link`)}
+                            
                             placeholder="https://eventbrite.com/..."
                           />
                         </div>
@@ -366,10 +351,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-registration-deadline-${index}`}
                             type="datetime-local"
-                            value={field.registration_deadline || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, registration_deadline: e.target.value });
-                            }}
+                            {...register(`events.${index}.registration_deadline`)}
+                            
                           />
                         </div>
 
@@ -378,10 +361,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-max-participants-${index}`}
                             type="number"
-                            value={field.max_participants || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, max_participants: parseInt(e.target.value) || undefined });
-                            }}
+                            {...register(`events.${index}.max_participants`)}
+                            
                             placeholder="Unlimited"
                             min="1"
                           />
@@ -394,10 +375,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Label htmlFor={`event-contact-person-${index}`}>Contact Person</Label>
                           <Input
                             id={`event-contact-person-${index}`}
-                            value={field.contact_person || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, contact_person: e.target.value });
-                            }}
+                            {...register(`events.${index}.contact_person`)}
+                            
                             placeholder="Event organizer name"
                           />
                         </div>
@@ -407,10 +386,8 @@ export function ProjectEventsSection({ onSave, projectId }: ProjectEventsSection
                           <Input
                             id={`event-contact-email-${index}`}
                             type="email"
-                            value={field.contact_email || ''}
-                            onChange={(e) => {
-                              update(index, { ...field, contact_email: e.target.value });
-                            }}
+                            {...register(`events.${index}.contact_email`)}
+                            
                             placeholder="organizer@example.com"
                           />
                         </div>

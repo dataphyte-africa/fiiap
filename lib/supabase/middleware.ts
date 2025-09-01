@@ -3,9 +3,16 @@ import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "../utils";
 
 export async function updateSession(request: NextRequest) {
+  const headers = new Headers(request.headers);
+      headers.set("x-current-path", request.nextUrl.pathname);
   let supabaseResponse = NextResponse.next({
-    request,
+    request: {
+      ...request,
+      headers,
+    },
   });
+
+  
 
   // If the env vars are not set, skip middleware check. You can remove this
   // once you setup the project.

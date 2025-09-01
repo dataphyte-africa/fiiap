@@ -154,7 +154,7 @@ export async function setUserRole(userId: string, role: UserRole, assignedBy?: s
     const { data, error } = await supabase.rpc('admin_set_user_role', {
       target_user_id: userId,
       new_role: role,
-      assigned_by: assignedBy
+      assigned_by_user_id: assignedBy 
     })
 
     if (error) {

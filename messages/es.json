@@ -6,7 +6,11 @@
             "contact": "Contacto",
             "faqs": "FAQs",
             "organisations": "Organizaciones",
-            "posts": "Publicaciones"
+            "posts": "Publicaciones",
+            "blogs": "Blogs",
+            "events": "Eventos",
+            "resources": "Recursos",
+            "courses": "Cursos"
         },
         "hero": {
             "title": "Conectar. Colaborar. Crecer:",
@@ -246,6 +250,162 @@
                 "title": "Enviando tu registro...",
                 "description": "Por favor espera mientras procesamos tu información."
             }
+        }
+    },
+    "resources": {
+        "page": {
+            "title": "Biblioteca de Recursos",
+            "description": "Accede a herramientas, documentos de investigación, guías, plantillas y materiales educativos de OSCs en África Occidental."
+        },
+        "hero": {
+            "title": "Biblioteca de Recursos",
+            "description": "Accede a herramientas, documentos de investigación, guías, plantillas y materiales educativos de OSCs en África Occidental."
+        },
+        "featured": {
+            "title": "Recursos Destacados",
+            "description": "Descubre herramientas esenciales, documentos de investigación y materiales educativos seleccionados por nuestra comunidad."
+        },
+        "all": {
+            "title": "Todos los Recursos",
+            "description": "Explora nuestra colección completa de recursos"
+        },
+        "search": {
+            "placeholder": "Buscar recursos por título, descripción, autor o etiquetas..."
+        },
+        "filters": {
+            "type": "Tipo de Recurso"
+        },
+        "results": {
+            "showing": "Mostrando {count} de {total} recursos",
+            "showingFiltered": "Mostrando {count} de {total} recursos para",
+            "ofType": "de tipo"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "No pudimos cargar los recursos. Por favor intenta de nuevo más tarde."
+        }
+    },
+    "events": {
+        "page": {
+            "title": "Eventos y Actividades",
+            "description": "Descubre próximas conferencias, talleres, webinarios y eventos comunitarios de OSCs en África Occidental."
+        },
+        "hero": {
+            "title": "Eventos y Actividades",
+            "description": "Descubre próximas conferencias, talleres, webinarios y eventos comunitarios de OSCs en África Occidental."
+        },
+        "featured": {
+            "title": "Eventos Destacados",
+            "description": "No te pierdas estos eventos y actividades destacados de nuestros socios comunitarios."
+        },
+        "upcoming": {
+            "title": "Próximos Eventos",
+            "description": "Explora próximos eventos y actividades"
+        },
+        "results": {
+            "showing": "Mostrando {count} de {total} eventos",
+            "showingFiltered": "Mostrando {count} de {total} eventos para",
+            "inCategory": "en",
+            "virtualOnly": "(solo eventos virtuales)",
+            "upcomingEvents": "Mostrando {count} de {total} próximos eventos"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "No pudimos cargar los eventos. Por favor intenta de nuevo más tarde."
+        }
+    },
+    "courses": {
+        "page": {
+            "title": "Cursos en Línea",
+            "description": "Accede a cursos de desarrollo profesional, programas de capacitación y contenido educativo de FIAP y organizaciones asociadas."
+        },
+        "hero": {
+            "title": "Cursos en Línea",
+            "description": "Accede a cursos de desarrollo profesional, programas de capacitación y contenido educativo de FIAP y organizaciones asociadas."
+        },
+        "featured": {
+            "title": "Cursos Destacados",
+            "description": "Descubre nuestros cursos en línea y programas de capacitación más populares y recomendados."
+        },
+        "all": {
+            "title": "Todos los Cursos",
+            "description": "Explora nuestra colección completa de cursos en línea"
+        },
+        "search": {
+            "placeholder": "Buscar cursos por título, descripción, instructor o etiquetas..."
+        },
+        "filters": {
+            "difficulty": "Nivel de Dificultad"
+        },
+        "results": {
+            "showing": "Mostrando {count} de {total} cursos",
+            "showingFiltered": "Mostrando {count} de {total} cursos para",
+            "atLevel": "en nivel {level}"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "No pudimos cargar los cursos. Por favor intenta de nuevo más tarde."
+        }
+    },
+    "blogs": {
+        "page": {
+            "title": "Historias de Nuestra Comunidad",
+            "description": "Descubre historias inspiradoras, perspectivas y oportunidades compartidas por OSCs en África Occidental."
+        },
+        "hero": {
+            "title": "Historias Destacadas de la comunidad",
+            "description": "Descubre historias inspiradoras, historias de éxito y oportunidades compartidas por OSCs en África Occidental."
+        },
+        "featured": {
+            "title": "Historias Destacadas",
+            "description": "Descubre historias inspiradoras, perspectivas y oportunidades compartidas por OSCs en África Occidental."
+        },
+        "latest": {
+            "title": "Últimas Historias",
+            "description": "Explora noticias de FIAP"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "No pudimos cargar las publicaciones del blog. Por favor intenta de nuevo más tarde."
+        }
+    },
+    "posts": {
+        "page": {
+            "title": "Publicaciones Comunitarias",
+            "description": "Únete a la conversación con publicaciones de OSCs en África Occidental"
+        },
+        "error": {
+            "title": "Algo salió mal",
+            "description": "Error al obtener publicaciones. Por favor intenta de nuevo.",
+            "tryAgain": "Intentar de Nuevo"
+        },
+        "empty": {
+            "title": "No se encontraron publicaciones",
+            "descriptionAll": "No hay publicaciones disponibles aún.",
+            "descriptionCategory": "No hay publicaciones en esta categoría aún.",
+            "refresh": "Actualizar"
+        },
+        "loadMore": "Cargar Más",
+        "loading": "Cargando...",
+        "pagination": {
+            "showing": "Mostrando {count} de {total} publicaciones",
+            "inCategory": "en categoría seleccionada"
         }
     }
 }

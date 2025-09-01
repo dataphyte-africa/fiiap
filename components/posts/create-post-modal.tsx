@@ -115,6 +115,7 @@ export function CreatePostModal({ isOpen, onClose, profile, media:prop_media, co
     if (isOpen) {
       fetchCategories();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   // Clear errors when modal opens

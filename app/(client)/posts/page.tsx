@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { PublicPostCard } from '@/components/posts/public-post-card';
 import { useForumThreads } from '@/lib/data/posts';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { LucideLoader2, LucideRefreshCw } from 'lucide-react';
 
 export default function PostsPage() {
+  const t = useTranslations('posts');
   const searchParams = useSearchParams();
   const selectedCategory = searchParams.get('category') || undefined;
   console.log(selectedCategory, "🌹")
@@ -64,12 +66,12 @@ export default function PostsPage() {
             <div className="text-red-500 mb-4">
               <LucideRefreshCw className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Something went wrong</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('error.title')}</h3>
             <p className="text-gray-500 mb-4">
-              {error?.message || 'Failed to fetch posts. Please try again.'}
+              {error?.message || t('error.description')}
             </p>
             <Button onClick={() => refetch()} variant="outline">
-              Try Again
+              {t('error.tryAgain')}
             </Button>
           </div>
         </div>
@@ -133,15 +135,15 @@ export default function PostsPage() {
             <div className="text-gray-400 mb-4">
               <LucideRefreshCw className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No posts found</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">{t('empty.title')}</h3>
             <p className="text-gray-500 mb-4">
               {selectedCategory 
-                ? 'No posts in this category yet.' 
-                : 'No posts available yet.'
+                ? t('empty.descriptionCategory') 
+                : t('empty.descriptionAll')
               }
             </p>
             <Button onClick={() => refetch()} variant="outline">
-              Refresh
+              {t('empty.refresh')}
             </Button>
           </div>
         )}
@@ -158,10 +160,10 @@ export default function PostsPage() {
               {isFetchingNextPage ? (
                 <>
                   <LucideLoader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Loading...
+                  {t('loading')}
                 </>
               ) : (
-                'Load More'
+                t('loadMore')
               )}
             </Button>
           </div>
@@ -170,10 +172,10 @@ export default function PostsPage() {
         {/* Pagination Info */}
         {total > 0 && (
           <div className="text-center text-sm text-gray-500 pt-4">
-            Showing {threads.length} of {total} posts
+            {t('pagination.showing', { count: threads.length, total })}
             {selectedCategory && (
               <span className="ml-2">
-                in selected category
+                {t('pagination.inCategory')}
               </span>
             )}
           </div>

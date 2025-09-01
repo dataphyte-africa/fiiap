@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
 
 export const Feature2 = async () => {
   const t = await getTranslations('landingPage.feature2')
@@ -76,8 +77,11 @@ export const Feature2 = async () => {
                 <Button 
                   variant="outline" 
                   className='w-full border-primary text-primary hover:bg-primary hover:text-white transition-colors'
+                  asChild
                 >
+                  <Link href="/organisations">  
                   {t('exploreButton')}
+                  </Link>
                 </Button>
               </div>
             </div>
