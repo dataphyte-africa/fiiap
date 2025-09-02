@@ -60,7 +60,7 @@ export function OrganisationsGrid() {
 
         const filters = {
           name: searchParams.get('name') || undefined,
-          countries: searchParams.get('country') ? searchParams.get('country')!.split(',') : undefined,
+          countries: searchParams.get('country') ? searchParams.get('country')!.split(',').map(c => c.charAt(0).toUpperCase() + c.slice(1).toLowerCase()) : undefined,
           thematic_areas: searchParams.get('thematic_area') ? searchParams.get('thematic_area')!.split(',') : undefined,
           regions: searchParams.get('region') ? searchParams.get('region')!.split(',') : undefined,
           sortBy: (searchParams.get('sortBy') as 'name' | 'created_at' | 'updated_at') || 'created_at',
@@ -69,7 +69,7 @@ export function OrganisationsGrid() {
           limit: 12,
         };
 
-        const data = await organisationService.getActiveOrganisationsRPC(filters);
+        const data = await organisationService.getActiveOrganisations(filters);
         setResult(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch organisations');

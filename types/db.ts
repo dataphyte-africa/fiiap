@@ -2297,6 +2297,59 @@ export type Database = {
           website_url: string
         }[]
       }
+      get_blog_posts_with_details: {
+        Args: {
+          language_filter?: string
+          page_number?: number
+          page_size?: number
+          search_query?: string
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          comment_count: number
+          content: string
+          created_at: string
+          excerpt: string
+          featured_image_url: string
+          id: string
+          is_featured: boolean
+          language: string
+          like_count: number
+          moderation_status: string
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          published_at: string
+          slug: string
+          status: string
+          tags: string[]
+          title: string
+          total_count: number
+          updated_at: string
+          view_count: number
+        }[]
+      }
+      get_featured_blog_posts: {
+        Args: { limit_count?: number }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          excerpt: string
+          featured_image_url: string
+          id: string
+          language: string
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          published_at: string
+          slug: string
+          tags: string[]
+          title: string
+        }[]
+      }
       get_forum_categories_with_counts: {
         Args: Record<PropertyKey, never>
         Returns: {

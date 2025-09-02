@@ -464,7 +464,7 @@ export class OrganisationService {
     const limit = filters?.limit || 12
     const page = filters?.page || 1
     const offset = (page - 1) * limit
-
+    console.log(filters, "😀 filters")
     const { data, error } = await this.supabase.rpc('get_active_organisations_with_counts', {
       name_filter: filters?.name?.trim() || undefined,
       countries_filter: filters?.countries || undefined,

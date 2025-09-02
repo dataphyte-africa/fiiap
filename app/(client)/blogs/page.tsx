@@ -78,7 +78,7 @@ async function BlogPostsList({ searchParams }: { searchParams: BlogsPageProps['s
   const supabase = await createClient();
 
   try {
-    const { data: posts, count: totalCount,} = await supabase.from('blog_posts').select(`
+    const { data: posts, count: totalCount } = await supabase.from('blog_posts').select(`
       *,
       profiles!blog_posts_author_id_fkey (
         id,
@@ -95,7 +95,6 @@ async function BlogPostsList({ searchParams }: { searchParams: BlogsPageProps['s
     const hasPrevPage = pageInt > 1;
     const hasNextPage = pageInt < totalPages;
     const currentPage = pageInt;
-
     return (
       <section>
         <div className="flex items-center justify-between mb-8">

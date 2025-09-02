@@ -9,7 +9,7 @@ interface BlogPostGridProps {
 }
 
 export function BlogPostGrid({ posts, showStats = true }: BlogPostGridProps) {
-  if (posts.length === 0) {
+  if (( posts?.length || 0) === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">📝</div>

@@ -24,14 +24,14 @@ export function BlogPostCarousel({
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    if (!autoPlay || posts.length <= 1) return;
+    if (!autoPlay || (posts?.length || 0) <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % posts.length);
+      setCurrentSlide((prev) => (prev + 1) % posts?.length || 0);
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, posts.length]);
+  }, [autoPlay, autoPlayInterval, posts?.length]);
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
@@ -45,7 +45,7 @@ export function BlogPostCarousel({
     setCurrentSlide((prev) => (prev + 1) % posts.length);
   };
 
-  if (posts.length === 0) {
+  if (( posts?.length || 0) === 0) {
     return null;
   }
 
