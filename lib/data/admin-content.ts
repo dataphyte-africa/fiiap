@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import type { Database } from "@/types/db";
+import { fundingOpportunityFormSchema } from "../schemas/admin-content-schemas";
+import { z } from "zod";
 
 // Type definitions
 type Event = Database['public']['Tables']['events']['Row'];
@@ -371,6 +373,180 @@ export async function deleteCourse(id: string): Promise<void> {
   const supabase = createClient();
   const { error } = await supabase
     .from('online_courses')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// Funding Opportunities
+type FundingOpportunity = Database['public']['Tables']['funding_opportunities']['Row'];
+type FundingOpportunityInsert = Database['public']['Tables']['funding_opportunities']['Insert'];
+
+type FundingOpportunityFormData = z.infer<typeof fundingOpportunityFormSchema>;
+type FundingOpportunityUpdate = Omit<Database['public']['Tables']['funding_opportunities']['Update'], 'tags' | 'thematic_areas' | 'target_countries' | 'geographic_focus' | 'target_populations' | 'application_requirements'> & Pick<FundingOpportunityFormData, 'tags' | 'thematic_areas' | 'target_countries' | 'geographic_focus' | 'target_populations' | 'application_requirements'>;
+export interface FundingOpportunityFilters extends BaseFilters {
+  opportunity_type?: FundingOpportunity["opportunity_type"];
+  status?: FundingOpportunity["status"];
+  funder_type?: FundingOpportunity["funder_type"];
+  funder_name?: string;
+  geographic_focus?: string;
+  language?: FundingOpportunity["language"];
+  is_verified?: boolean;
+}
+
+export async function getFundingOpportunities(filters: FundingOpportunityFilters = {}): Promise<PaginatedResult<FundingOpportunity>> {
+  const supabase = createClient();
+  
+  const {
+    search,
+    opportunity_type,
+    status,
+    funder_type,
+    funder_name,
+    geographic_focus,
+    language,
+    is_visible,
+    is_featured,
+    is_verified,
+    sortBy = 'created_at',
+    sortOrder = 'desc',
+    page = 1,
+    limit = 12
+  } = filters;
+
+  let query = supabase.from('funding_opportunities').select('*', { count: 'exact' });
+
+  // Apply filters
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%,summary.ilike.%${search}%,funder_name.ilike.%${search}%,tags.cs.{${search}}`);
+  }
+  if (opportunity_type) {
+    query = query.eq('opportunity_type', opportunity_type);
+  }
+  if (status) {
+    query = query.eq('status', status);
+  }
+  if (funder_type) {
+    query = query.eq('funder_type', funder_type);
+  }
+  if (funder_name) {
+    query = query.ilike('funder_name', `%${funder_name}%`);
+  }
+  if (geographic_focus) {
+    query = query.contains('geographic_focus', [geographic_focus]);
+  }
+  if (language) {
+    query = query.eq('language', language);
+  }
+  if (typeof is_visible === 'boolean') {
+    query = query.eq('is_visible', is_visible);
+  }
+  if (typeof is_featured === 'boolean') {
+    query = query.eq('is_featured', is_featured);
+  }
+  if (typeof is_verified === 'boolean') {
+    query = query.eq('is_verified', is_verified);
+  }
+
+  // Apply sorting
+  query = query.order(sortBy, { ascending: sortOrder === 'asc' });
+
+  // Apply pagination
+  const offset = (page - 1) * limit;
+  query = query.range(offset, offset + limit - 1);
+
+  const { data, error, count } = await query;
+
+  if (error) throw error;
+
+  const totalPages = Math.ceil((count || 0) / limit);
+
+  return {
+    data: data || [],
+    count: count || 0,
+    totalPages,
+    currentPage: page,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+  };
+}
+
+export async function getFundingOpportunityById(id: string): Promise<FundingOpportunity | null> {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function createFundingOpportunity(opportunityData: FundingOpportunityFormData): Promise<FundingOpportunity> {
+  const supabase = createClient();
+
+  // Generate slug from title if not provided
+  if (!opportunityData.slug && opportunityData.title) {
+    opportunityData.slug = opportunityData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }
+
+  // Convert array fields from comma-separated strings to arrays
+  const processedData = {
+    ...opportunityData,
+    tags: opportunityData.tags ? opportunityData.tags.split(',').map(t => t.trim()) : null,
+    thematic_areas: opportunityData.thematic_areas ? opportunityData.thematic_areas.split(',').map(t => t.trim()) : null,
+    target_countries: opportunityData.target_countries ? opportunityData.target_countries.split(',').map(t => t.trim()) : null,
+    geographic_focus: opportunityData.geographic_focus ? opportunityData.geographic_focus.split(',').map(t => t.trim()) : null,
+    target_populations: opportunityData.target_populations ? opportunityData.target_populations.split(',').map(t => t.trim()) : null,
+    application_requirements: opportunityData.application_requirements ? opportunityData.application_requirements.split(',').map(t => t.trim()) : null,
+  } as FundingOpportunityInsert;
+
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .insert(processedData)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function updateFundingOpportunity(id: string, opportunityData: FundingOpportunityUpdate): Promise<FundingOpportunity> {
+  const supabase = createClient();
+
+  // Convert array fields from comma-separated strings to arrays
+  const processedData = {
+    ...opportunityData,
+    tags: opportunityData.tags ? opportunityData.tags.split(',').map(t => t.trim()) : undefined,
+    thematic_areas: opportunityData.thematic_areas ? opportunityData.thematic_areas.split(',').map(t => t.trim()) : undefined,
+    target_countries: opportunityData.target_countries ? opportunityData.target_countries.split(',').map(t => t.trim()) : undefined,
+    geographic_focus: opportunityData.geographic_focus ? opportunityData.geographic_focus.split(',').map(t => t.trim()) : undefined,
+    target_populations: opportunityData.target_populations ? opportunityData.target_populations.split(',').map(t => t.trim()) : undefined,
+    application_requirements: opportunityData.application_requirements ? opportunityData.application_requirements.split(',').map(t => t.trim()) : undefined,
+  } as FundingOpportunityInsert;
+
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .update(processedData)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteFundingOpportunity(id: string): Promise<void> {
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from('funding_opportunities')
     .delete()
     .eq('id', id);
 

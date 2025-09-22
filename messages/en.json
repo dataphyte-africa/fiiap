@@ -12,7 +12,8 @@
             "blogs": "Blogs",
             "events": "Events",
             "resources": "Resources",
-            "courses": "Courses"
+            "courses": "Courses",
+            "funding": "Funding Opportunities"
         },
         "hero": {
             "title": "Connect. Collaborate. Grow:",
@@ -289,6 +290,45 @@
         "error": {
             "title": "Something went wrong",
             "description": "We couldn't load the resources. Please try again later."
+        }
+    },
+    "funding": {
+        "page": {
+            "title": "Funding Opportunities",
+            "description": "Discover grants, fellowships, and funding opportunities for civil society organizations across West Africa."
+        },
+        "hero": {
+            "title": "Funding Opportunities",
+            "description": "Discover grants, fellowships, and funding opportunities for civil society organizations across West Africa."
+        },
+        "featured": {
+            "title": "Featured Opportunities",
+            "description": "Don't miss these highlighted funding opportunities from verified funders and organizations."
+        },
+        "all": {
+            "title": "All Funding Opportunities",
+            "description": "Explore our comprehensive collection of funding opportunities"
+        },
+        "search": {
+            "placeholder": "Search funding opportunities by title, funder, description, or tags..."
+        },
+        "filters": {
+            "type": "Opportunity Type",
+            "status": "Status"
+        },
+        "results": {
+            "showing": "Showing {count} of {total} funding opportunities",
+            "showingFiltered": "Showing {count} of {total} funding opportunities for",
+            "ofType": "of type",
+            "withStatus": "with status"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "error": {
+            "title": "Something went wrong",
+            "description": "We couldn't load the funding opportunities. Please try again later."
         }
     },
     "events": {

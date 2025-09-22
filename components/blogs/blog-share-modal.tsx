@@ -120,11 +120,11 @@ export function BlogShareModal({ title, url, excerpt, trigger }: BlogShareModalP
   );
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen} >
       <DialogTrigger asChild>
         {trigger || defaultTrigger}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className=" w-3xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Share2 className="h-5 w-5" />
@@ -139,9 +139,9 @@ export function BlogShareModal({ title, url, excerpt, trigger }: BlogShareModalP
           </button>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="space-y-6 w-full max-w-full">
           {/* Social Media Platforms */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {socialPlatforms.map((platform) => (
               <button
                 key={platform.name}
@@ -190,7 +190,7 @@ export function BlogShareModal({ title, url, excerpt, trigger }: BlogShareModalP
 
           {/* Article Preview */}
           <div className="bg-gray-50 rounded-lg p-4">
-            <h4 className="font-medium text-gray-900 text-sm line-clamp-2 mb-1">
+            <h4 className="font-medium text-gray-900 text-sm line-clamp-1 mb-1">
               {title}
             </h4>
             {excerpt && (
@@ -198,9 +198,9 @@ export function BlogShareModal({ title, url, excerpt, trigger }: BlogShareModalP
                 {excerpt}
               </p>
             )}
-            <p className="text-xs text-gray-400 mt-2 truncate">
+            {/* <p className="text-xs text-gray-400 mt-2 truncate line-clamp-1">
               {fullUrl}
-            </p>
+            </p> */}
           </div>
         </div>
       </DialogContent>

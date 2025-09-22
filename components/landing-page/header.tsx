@@ -41,6 +41,10 @@ export const Header =  ({cookieLang, children}: {cookieLang: string, children: R
          href: "/courses"
       },
       {
+         label: t('funding'),
+         href: "/funding-opportunities"
+      },
+      {
          label: t('events'),
          href: "/events"
 
@@ -52,11 +56,11 @@ export const Header =  ({cookieLang, children}: {cookieLang: string, children: R
             {/* <Image src="/logo.png" alt="logo" width={100} height={100} className='hidden md:block' />
             <Image src="/logo.png" alt="logo" width={80} height={80} className='block md:hidden' /> */}
             <Link href="/">
-            <h1 className='text-lg md:text-2xl font-bold'>{t('title')}</h1>
+            <h1 className='text-lg md:text-xl font-bold'>{t('title')}</h1>
             </Link>
         </div>
 
-        <div className='hidden md:flex gap-8 items-center'>
+        <div className='hidden md:flex gap-4 items-center'>
             {NavLinks.map((link) => (
                <Button variant="link" asChild key={link.label} className={pathname === link.href ? "bg-primary/20" : ""}>
                 <Link href={link.href}>

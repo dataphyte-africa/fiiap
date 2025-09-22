@@ -991,6 +991,159 @@ export type Database = {
           },
         ]
       }
+      funding_opportunities: {
+        Row: {
+          application_deadline: string | null
+          application_requirements: string[] | null
+          application_url: string | null
+          created_at: string | null
+          created_by: string | null
+          currency: string | null
+          description: string | null
+          eligibility_criteria: string | null
+          featured_image_url: string | null
+          funder_contact_email: string | null
+          funder_contact_person: string | null
+          funder_description: string | null
+          funder_logo_url: string | null
+          funder_name: string
+          funder_type:
+            | Database["public"]["Enums"]["funding_source_type_enum"]
+            | null
+          funder_website: string | null
+          funding_amount_max: number | null
+          funding_amount_min: number | null
+          funding_duration_months: number | null
+          funding_period_end: string | null
+          funding_period_start: string | null
+          geographic_focus:
+            | Database["public"]["Enums"]["geographic_focus_enum"][]
+            | null
+          id: string
+          is_featured: boolean | null
+          is_verified: boolean | null
+          is_visible: boolean | null
+          language: Database["public"]["Enums"]["language_enum"] | null
+          opportunity_type: Database["public"]["Enums"]["opportunity_type_enum"]
+          search_vector: unknown | null
+          selection_criteria: string | null
+          slug: string
+          status: Database["public"]["Enums"]["opportunity_status_enum"] | null
+          summary: string | null
+          tags: string[] | null
+          target_countries: string[] | null
+          target_populations:
+            | Database["public"]["Enums"]["target_population_enum"][]
+            | null
+          thematic_areas: string[] | null
+          title: string
+          updated_at: string | null
+          verified_at: string | null
+          verified_by: string | null
+          view_count: number | null
+        }
+        Insert: {
+          application_deadline?: string | null
+          application_requirements?: string[] | null
+          application_url?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          currency?: string | null
+          description?: string | null
+          eligibility_criteria?: string | null
+          featured_image_url?: string | null
+          funder_contact_email?: string | null
+          funder_contact_person?: string | null
+          funder_description?: string | null
+          funder_logo_url?: string | null
+          funder_name: string
+          funder_type?:
+            | Database["public"]["Enums"]["funding_source_type_enum"]
+            | null
+          funder_website?: string | null
+          funding_amount_max?: number | null
+          funding_amount_min?: number | null
+          funding_duration_months?: number | null
+          funding_period_end?: string | null
+          funding_period_start?: string | null
+          geographic_focus?:
+            | Database["public"]["Enums"]["geographic_focus_enum"][]
+            | null
+          id?: string
+          is_featured?: boolean | null
+          is_verified?: boolean | null
+          is_visible?: boolean | null
+          language?: Database["public"]["Enums"]["language_enum"] | null
+          opportunity_type: Database["public"]["Enums"]["opportunity_type_enum"]
+          search_vector?: unknown | null
+          selection_criteria?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["opportunity_status_enum"] | null
+          summary?: string | null
+          tags?: string[] | null
+          target_countries?: string[] | null
+          target_populations?:
+            | Database["public"]["Enums"]["target_population_enum"][]
+            | null
+          thematic_areas?: string[] | null
+          title: string
+          updated_at?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          application_deadline?: string | null
+          application_requirements?: string[] | null
+          application_url?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          currency?: string | null
+          description?: string | null
+          eligibility_criteria?: string | null
+          featured_image_url?: string | null
+          funder_contact_email?: string | null
+          funder_contact_person?: string | null
+          funder_description?: string | null
+          funder_logo_url?: string | null
+          funder_name?: string
+          funder_type?:
+            | Database["public"]["Enums"]["funding_source_type_enum"]
+            | null
+          funder_website?: string | null
+          funding_amount_max?: number | null
+          funding_amount_min?: number | null
+          funding_duration_months?: number | null
+          funding_period_end?: string | null
+          funding_period_start?: string | null
+          geographic_focus?:
+            | Database["public"]["Enums"]["geographic_focus_enum"][]
+            | null
+          id?: string
+          is_featured?: boolean | null
+          is_verified?: boolean | null
+          is_visible?: boolean | null
+          language?: Database["public"]["Enums"]["language_enum"] | null
+          opportunity_type?: Database["public"]["Enums"]["opportunity_type_enum"]
+          search_vector?: unknown | null
+          selection_criteria?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["opportunity_status_enum"] | null
+          summary?: string | null
+          tags?: string[] | null
+          target_countries?: string[] | null
+          target_populations?:
+            | Database["public"]["Enums"]["target_population_enum"][]
+            | null
+          thematic_areas?: string[] | null
+          title?: string
+          updated_at?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           action_url: string | null
@@ -2675,6 +2828,32 @@ export type Database = {
       export_status_enum: "pending" | "processing" | "completed" | "failed"
       file_type_enum: "image" | "pdf" | "video" | "audio" | "document" | "other"
       forum_moderation_status_enum: "approved" | "flagged" | "rejected"
+      funding_source_type_enum:
+        | "government"
+        | "foundation"
+        | "ngo"
+        | "international_organization"
+        | "private_corporation"
+        | "multilateral_agency"
+        | "bilateral_agency"
+        | "university"
+        | "research_institute"
+        | "other"
+      geographic_focus_enum:
+        | "global"
+        | "africa"
+        | "west_africa"
+        | "east_africa"
+        | "southern_africa"
+        | "central_africa"
+        | "north_africa"
+        | "nigeria"
+        | "benin"
+        | "gambia"
+        | "regional"
+        | "national"
+        | "local"
+        | "other"
       language_enum: "English" | "French"
       milestone_status_enum:
         | "planned"
@@ -2682,6 +2861,20 @@ export type Database = {
         | "achieved"
         | "delayed"
         | "cancelled"
+      opportunity_status_enum:
+        | "open"
+        | "closing_soon"
+        | "closed"
+        | "postponed"
+        | "cancelled"
+      opportunity_type_enum:
+        | "grant"
+        | "fellowship"
+        | "donor_call"
+        | "scholarship"
+        | "award"
+        | "loan"
+        | "other"
       organisation_affiliation_status_enum:
         | "pending"
         | "approved"
@@ -2899,6 +3092,34 @@ export const Constants = {
       export_status_enum: ["pending", "processing", "completed", "failed"],
       file_type_enum: ["image", "pdf", "video", "audio", "document", "other"],
       forum_moderation_status_enum: ["approved", "flagged", "rejected"],
+      funding_source_type_enum: [
+        "government",
+        "foundation",
+        "ngo",
+        "international_organization",
+        "private_corporation",
+        "multilateral_agency",
+        "bilateral_agency",
+        "university",
+        "research_institute",
+        "other",
+      ],
+      geographic_focus_enum: [
+        "global",
+        "africa",
+        "west_africa",
+        "east_africa",
+        "southern_africa",
+        "central_africa",
+        "north_africa",
+        "nigeria",
+        "benin",
+        "gambia",
+        "regional",
+        "national",
+        "local",
+        "other",
+      ],
       language_enum: ["English", "French"],
       milestone_status_enum: [
         "planned",
@@ -2906,6 +3127,22 @@ export const Constants = {
         "achieved",
         "delayed",
         "cancelled",
+      ],
+      opportunity_status_enum: [
+        "open",
+        "closing_soon",
+        "closed",
+        "postponed",
+        "cancelled",
+      ],
+      opportunity_type_enum: [
+        "grant",
+        "fellowship",
+        "donor_call",
+        "scholarship",
+        "award",
+        "loan",
+        "other",
       ],
       organisation_affiliation_status_enum: [
         "pending",

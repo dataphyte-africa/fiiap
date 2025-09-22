@@ -157,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-4 py-4">
           <Link 
             href="/blogs" 
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors"
+            className="inline-flex items-center text-primary  hover:text-primary/80 transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Stories
@@ -231,7 +231,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
 
           {/* Stats and Actions */}
-          <div className="flex items-center justify-between py-4 border-y border-gray-200">
+          <div className="flex items-center justify-between py-4 border-y border-gray-200 flex-wrap gap-4">
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-1">
                 <Eye className="h-4 w-4" />
@@ -285,7 +285,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Article Footer */}
         <footer className="border-t border-gray-200 pt-8 mb-12">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="text-sm text-gray-500">
               Last updated: {formatDate(post.updated_at)}
             </div>

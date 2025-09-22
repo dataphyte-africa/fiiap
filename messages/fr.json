@@ -12,7 +12,8 @@
             "blogs": "Blogs",
             "events": "Événements",
             "resources": "Ressources",
-            "courses": "Cours"
+            "courses": "Cours",
+            "funding": "Opportunités de Financement"
         },
         "hero": {
             "title": "Connecter. Collaborer. Grandir :",
@@ -289,6 +290,45 @@
         "error": {
             "title": "Quelque chose s'est mal passé",
             "description": "Nous n'avons pas pu charger les ressources. Veuillez réessayer plus tard."
+        }
+    },
+    "funding": {
+        "page": {
+            "title": "Opportunités de Financement",
+            "description": "Découvrez des subventions, bourses et opportunités de financement pour les organisations de la société civile en Afrique de l'Ouest."
+        },
+        "hero": {
+            "title": "Opportunités de Financement",
+            "description": "Découvrez des subventions, bourses et opportunités de financement pour les organisations de la société civile en Afrique de l'Ouest."
+        },
+        "featured": {
+            "title": "Opportunités en Vedette",
+            "description": "Ne manquez pas ces opportunités de financement mises en avant par des bailleurs de fonds et organisations vérifiés."
+        },
+        "all": {
+            "title": "Toutes les Opportunités de Financement",
+            "description": "Explorez notre collection complète d'opportunités de financement"
+        },
+        "search": {
+            "placeholder": "Rechercher des opportunités de financement par titre, bailleur, description ou tags..."
+        },
+        "filters": {
+            "type": "Type d'Opportunité",
+            "status": "Statut"
+        },
+        "results": {
+            "showing": "Affichage de {count} sur {total} opportunités de financement",
+            "showingFiltered": "Affichage de {count} sur {total} opportunités de financement pour",
+            "ofType": "de type",
+            "withStatus": "avec le statut"
+        },
+        "pagination": {
+            "previous": "Précédent",
+            "next": "Suivant"
+        },
+        "error": {
+            "title": "Quelque chose s'est mal passé",
+            "description": "Nous n'avons pas pu charger les opportunités de financement. Veuillez réessayer plus tard."
         }
     },
     "events": {

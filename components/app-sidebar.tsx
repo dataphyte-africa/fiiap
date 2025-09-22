@@ -112,6 +112,11 @@ const adminNavItems = [
       icon:  LucideGraduationCap,
   },
   {
+      title: "Manage Funding Opportunities",
+      url: '/admin/funding-opportunities',
+      icon: LucideBriefcaseBusiness,
+  },
+  {
       title: "Manage Events",
       url: '/admin/events',
       icon: LucideUsers,

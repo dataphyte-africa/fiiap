@@ -5,11 +5,14 @@ import type { Database } from "@/types/db";
 type Event = Database['public']['Tables']['events']['Row'];
 type ResourceLibrary = Database['public']['Tables']['resource_library']['Row'];
 type OnlineCourse = Database['public']['Tables']['online_courses']['Row'];
-
+type FundingOpportunity = Database['public']['Tables']['funding_opportunities']['Row'];
+export type FundingOpportunityType = FundingOpportunity['opportunity_type'];
+export type FundingOpportunityStatus = FundingOpportunity['status'];
 // Common interfaces
 export interface PublicContentFilters {
   search?: string;
-  type?: string;
+  type?: FundingOpportunityType | string;
+  status?: FundingOpportunityStatus;
   featured?: boolean;
   is_virtual?: boolean;
   limit?: number;
@@ -252,6 +255,103 @@ export async function getFeaturedCourses(): Promise<OnlineCourse[]> {
 
   if (error) throw error;
   return data || [];
+}
+
+// ========== PUBLIC FUNDING OPPORTUNITIES ==========
+
+export async function getPublicFundingOpportunities(filters: PublicContentFilters = {}): Promise<PaginatedPublicResult<FundingOpportunity>> {
+  const supabase = await createClient();
+  
+  const {
+    search,
+    type, // opportunity_type
+    status,
+    featured,
+    limit = 12,
+    page = 1
+  } = filters;
+
+  let query = supabase
+    .from('funding_opportunities')
+    .select('*', { count: 'exact' })
+    .eq('is_visible', true);
+
+  // Apply filters
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%,summary.ilike.%${search}%,funder_name.ilike.%${search}%,tags.cs.{${search}}`);
+  }
+  if (type) {
+    query = query.eq('opportunity_type', type as FundingOpportunityType);
+  }
+  if (status) {
+    query = query.eq('status', status);
+  }
+  if (typeof featured === 'boolean') {
+    query = query.eq('is_featured', featured);
+  }
+
+  // Apply sorting and pagination
+  query = query.order('created_at', { ascending: false });
+  const offset = (page - 1) * limit;
+  query = query.range(offset, offset + limit - 1);
+
+  const { data, error, count } = await query;
+
+  if (error) throw error;
+
+  const totalPages = Math.ceil((count || 0) / limit);
+
+  return {
+    data: data || [],
+    count: count || 0,
+    totalPages,
+    currentPage: page,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+  };
+}
+
+export async function getFeaturedFundingOpportunities(): Promise<FundingOpportunity[]> {
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .select('*')
+    .eq('is_visible', true)
+    .eq('is_featured', true)
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  if (error) throw error;
+  return data || [];
+}
+
+export async function getFundingOpportunityById(id: string): Promise<FundingOpportunity | null> {
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .select('*')
+    .eq('id', id)
+    .eq('is_visible', true)
+    .single();
+
+  if (error) return null;
+  return data;
+}
+
+export async function getFundingOpportunityBySlug(slug: string): Promise<FundingOpportunity | null> {
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase
+    .from('funding_opportunities')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_visible', true)
+    .single();
+
+  if (error) return null;
+  return data;
 }
 
 export async function getCourseById(id: string): Promise<OnlineCourse | null> {
