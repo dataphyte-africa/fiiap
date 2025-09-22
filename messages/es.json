@@ -1,6 +1,8 @@
 {
     "landingPage": {
         "navigation": {
+            "register": "Registrarse",
+            "title": "Centro de Paz Electoral",
             "home": "Inicio",
             "about": "Acerca de",
             "contact": "Contacto",
@@ -42,7 +44,7 @@
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Benín",
-                "gambia": "Gambia",
+                "gambia": "La Gambia",
                 "organizations": "organizaciones",
                 "resources": "recursos"
             },
@@ -50,7 +52,7 @@
         },
         "feature3": {
             "title": "Organizaciones destacadas",
-            "subtitle": "Descubre OSCs impactantes que están marcando la diferencia en Nigeria, Benín y Gambia.",
+            "subtitle": "Descubre OSCs impactantes que están marcando la diferencia en África Occidental.",
             "viewAllButton": "Ver todas →",
             "projects": "Proyectos",
             "blogs": "Blogs"

@@ -1,6 +1,8 @@
 {
     "landingPage": {
         "navigation": {
+            "register": "Register",
+            "title": "Electoral Peace Hub",
             "home": "Home",
             "about": "About",
             "contact": "Contact",
@@ -42,7 +44,7 @@
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Benin",
-                "gambia": "Gambia",
+                "gambia": "The Gambia",
                 "organizations": "organizations",
                 "resources": "resources"
             },
@@ -50,7 +52,7 @@
         },
         "feature3": {
             "title": "Featured organizations",
-            "subtitle": "Discover impactful CSOs making a difference across Nigeria, Benin, and The Gambia.",
+            "subtitle": "Discover impactful CSOs making a difference across West Africa.",
             "viewAllButton": "View all →",
             "projects": "Projects",
             "blogs": "Blogs"

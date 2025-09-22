@@ -49,8 +49,11 @@ export const Header =  ({cookieLang, children}: {cookieLang: string, children: R
   return (
     <div className='flex justify-between items-center w-full py-4 px-8 border'>
         <div>
-            <Image src="/logo.png" alt="logo" width={100} height={100} className='hidden md:block' />
-            <Image src="/logo.png" alt="logo" width={80} height={80} className='block md:hidden' />
+            {/* <Image src="/logo.png" alt="logo" width={100} height={100} className='hidden md:block' />
+            <Image src="/logo.png" alt="logo" width={80} height={80} className='block md:hidden' /> */}
+            <Link href="/">
+            <h1 className='text-lg md:text-2xl font-bold'>{t('title')}</h1>
+            </Link>
         </div>
 
         <div className='hidden md:flex gap-8 items-center'>

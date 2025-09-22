@@ -9,6 +9,14 @@ export { SetUserOrganisationModal } from './set-user-organisation-modal'
 export { AdminBlogPostsTable } from './admin-blog-posts-table'
 export { BlogModerationModal } from './blog-moderation-modal'
 
+// Admin Forum Management
+export { AdminForumPostsTable } from './admin-forum-posts-table'
+export { AdminForumPostCard } from './admin-forum-post-card'
+export { AdminForumPostDetail } from './admin-forum-post-detail'
+export { AdminForumReplyCard } from './admin-forum-reply-card'
+export { ForumModerationModal } from './forum-moderation-modal'
+export { ForumReplyModerationModal } from './forum-reply-moderation-modal'
+
 // Admin Content Management
 export { EventForm } from './event-form'
 export { ResourceForm } from './resource-form'

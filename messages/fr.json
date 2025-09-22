@@ -1,6 +1,8 @@
 {
     "landingPage": {
         "navigation": {
+            "register": "S'inscrire",
+            "title": "Hub de Paix Électorale",
             "home": "Accueil",
             "about": "À propos",
             "contact": "Contact",
@@ -42,7 +44,7 @@
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Bénin",
-                "gambia": "Gambie",
+                "gambia": "La Gambie",
                 "organizations": "organisations",
                 "resources": "ressources"
             },
@@ -50,7 +52,7 @@
         },
         "feature3": {
             "title": "Organisations en vedette",
-            "subtitle": "Découvrez des OSC ayant un impact qui font la différence à travers le Nigeria, le Bénin et la Gambie.",
+            "subtitle": "Découvrez des OSC ayant un impact qui font la différence à travers le Afrique de l'Ouest.",
             "viewAllButton": "Voir tout →",
             "projects": "Projets",
             "blogs": "Blogs"

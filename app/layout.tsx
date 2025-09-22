@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -37,19 +36,19 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <ThemeProvider
+        {/* <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem
+          // enableSystem
           disableTransitionOnChange
-        >
+        > */}
           <ReactQueryProvider>
             <NextIntlClientProvider>
               {children}
               <Toaster position="top-right" richColors />
             </NextIntlClientProvider>
           </ReactQueryProvider>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

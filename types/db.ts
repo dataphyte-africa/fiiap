@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       analytics_events: {
@@ -766,6 +741,12 @@ export type Database = {
           id: string
           is_solution: boolean | null
           like_count: number | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          moderation_status:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           parent_reply_id: string | null
           thread_id: string
           updated_at: string | null
@@ -777,6 +758,12 @@ export type Database = {
           id?: string
           is_solution?: boolean | null
           like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           parent_reply_id?: string | null
           thread_id: string
           updated_at?: string | null
@@ -788,11 +775,31 @@ export type Database = {
           id?: string
           is_solution?: boolean | null
           like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           parent_reply_id?: string | null
           thread_id?: string
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "forum_replies_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_replies_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "forum_replies_parent_reply_id_fkey"
             columns: ["parent_reply_id"]
@@ -880,6 +887,12 @@ export type Database = {
           last_reply_at: string | null
           last_reply_by: string | null
           like_count: number | null
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          moderation_status:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           organisation_id: string | null
           reply_count: number | null
           search_vector: unknown | null
@@ -900,6 +913,12 @@ export type Database = {
           last_reply_at?: string | null
           last_reply_by?: string | null
           like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           organisation_id?: string | null
           reply_count?: number | null
           search_vector?: unknown | null
@@ -920,6 +939,12 @@ export type Database = {
           last_reply_at?: string | null
           last_reply_by?: string | null
           like_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          moderation_status?:
+            | Database["public"]["Enums"]["forum_moderation_status_enum"]
+            | null
           organisation_id?: string | null
           reply_count?: number | null
           search_vector?: unknown | null
@@ -934,6 +959,20 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "forum_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_threads_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_threads_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
@@ -2151,11 +2190,126 @@ export type Database = {
       }
     }
     Functions: {
+      admin_get_forum_thread_replies: {
+        Args: {
+          limit_param?: number
+          offset_param?: number
+          thread_id_param: string
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          child_replies_count: number
+          content: string
+          created_at: string
+          id: string
+          is_solution: boolean
+          like_count: number
+          moderated_at: string
+          moderated_by: string
+          moderated_by_name: string
+          moderation_notes: string
+          moderation_status: Database["public"]["Enums"]["forum_moderation_status_enum"]
+          parent_reply_id: string
+          thread_id: string
+          updated_at: string
+          user_has_liked: boolean
+        }[]
+      }
+      admin_get_forum_thread_with_likes: {
+        Args: { thread_id_param: string }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          category_color_hex: string
+          category_icon: string
+          category_id: string
+          category_name_en: string
+          category_name_es: string
+          category_name_fr: string
+          content: string
+          created_at: string
+          id: string
+          language: string
+          like_count: number
+          media: Json
+          moderated_at: string
+          moderated_by: string
+          moderated_by_name: string
+          moderation_notes: string
+          moderation_status: Database["public"]["Enums"]["forum_moderation_status_enum"]
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          reply_count: number
+          tags: string[]
+          title: string
+          updated_at: string
+          user_has_liked: boolean
+          view_count: number
+        }[]
+      }
+      admin_get_forum_threads_with_likes: {
+        Args: {
+          category_id_param?: string
+          limit_param?: number
+          offset_param?: number
+        }
+        Returns: {
+          author_avatar_url: string
+          author_id: string
+          author_name: string
+          category_color_hex: string
+          category_icon: string
+          category_id: string
+          category_name_en: string
+          category_name_es: string
+          category_name_fr: string
+          content: string
+          created_at: string
+          id: string
+          language: string
+          like_count: number
+          media: Json
+          moderated_at: string
+          moderated_by: string
+          moderated_by_name: string
+          moderation_notes: string
+          moderation_status: Database["public"]["Enums"]["forum_moderation_status_enum"]
+          organisation_id: string
+          organisation_logo_url: string
+          organisation_name: string
+          reply_count: number
+          tags: string[]
+          title: string
+          updated_at: string
+          user_has_liked: boolean
+          view_count: number
+        }[]
+      }
       admin_moderate_blog_post: {
         Args: {
           admin_notes?: string
           blog_post_id_param: string
           new_moderation_status: Database["public"]["Enums"]["blog_moderation_status_enum"]
+        }
+        Returns: boolean
+      }
+      admin_moderate_forum_reply: {
+        Args: {
+          admin_notes?: string
+          new_moderation_status: Database["public"]["Enums"]["forum_moderation_status_enum"]
+          reply_id_param: string
+        }
+        Returns: boolean
+      }
+      admin_moderate_forum_thread: {
+        Args: {
+          admin_notes?: string
+          new_moderation_status: Database["public"]["Enums"]["forum_moderation_status_enum"]
+          thread_id_param: string
         }
         Returns: boolean
       }
@@ -2324,7 +2478,7 @@ export type Database = {
           published_at: string
           slug: string
           status: string
-          tags: string[]
+          tags: Json
           title: string
           total_count: number
           updated_at: string
@@ -2520,6 +2674,7 @@ export type Database = {
       country_enum: "Nigeria" | "Benin" | "Gambia"
       export_status_enum: "pending" | "processing" | "completed" | "failed"
       file_type_enum: "image" | "pdf" | "video" | "audio" | "document" | "other"
+      forum_moderation_status_enum: "approved" | "flagged" | "rejected"
       language_enum: "English" | "French"
       milestone_status_enum:
         | "planned"
@@ -2736,9 +2891,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       blog_moderation_status_enum: ["approved", "flagged", "rejected"],
@@ -2746,6 +2898,7 @@ export const Constants = {
       country_enum: ["Nigeria", "Benin", "Gambia"],
       export_status_enum: ["pending", "processing", "completed", "failed"],
       file_type_enum: ["image", "pdf", "video", "audio", "document", "other"],
+      forum_moderation_status_enum: ["approved", "flagged", "rejected"],
       language_enum: ["English", "French"],
       milestone_status_enum: [
         "planned",
