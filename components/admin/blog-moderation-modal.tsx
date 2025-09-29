@@ -17,6 +17,7 @@ import { Loader2, Flag, CheckCircle, XCircle, AlertTriangle } from 'lucide-react
 import { moderateBlogPost } from '@/lib/data/admin-blogs';
 import type { Database } from '@/types/db';
 import type { AdminBlogPost } from '@/lib/data/admin-blogs';
+import { useTranslations } from 'next-intl';
 
 type BlogModerationStatus = Database['public']['Enums']['blog_moderation_status_enum'];
 
@@ -28,35 +29,35 @@ interface BlogModerationModalProps {
   action: BlogModerationStatus;
 }
 
-const ACTION_CONFIG = {
+const getActionConfig = (t: (key: string) => string) => ({
   approved: {
-    title: 'Approve Blog Post',
-    description: 'This blog post will be marked as approved and will be visible to users.',
+    title: t('admin.modals.moderation.title'),
+    description: t('admin.modals.moderation.confirmApproval'),
     icon: CheckCircle,
     color: 'text-green-600',
-    buttonText: 'Approve Post',
+    buttonText: t('admin.modals.moderation.approve'),
     buttonClass: 'bg-green-600 hover:bg-green-700',
-    placeholder: 'Optional approval notes...'
+    placeholder: t('admin.modals.moderation.reasonPlaceholder')
   },
   flagged: {
-    title: 'Flag Blog Post',
-    description: 'This blog post will be flagged for review and hidden from public view.',
+    title: t('admin.modals.moderation.title'),
+    description: t('admin.modals.moderation.confirmFlagging'),
     icon: Flag,
     color: 'text-yellow-600',
-    buttonText: 'Flag Post',
+    buttonText: t('admin.modals.moderation.flag'),
     buttonClass: 'bg-yellow-600 hover:bg-yellow-700',
-    placeholder: 'Reason for flagging (required)...'
+    placeholder: t('admin.modals.moderation.reasonPlaceholder')
   },
   rejected: {
-    title: 'Reject Blog Post',
-    description: 'This blog post will be rejected and removed from public view.',
+    title: t('admin.modals.moderation.title'),
+    description: t('admin.modals.moderation.confirmRejection'),
     icon: XCircle,
     color: 'text-red-600',
-    buttonText: 'Reject Post',
+    buttonText: t('admin.modals.moderation.reject'),
     buttonClass: 'bg-red-600 hover:bg-red-700',
-    placeholder: 'Reason for rejection (required)...'
+    placeholder: t('admin.modals.moderation.reasonPlaceholder')
   }
-};
+});
 
 export function BlogModerationModal({
   isOpen,
@@ -65,17 +66,18 @@ export function BlogModerationModal({
   blogPost,
   action
 }: BlogModerationModalProps) {
+  const t = useTranslations();
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const config = ACTION_CONFIG[action];
+  const config = getActionConfig(t)[action];
   const Icon = config.icon;
   const requiresNotes = action === 'flagged' || action === 'rejected';
 
   const handleSubmit = async () => {
     if (requiresNotes && !notes.trim()) {
-      setError('Notes are required for this action');
+      setError(t('admin.forms.validation.required'));
       return;
     }
 
@@ -94,10 +96,10 @@ export function BlogModerationModal({
         onClose();
         setNotes('');
       } else {
-        setError(result.error || 'An unexpected error occurred');
+        setError(result.error || t('admin.errors.serverError'));
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unexpected error occurred');
+      setError(error instanceof Error ? error.message : t('admin.errors.serverError'));
     } finally {
       setLoading(false);
     }
@@ -127,19 +129,19 @@ export function BlogModerationModal({
         <div className="space-y-4">
           {/* Blog Post Preview */}
           <div className="bg-gray-50 rounded-lg p-4">
-            <h4 className="font-medium text-gray-900 mb-2">Blog Post Details</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('admin.common.title')}</h4>
             <div className="space-y-2 text-sm">
               <div>
-                <span className="font-medium">Title:</span> {blogPost.title}
+                <span className="font-medium">{t('admin.common.title')}:</span> {blogPost.title}
               </div>
               <div>
-                <span className="font-medium">Author:</span> {blogPost.profiles?.name || 'Unknown'}
+                <span className="font-medium">{t('admin.common.author')}:</span> {blogPost.profiles?.name || t('admin.common.unknown')}
               </div>
               <div>
-                <span className="font-medium">Organisation:</span> {blogPost.organisations?.name || 'Unknown'}
+                <span className="font-medium">{t('admin.common.organisation')}:</span> {blogPost.organisations?.name || t('admin.common.unknown')}
               </div>
               <div>
-                <span className="font-medium">Status:</span>{' '}
+                <span className="font-medium">{t('admin.common.status')}:</span>{' '}
                 <span className={`px-2 py-1 rounded-full text-xs ${
                   blogPost.status === 'published' ? 'bg-green-100 text-green-800' :
                   blogPost.status === 'draft' ? 'bg-gray-100 text-gray-800' :
@@ -151,7 +153,7 @@ export function BlogModerationModal({
               </div>
               {blogPost.moderation_status && (
                 <div>
-                  <span className="font-medium">Current Moderation:</span>{' '}
+                  <span className="font-medium">{t('admin.common.moderation')}:</span>{' '}
                   <span className={`px-2 py-1 rounded-full text-xs ${
                     blogPost.moderation_status === 'approved' ? 'bg-green-100 text-green-800' :
                     blogPost.moderation_status === 'flagged' ? 'bg-yellow-100 text-yellow-800' :
@@ -167,7 +169,7 @@ export function BlogModerationModal({
           {/* Notes Input */}
           <div className="space-y-2">
             <Label htmlFor="notes">
-              {requiresNotes ? 'Notes (Required)' : 'Notes (Optional)'}
+              {requiresNotes ? `${t('admin.modals.moderation.reason')} (${t('admin.forms.required')})` : `${t('admin.modals.moderation.reason')} (${t('admin.forms.optional')})`}
             </Label>
             <Textarea
               id="notes"
@@ -180,7 +182,7 @@ export function BlogModerationModal({
             />
             {requiresNotes && !notes.trim() && (
               <p className="text-sm text-red-600">
-                Please provide a reason for this action.
+                {t('admin.forms.validation.required')}
               </p>
             )}
           </div>
@@ -190,18 +192,18 @@ export function BlogModerationModal({
             <div className="bg-blue-50 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-1">
                 <AlertTriangle className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-900">Previous Moderation</span>
+                <span className="text-sm font-medium text-blue-900">{t('admin.common.previousModeration')}</span>
               </div>
               <div className="text-sm text-blue-800">
                 <p>
-                  Status: <span className="font-medium">{blogPost.moderation_status}</span>
+                  {t('admin.common.status')}: <span className="font-medium">{blogPost.moderation_status}</span>
                 </p>
                 <p>
-                  Moderated by: <span className="font-medium">{blogPost.moderated_by_profile.name}</span>
+                  {t('admin.common.moderatedBy')}: <span className="font-medium">{blogPost.moderated_by_profile.name}</span>
                 </p>
                 {blogPost.moderated_at && (
                   <p>
-                    Date: <span className="font-medium">
+                    {t('admin.common.date')}: <span className="font-medium">
                       {new Date(blogPost.moderated_at).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
@@ -214,7 +216,7 @@ export function BlogModerationModal({
                 )}
                 {blogPost.moderation_notes && (
                   <p className="mt-1">
-                    <span className="font-medium">Notes:</span> {blogPost.moderation_notes}
+                    <span className="font-medium">{t('admin.modals.moderation.reason')}:</span> {blogPost.moderation_notes}
                   </p>
                 )}
               </div>
@@ -225,7 +227,7 @@ export function BlogModerationModal({
             <Alert className="border-red-200 bg-red-50">
               <XCircle className="w-4 h-4 text-red-600" />
               <div className="text-red-800">
-                <p className="font-medium">Error</p>
+                <p className="font-medium">{t('admin.errors.serverError')}</p>
                 <p className="text-sm">{error}</p>
               </div>
             </Alert>
@@ -238,7 +240,7 @@ export function BlogModerationModal({
             onClick={handleClose}
             disabled={loading}
           >
-            Cancel
+            {t('admin.common.cancel')}
           </Button>
           <Button 
             onClick={handleSubmit}
@@ -248,7 +250,7 @@ export function BlogModerationModal({
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Processing...
+                {t('admin.common.processing')}
               </>
             ) : (
               <>

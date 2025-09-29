@@ -548,7 +548,7 @@ const createMutation = useMutation({
         <Button
           type="submit"
           disabled={loading || saving}
-          onClick={() => setValue('status', 'published')}
+          onClick={() => mode == "create" && setValue('status', 'published')}
         >
           {loading || saving ? (
             <div className="flex items-center gap-2">
@@ -557,7 +557,7 @@ const createMutation = useMutation({
              {saving && ("Uploading...")}
             </div>
           ) : (   
-            mode === 'create' ? 'Create Post' : 'Update Post'
+            mode === 'create' ? 'Create Blog Post' : 'Update Blog Post'
           )}
         </Button>
       </div>

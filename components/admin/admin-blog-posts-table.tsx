@@ -44,16 +44,17 @@ import {
 } from '@/lib/data/admin-blogs';
 import { BlogModerationModal } from './blog-moderation-modal';
 import type { Database } from '@/types/db';
+import { useTranslations } from 'next-intl';
 
 type BlogModerationStatus = Database['public']['Enums']['blog_moderation_status_enum'];
 type PostStatus = Database['public']['Enums']['post_status_enum'];
 
-const STATUS_LABELS: Record<PostStatus, string> = {
-  draft: 'Draft',
-  published: 'Published',
-  archived: 'Archived',
-  flagged: 'Flagged'
-};
+const getStatusLabels = (t: (key: string) => string): Record<PostStatus, string> => ({
+  draft: t('admin.common.draft'),
+  published: t('admin.common.published'),
+  archived: t('admin.common.archived'),
+  flagged: t('admin.common.flagged')
+});
 
 const STATUS_COLORS: Record<PostStatus, string> = {
   draft: 'bg-gray-100 text-gray-800 border-gray-200',
@@ -62,11 +63,11 @@ const STATUS_COLORS: Record<PostStatus, string> = {
   flagged: 'bg-red-100 text-red-800 border-red-200'
 };
 
-const MODERATION_LABELS: Record<BlogModerationStatus, string> = {
-  approved: 'Approved',
-  flagged: 'Flagged',
-  rejected: 'Rejected'
-};
+const getModerationLabels = (t: (key: string) => string): Record<BlogModerationStatus, string> => ({
+  approved: t('admin.common.approved'),
+  flagged: t('admin.common.flagged'),
+  rejected: t('admin.common.rejected')
+});
 
 const MODERATION_COLORS: Record<BlogModerationStatus, string> = {
   approved: 'bg-green-100 text-green-800 border-green-200',
@@ -76,6 +77,7 @@ const MODERATION_COLORS: Record<BlogModerationStatus, string> = {
 
 export function AdminBlogPostsTable() {
   const queryClient = useQueryClient();
+  const t = useTranslations();
   const [filters, setFilters] = useState<AdminBlogFilters>({
     page: 1,
     limit: 20,
@@ -85,6 +87,9 @@ export function AdminBlogPostsTable() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<PostStatus | 'all'>('all');
   const [selectedModerationStatus, setSelectedModerationStatus] = useState<BlogModerationStatus | 'all'>('all');
+  
+  const STATUS_LABELS = getStatusLabels(t);
+  const MODERATION_LABELS = getModerationLabels(t);
 
   // Modal states
   const [moderationModal, setModerationModal] = useState<{
@@ -205,10 +210,10 @@ export function AdminBlogPostsTable() {
       <Card>
         <CardContent className="p-6">
           <div className="text-center text-red-600">
-            <p>Error loading blog posts: {error instanceof Error ? error.message : 'Unknown error'}</p>
+            <p>{t('admin.errors.loading')}: {error instanceof Error ? error.message : 'Unknown error'}</p>
             <Button onClick={() => refetch()} className="mt-2">
               <RefreshCw className="mr-2 h-4 w-4" />
-              Retry
+              {t('admin.common.refresh')}
             </Button>
           </div>
         </CardContent>
@@ -223,7 +228,7 @@ export function AdminBlogPostsTable() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Blog Post Management
+            {t('admin.pages.blogs.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -233,7 +238,7 @@ export function AdminBlogPostsTable() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Search by title, excerpt, or tags..."
+                  placeholder={t('admin.common.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   className="pl-10"
@@ -244,10 +249,10 @@ export function AdminBlogPostsTable() {
             {/* Status Filter */}
             <Select value={selectedStatus} onValueChange={handleStatusFilter}>
               <SelectTrigger className="w-full lg:w-48">
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder={t('admin.common.filter')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')}</SelectItem>
                 {Object.entries(STATUS_LABELS).map(([status, label]) => (
                   <SelectItem key={status} value={status}>
                     {label}
@@ -259,10 +264,10 @@ export function AdminBlogPostsTable() {
             {/* Moderation Status Filter */}
             <Select value={selectedModerationStatus} onValueChange={handleModerationStatusFilter}>
               <SelectTrigger className="w-full lg:w-48">
-                <SelectValue placeholder="Filter by moderation" />
+                <SelectValue placeholder={t('admin.common.moderation')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Moderation</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')}</SelectItem>
                 {Object.entries(MODERATION_LABELS).map(([status, label]) => (
                   <SelectItem key={status} value={status}>
                     {label}
@@ -271,10 +276,7 @@ export function AdminBlogPostsTable() {
               </SelectContent>
             </Select>
 
-            {/* Refresh Button */}
-            <Button variant="outline" onClick={() => refetch()}>
-              <RefreshCw className="h-4 w-4" />
-            </Button>
+        
           </div>
         </CardContent>
       </Card>
@@ -286,7 +288,7 @@ export function AdminBlogPostsTable() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Total Posts</p>
+                  <p className="text-sm text-gray-600">{t('admin.stats.totalBlogs')}</p>
                   <p className="text-2xl font-bold">{data.count}</p>
                 </div>
                 <FileText className="h-8 w-8 text-blue-500" />
@@ -297,7 +299,7 @@ export function AdminBlogPostsTable() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Published</p>
+                  <p className="text-sm text-gray-600">{t('admin.stats.publishedBlogs')}</p>
                   <p className="text-2xl font-bold text-green-600">
                     {data.data.filter(post => post.status === 'published').length}
                   </p>
@@ -310,7 +312,7 @@ export function AdminBlogPostsTable() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Flagged</p>
+                  <p className="text-sm text-gray-600">{t('admin.stats.flaggedBlogs')}</p>
                   <p className="text-2xl font-bold text-red-600">
                     {data.data.filter(post => post.moderation_status === 'flagged').length}
                   </p>
@@ -323,7 +325,7 @@ export function AdminBlogPostsTable() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Featured</p>
+                  <p className="text-sm text-gray-600">{t('admin.stats.featuredBlogs')}</p>
                   <p className="text-2xl font-bold text-yellow-600">
                     {data.data.filter(post => post.is_featured).length}
                   </p>
@@ -347,7 +349,7 @@ export function AdminBlogPostsTable() {
                     onClick={() => handleSort('title')}
                   >
                     <div className="flex items-center gap-1">
-                      Post Details
+                      {t('admin.common.title')}
                       {filters.sortBy === 'title' && (
                         <span className="text-xs text-gray-500">
                           {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -355,16 +357,16 @@ export function AdminBlogPostsTable() {
                       )}
                     </div>
                   </TableHead>
-                  <TableHead>Author & Org</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Moderation</TableHead>
-                  <TableHead>Stats</TableHead>
+                  <TableHead>{t('admin.common.author')} & {t('admin.common.organisation')}</TableHead>
+                  <TableHead>{t('admin.common.status')}</TableHead>
+                  <TableHead>{t('admin.common.moderation')}</TableHead>
+                  <TableHead>{t('admin.common.stats')}</TableHead>
                   <TableHead 
                     className="cursor-pointer hover:bg-gray-50"
                     onClick={() => handleSort('created_at')}
                   >
                     <div className="flex items-center gap-1">
-                      Dates
+                      {t('admin.common.date')}
                       {filters.sortBy === 'created_at' && (
                         <span className="text-xs text-gray-500">
                           {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -372,7 +374,7 @@ export function AdminBlogPostsTable() {
                       )}
                     </div>
                   </TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>{t('admin.common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -381,7 +383,7 @@ export function AdminBlogPostsTable() {
                     <TableCell colSpan={7} className="text-center py-8">
                       <div className="flex items-center justify-center">
                         <RefreshCw className="h-6 w-6 animate-spin text-gray-400" />
-                        <span className="ml-2 text-gray-500">Loading blog posts...</span>
+                        <span className="ml-2 text-gray-500">{t('admin.common.loading')}</span>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -390,8 +392,8 @@ export function AdminBlogPostsTable() {
                     <TableCell colSpan={7} className="text-center py-8">
                       <div className="text-gray-500">
                         <FileText className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                        <p>No blog posts found</p>
-                        {searchTerm && <p className="text-sm">Try adjusting your search criteria</p>}
+                        <p>{t('admin.common.noResults')}</p>
+                        {searchTerm && <p className="text-sm">{t('admin.common.noResults')}</p>}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -407,15 +409,15 @@ export function AdminBlogPostsTable() {
                               className="w-12 h-12 object-cover rounded flex-shrink-0"
                             />
                           )}
-                          <div className="min-w-0">
-                            <div className="font-medium text-sm line-clamp-2 mb-1">
+                          <div className="min-w-0 max-w-[200px]">
+                            <div className="font-medium text-sm line-clamp-1 mb-1 truncate">
                               {post.title}
                               {post.is_featured && (
                                 <Star className="inline w-4 h-4 text-yellow-500 ml-1" />
                               )}
                             </div>
                             {post.excerpt && (
-                              <p className="text-xs text-gray-500 line-clamp-2">
+                              <p className="text-xs text-gray-500 line-clamp-1 truncate">
                                 {post.excerpt}
                               </p>
                             )}
@@ -502,24 +504,24 @@ export function AdminBlogPostsTable() {
                           </div>
                           {post.published_at && (
                             <div className="text-green-600">
-                              Published: {formatDate(post.published_at)}
+                              {t('admin.common.published')}: {formatDate(post.published_at)}
                             </div>
                           )}
                           {post.moderated_at && (
                             <div className="text-blue-600">
-                              Moderated: {formatDate(post.moderated_at)}
+                              {t('admin.common.moderated')}: {formatDate(post.moderated_at)}
                             </div>
                           )}
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-1 flex-wrap">
+                        <div className="flex flex-row min-w-[200px]  gap-1 flex-wrap">
                           {/* View Post */}
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => window.open(`/blogs/${post.slug}`, '_blank')}
-                            title="View post"
+                            title={t('admin.common.view')}
                           >
                             <ExternalLink className="h-3 w-3" />
                           </Button>
@@ -529,7 +531,7 @@ export function AdminBlogPostsTable() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleToggleFeatured(post)}
-                            title={post.is_featured ? 'Remove from featured' : 'Add to featured'}
+                            title={post.is_featured ? t('admin.modals.feature.unfeature') : t('admin.modals.feature.feature')}
                           >
                             {post.is_featured ? (
                               <StarOff className="h-3 w-3" />
@@ -543,7 +545,7 @@ export function AdminBlogPostsTable() {
                             variant="outline"
                             size="sm"
                             onClick={() => openModerationModal(post, 'approved')}
-                            title="Approve post"
+                            title={t('admin.modals.moderation.approve')}
                             className="text-green-600 hover:text-green-700"
                           >
                             <CheckCircle className="h-3 w-3" />
@@ -552,7 +554,7 @@ export function AdminBlogPostsTable() {
                             variant="outline"
                             size="sm"
                             onClick={() => openModerationModal(post, 'flagged')}
-                            title="Flag post"
+                            title={t('admin.modals.moderation.flag')}
                             className="text-yellow-600 hover:text-yellow-700"
                           >
                             <Flag className="h-3 w-3" />
@@ -561,7 +563,7 @@ export function AdminBlogPostsTable() {
                             variant="outline"
                             size="sm"
                             onClick={() => openModerationModal(post, 'rejected')}
-                            title="Reject post"
+                            title={t('admin.modals.moderation.reject')}
                             className="text-red-600 hover:text-red-700"
                           >
                             <XCircle className="h-3 w-3" />
@@ -572,7 +574,7 @@ export function AdminBlogPostsTable() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleDeletePost(post)}
-                            title="Delete post"
+                            title={t('admin.common.delete')}
                             className="text-red-600 hover:text-red-700"
                           >
                             <Trash2 className="h-3 w-3" />
@@ -594,8 +596,8 @@ export function AdminBlogPostsTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-500">
-                Showing {((data.currentPage - 1) * filters.limit!) + 1} to{' '}
-                {Math.min(data.currentPage * filters.limit!, data.count)} of {data.count} posts
+                {t('admin.common.showing')} {((data.currentPage - 1) * filters.limit!) + 1} {t('admin.common.of')}{' '}
+                {Math.min(data.currentPage * filters.limit!, data.count)} {t('admin.common.of')} {data.count} {t('admin.common.results')}
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -605,10 +607,10 @@ export function AdminBlogPostsTable() {
                   disabled={!data.hasPrevPage}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  Previous
+                  {t('admin.common.previous')}
                 </Button>
                 <span className="text-sm text-gray-500">
-                  Page {data.currentPage} of {data.totalPages}
+                  {t('admin.common.page')} {data.currentPage} {t('admin.common.of')} {data.totalPages}
                 </span>
                 <Button
                   variant="outline"
@@ -616,7 +618,7 @@ export function AdminBlogPostsTable() {
                   onClick={() => handlePageChange(data.currentPage + 1)}
                   disabled={!data.hasNextPage}
                 >
-                  Next
+                  {t('admin.common.next')}
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>

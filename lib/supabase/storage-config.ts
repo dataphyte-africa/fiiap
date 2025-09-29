@@ -46,7 +46,7 @@ export const BUCKET_CONFIGS = {
   },
   [STORAGE_BUCKETS.ORGANISATION_MEDIA]: {
     public: true,
-    allowedFileTypes: [...ALLOWED_FILE_TYPES.IMAGES, ...ALLOWED_FILE_TYPES.DOCUMENTS],
+    allowedFileTypes: [...ALLOWED_FILE_TYPES.IMAGES, ...ALLOWED_FILE_TYPES.DOCUMENTS, ...ALLOWED_FILE_TYPES.VIDEOS],
     maxFileSize: FILE_SIZE_LIMITS.DOCUMENT,
     description: 'Private media files for organisations',
   },

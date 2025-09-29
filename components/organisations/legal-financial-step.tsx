@@ -29,7 +29,8 @@ export function LegalFinancialStep({ onNext, onPrev, currentStep, totalSteps }: 
       onNext()
     }
   }
-
+  const annualBudget = watch('annual_budget')
+  console.log(annualBudget, "💸 annual budget")
   // Dynamic arrays for certifications
   const certifications = watch('certifications') || []
 
@@ -164,7 +165,12 @@ export function LegalFinancialStep({ onNext, onPrev, currentStep, totalSteps }: 
             <Input
               id="annual_budget"
               type="number"
-              {...register('annual_budget', { valueAsNumber: true })}
+              {...register('annual_budget', { 
+                setValueAs: (value) => {
+                  const num = Number(value)
+                  return value === '' || isNaN(num) ? undefined : num
+                }
+              })}
               placeholder="e.g. 50000"
               min="0"
               step="1000"

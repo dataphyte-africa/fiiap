@@ -29,6 +29,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Database } from '@/types/db';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 type Organisation = Database['public']['Tables']['organisations']['Row'];
 type OrganisationStatus = Database['public']['Enums']['organisation_status_enum'];
@@ -42,14 +43,16 @@ const STATUS_COLORS = {
   inactive: 'bg-gray-100 text-gray-800 border-gray-200',
 } as const;
 
-const STATUS_LABELS = {
-  active: 'Active',
-  pending_approval: 'Pending',
-  flagged: 'Flagged',
-  inactive: 'Inactive',
-} as const;
+const getStatusLabels = (t: (key: string) => string) => ({
+  active: t('admin.common.active'),
+  pending_approval: t('admin.common.pending'),
+  flagged: t('admin.common.flagged'),
+  inactive: t('admin.common.inactive'),
+});
 
 export default function OrganisationsListable() {
+  const t = useTranslations();
+  const STATUS_LABELS = getStatusLabels(t);
   const [organisations, setOrganisations] = useState<Organisation[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<Set<string>>(new Set());
@@ -239,31 +242,31 @@ export default function OrganisationsListable() {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Total</p>
+            <p className="text-sm text-muted-foreground">{t('admin.stats.totalOrganisations')}</p>
             <p className="text-2xl font-bold">{stats.total}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Active</p>
+            <p className="text-sm text-muted-foreground">{t('admin.stats.approvedOrganisations')}</p>
             <p className="text-2xl font-bold text-green-600">{stats.active}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Pending</p>
+            <p className="text-sm text-muted-foreground">{t('admin.stats.pendingOrganisations')}</p>
             <p className="text-2xl font-bold text-yellow-600">{stats.pending}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Flagged</p>
+            <p className="text-sm text-muted-foreground">{t('admin.stats.flaggedOrganisations')}</p>
             <p className="text-2xl font-bold text-red-600">{stats.flagged}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
-            <p className="text-sm text-muted-foreground">Inactive</p>
+            <p className="text-sm text-muted-foreground">{t('admin.common.inactive')}</p>
             <p className="text-2xl font-bold text-gray-600">{stats.inactive}</p>
           </CardContent>
         </Card>
@@ -274,17 +277,17 @@ export default function OrganisationsListable() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Filter className="h-5 w-5" />
-            Filters & Search
+            {t('admin.common.filter')} & {t('admin.common.search')}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Search</label>
+              <label className="text-sm font-medium">{t('admin.common.search')}</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search organisations..."
+                  placeholder={t('admin.common.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyUp={(e) => e.key === 'Enter' && handleSearch()}
@@ -294,59 +297,59 @@ export default function OrganisationsListable() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Status</label>
+              <label className="text-sm font-medium">{t('admin.common.status')}</label>
               <Select
               
                 value={selectedStatuses}
                 onValueChange={(value) => setSelectedStatuses(value as OrganisationStatus)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All statuses" />
+                  <SelectValue placeholder={`${t('admin.common.all')} ${t('admin.common.status')}`} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All statuses</SelectItem>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="pending_approval">Pending Approval</SelectItem>
-                  <SelectItem value="flagged">Flagged</SelectItem>
-                  <SelectItem value="inactive">Inactive</SelectItem>
+                  <SelectItem value="all">{t('admin.common.all')} {t('admin.common.status')}</SelectItem>
+                  <SelectItem value="active">{t('admin.common.active')}</SelectItem>
+                  <SelectItem value="pending_approval">{t('admin.common.pending')}</SelectItem>
+                  <SelectItem value="flagged">{t('admin.common.flagged')}</SelectItem>
+                  <SelectItem value="inactive">{t('admin.common.inactive')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Type</label>
+              <label className="text-sm font-medium">{t('admin.common.type')}</label>
               <Select
                 value={selectedTypes}
                 onValueChange={(value) => setSelectedTypes(value as OrganisationType)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All types" />
+                  <SelectValue placeholder={`${t('admin.common.all')} ${t('admin.common.types')}`} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All types</SelectItem>
-                  <SelectItem value="NGO">NGO</SelectItem>
-                  <SelectItem value="CBO">CBO</SelectItem>
-                  <SelectItem value="Network">Network</SelectItem>
-                  <SelectItem value="Foundation">Foundation</SelectItem>
-                  <SelectItem value="Coalition">Coalition</SelectItem>
-                  <SelectItem value="Association">Association</SelectItem>
-                  <SelectItem value="Cooperative">Cooperative</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  <SelectItem value="all">{t('admin.common.all')} {t('admin.common.types')}</SelectItem>
+                  <SelectItem value="NGO">{t('admin.common.ngo')}</SelectItem>
+                  <SelectItem value="CBO">{t('admin.common.cbo')}</SelectItem>
+                  <SelectItem value="Network">{t('admin.common.network')}</SelectItem>
+                  <SelectItem value="Foundation">{t('admin.common.foundation')}</SelectItem>
+                  <SelectItem value="Coalition">{t('admin.common.coalition')}</SelectItem>
+                  <SelectItem value="Association">{t('admin.common.association')}</SelectItem>
+                  <SelectItem value="Cooperative">{t('admin.common.cooperative')}</SelectItem>
+                  <SelectItem value="Other">{t('admin.common.other')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Country</label>
+              <label className="text-sm font-medium">{t('admin.common.country')}</label>
               <Select
                 value={selectedCountries}
                 onValueChange={(value) => setSelectedCountries(value as Country)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="All countries" />
+                  <SelectValue placeholder={`${t('admin.common.all')} ${t('admin.common.countries')}`} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All countries</SelectItem>
+                  <SelectItem value="all">{t('admin.common.all')} {t('admin.common.countries')}</SelectItem>
                   <SelectItem value="Nigeria">Nigeria</SelectItem>
                   <SelectItem value="Benin">Benin</SelectItem>
                   <SelectItem value="Gambia">Gambia</SelectItem>
@@ -359,10 +362,10 @@ export default function OrganisationsListable() {
           <div className="flex items-center gap-2">
             <Button onClick={handleSearch} className="flex items-center gap-2">
               <Search className="h-4 w-4" />
-              Search
+              {t('admin.common.search')}
             </Button>
             <Button variant="outline" onClick={clearFilters}>
-              Clear Filters
+              {t('admin.common.clearFilters')}
             </Button>
             <Button variant="ghost" onClick={fetchOrganisations} size="sm">
               <RefreshCw className="h-4 w-4" />
@@ -386,9 +389,9 @@ export default function OrganisationsListable() {
           </CardContent>
         </Card>:
         <Card>
-        <CardHeader>
-          <CardTitle>Organisations ({pagination.count})</CardTitle>
-        </CardHeader>
+          <CardHeader>
+            <CardTitle>{t('admin.common.organisations')} ({pagination.count})</CardTitle>
+          </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -396,25 +399,25 @@ export default function OrganisationsListable() {
                 <tr className="border-b">
                   <th className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50" 
                       onClick={() => handleSort('name')}>
-                    Name
+                    {t('admin.common.organisation')}
                   </th>
                   <th className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50" 
                       onClick={() => handleSort('type')}>
-                    Type
+                    {t('admin.common.type')}
                   </th>
                   <th className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50" 
                       onClick={() => handleSort('country')}>
-                    Country
+                    {t('admin.common.country')}
                   </th>
                   <th className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50" 
                       onClick={() => handleSort('status')}>
-                    Status
+                    {t('admin.common.status')}
                   </th>
                   <th className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50" 
                       onClick={() => handleSort('created_at')}>
-                    Created
+                    {t('admin.common.created')}
                   </th>
-                  <th className="text-left p-3 font-medium">Actions</th>
+                  <th className="text-left p-3 font-medium">{t('admin.common.actions')}</th>
                 </tr>
               </thead>
               <tbody>

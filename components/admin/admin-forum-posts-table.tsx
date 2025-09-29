@@ -21,10 +21,12 @@ import { AdminForumPostCard } from './admin-forum-post-card';
 import { ForumModerationModal } from './forum-moderation-modal';
 import type { AdminForumThread } from '@/lib/data/admin-forum';
 import type { Database } from '@/types/db';
+import { useTranslations } from 'next-intl';
 
 type ForumModerationStatus = Database['public']['Enums']['forum_moderation_status_enum'];
 
 export function AdminForumPostsTable() {
+  const t = useTranslations();
   const [filters, setFilters] = useState<AdminForumFilters>({
     page: 1,
     limit: 12, // Grid layout, so we want multiples of 2
@@ -109,10 +111,10 @@ export function AdminForumPostsTable() {
       <Card>
         <CardContent className="p-6">
           <div className="text-center">
-            <p className="text-red-600 mb-4">Error loading forum posts: {error.message}</p>
+            <p className="text-red-600 mb-4">{t('admin.errors.loading')}: {error.message}</p>
             <Button onClick={() => refetch()} variant="outline">
               <RefreshCw className="h-4 w-4 mr-2" />
-              Retry
+              {t('admin.common.refresh')}
             </Button>
           </div>
         </CardContent>
@@ -127,7 +129,7 @@ export function AdminForumPostsTable() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Filter className="h-5 w-5" />
-            <span>Search & Filters</span>
+            <span>{t('admin.common.search')} & {t('admin.common.filter')}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -137,7 +139,7 @@ export function AdminForumPostsTable() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
-                  placeholder="Search posts by title, content, or author..."
+                  placeholder={t('admin.common.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   className="pl-10"
@@ -149,10 +151,10 @@ export function AdminForumPostsTable() {
             <div className="w-full lg:w-48">
               <Select value={selectedCategory} onValueChange={handleCategoryFilter}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Categories" />
+                  <SelectValue placeholder={`${t('admin.common.all')} ${t('admin.common.category')}`} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">{t('admin.common.all')} {t('admin.common.category')}</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.icon && <span className="mr-2">{category.icon}</span>}
@@ -167,41 +169,33 @@ export function AdminForumPostsTable() {
             <div className="w-full lg:w-48">
               <Select value={selectedModerationStatus} onValueChange={handleModerationStatusFilter}>
                 <SelectTrigger>
-                  <SelectValue placeholder="All Statuses" />
+                  <SelectValue placeholder={`${t('admin.common.all')} ${t('admin.common.status')}`} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="all">{t('admin.common.all')} {t('admin.common.status')}</SelectItem>
                   <SelectItem value="approved">
                     <div className="flex items-center">
                       <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                      Approved
+                      {t('admin.common.approved')}
                     </div>
                   </SelectItem>
                   <SelectItem value="flagged">
                     <div className="flex items-center">
                       <Flag className="h-4 w-4 mr-2 text-yellow-600" />
-                      Flagged
+                      {t('admin.common.flagged')}
                     </div>
                   </SelectItem>
                   <SelectItem value="rejected">
                     <div className="flex items-center">
                       <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                      Rejected
+                      {t('admin.common.rejected')}
                     </div>
                   </SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {/* Refresh Button */}
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => refetch()}
-              disabled={isLoading}
-            >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-            </Button>
+            
           </div>
         </CardContent>
       </Card>
@@ -212,7 +206,7 @@ export function AdminForumPostsTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Posts</p>
+                <p className="text-sm font-medium text-gray-600">{t('admin.stats.totalPosts')}</p>
                 <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
               </div>
               <FileText className="h-8 w-8 text-blue-600" />
@@ -224,7 +218,7 @@ export function AdminForumPostsTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Approved</p>
+                <p className="text-sm font-medium text-gray-600">{t('admin.stats.approvedPosts')}</p>
                 <p className="text-2xl font-bold text-green-600">{stats.approved}</p>
               </div>
               <CheckCircle className="h-8 w-8 text-green-600" />
@@ -236,7 +230,7 @@ export function AdminForumPostsTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Flagged</p>
+                <p className="text-sm font-medium text-gray-600">{t('admin.stats.flaggedPosts')}</p>
                 <p className="text-2xl font-bold text-yellow-600">{stats.flagged}</p>
               </div>
               <Flag className="h-8 w-8 text-yellow-600" />
@@ -248,7 +242,7 @@ export function AdminForumPostsTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Rejected</p>
+                <p className="text-sm font-medium text-gray-600">{t('admin.common.rejected')}</p>
                 <p className="text-2xl font-bold text-red-600">{stats.rejected}</p>
               </div>
               <XCircle className="h-8 w-8 text-red-600" />
@@ -290,11 +284,11 @@ export function AdminForumPostsTable() {
           <CardContent className="p-8">
             <div className="text-center">
               <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No forum posts found</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('admin.common.noResults')}</h3>
               <p className="text-gray-600 mb-4">
                 {searchTerm || selectedCategory !== 'all' || selectedModerationStatus !== 'all'
-                  ? 'Try adjusting your search criteria or filters.'
-                  : 'There are no forum posts to display at the moment.'
+                  ? t('admin.common.noResults')
+                  : t('admin.common.noResults')
                 }
               </p>
               {(searchTerm || selectedCategory !== 'all' || selectedModerationStatus !== 'all') && (
@@ -307,7 +301,7 @@ export function AdminForumPostsTable() {
                     setFilters(prev => ({ ...prev, page: 1 }));
                   }}
                 >
-                  Clear Filters
+                  {t('admin.common.clearFilters')}
                 </Button>
               )}
             </div>

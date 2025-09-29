@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { getProjectsForUserOrganisation, type ProjectFilters } from '@/lib/data/projects';
 import type { Database } from '@/types/db';
 import { CreateProjectModal } from './create-project-modal';
+import { useTranslations } from 'next-intl';
 
 interface ProjectsListProps {
   showCreateButton?: boolean;
@@ -20,6 +21,7 @@ interface ProjectsListProps {
 }
 
 export function ProjectsList({ showCreateButton = true, organisationId }: ProjectsListProps) {
+  const t = useTranslations('projects.list')
   const [filters, setFilters] = useState<ProjectFilters>({
     search: '',
     status: undefined,
@@ -91,9 +93,9 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-red-600 mb-4">Failed to load projects</p>
+        <p className="text-red-600 mb-4">{t('failedToLoad')}</p>
         <Button onClick={() => refetch()} variant="outline">
-          Try Again
+          {t('tryAgain')}
         </Button>
       </div>
     );
@@ -104,16 +106,16 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
       {/* Header */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Projects</h1>
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
           <p className="text-muted-foreground">
-            Manage your organisation&apos;s projects
+            {t('description')}
           </p>
         </div>
         {showCreateButton && (
           <CreateProjectModal organisationId={organisationId}>
             <Button>
               <PlusIcon className="h-4 w-4 mr-2" />
-              Create Project
+              {t('createProject')}
             </Button>
           </CreateProjectModal>
         )}
@@ -124,7 +126,7 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
         <div className="relative flex-1">
           <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search projects..."
+            placeholder={t('searchProjects')}
             value={filters.search}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="pl-10"
@@ -133,15 +135,15 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
         
         <Select value={filters.status || 'all'} onValueChange={handleStatusChange}>
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Filter by status" />
+            <SelectValue placeholder={t('filterByStatus')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="planning">Planning</SelectItem>
-            <SelectItem value="ongoing">Ongoing</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-            <SelectItem value="on_hold">On Hold</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
+            <SelectItem value="all">{t('allStatus')}</SelectItem>
+            <SelectItem value="planning">{t('planning')}</SelectItem>
+            <SelectItem value="ongoing">{t('ongoing')}</SelectItem>
+            <SelectItem value="completed">{t('completed')}</SelectItem>
+            <SelectItem value="on_hold">{t('onHold')}</SelectItem>
+            <SelectItem value="cancelled">{t('cancelled')}</SelectItem>
           </SelectContent>
         </Select>
 
@@ -150,15 +152,15 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
           onValueChange={handleSortChange}
         >
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Sort by" />
+            <SelectValue placeholder={t('sortBy')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="created_at-desc">Newest First</SelectItem>
-            <SelectItem value="created_at-asc">Oldest First</SelectItem>
-            <SelectItem value="title-asc">Title A-Z</SelectItem>
-            <SelectItem value="title-desc">Title Z-A</SelectItem>
-            <SelectItem value="start_date-desc">Start Date (Latest)</SelectItem>
-            <SelectItem value="start_date-asc">Start Date (Earliest)</SelectItem>
+            <SelectItem value="created_at-desc">{t('newestFirst')}</SelectItem>
+            <SelectItem value="created_at-asc">{t('oldestFirst')}</SelectItem>
+            <SelectItem value="title-asc">{t('titleAZ')}</SelectItem>
+            <SelectItem value="title-desc">{t('titleZA')}</SelectItem>
+            <SelectItem value="start_date-desc">{t('startDateLatest')}</SelectItem>
+            <SelectItem value="start_date-asc">{t('startDateEarliest')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -185,19 +187,19 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
               </div>
             </div>
             <h3 className="text-lg font-semibold mb-2">
-              {filters.search || filters.status ? 'No projects found' : 'No projects yet'}
+              {filters.search || filters.status ? t('noProjectsFound') : t('noProjectsYet')}
             </h3>
             <p className="text-muted-foreground mb-4">
               {filters.search || filters.status 
-                ? 'Try adjusting your search or filter criteria.'
-                : 'Get started by creating your first project.'
+                ? t('adjustCriteria')
+                : t('getStarted')
               }
             </p>
             {showCreateButton && !filters.search && !filters.status && (
               <Link href="/dashboard/projects/create">
                 <Button>
                   <PlusIcon className="h-4 w-4 mr-2" />
-                  Create Your First Project
+                  {t('createFirstProject')}
                 </Button>
               </Link>
             )}
@@ -214,7 +216,7 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
       {/* Results count */}
       {!isLoading && sortedProjects.length > 0 && (
         <div className="text-center text-sm text-muted-foreground">
-          Showing {sortedProjects.length} of {projects?.length || 0} projects
+          {t('showingResults', { count: sortedProjects.length, total: projects?.length || 0 })}
         </div>
       )}
     </div>

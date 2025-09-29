@@ -62,6 +62,7 @@ import {
 import { FundingOpportunityForm } from './funding-opportunity-form';
 import { Database } from '@/types/db';
 import { FundingOpportunityFormData } from '@/lib/schemas/admin-content-schemas';
+import { useTranslations } from 'next-intl';
 
 type FundingOpportunity = Database['public']['Tables']['funding_opportunities']['Row'];
 type FundingOpportunityType = FundingOpportunity['opportunity_type'] | "all";
@@ -70,6 +71,7 @@ type FundingOpportunityFunderType = FundingOpportunity['funder_type'] | "all";
 
 export function FundingOpportunitiesTable() {
   const queryClient = useQueryClient();
+  const t = useTranslations();
   const [filters, setFilters] = useState<FundingOpportunityFilters>({
     page: 1,
     limit: 20,
@@ -266,7 +268,13 @@ export function FundingOpportunitiesTable() {
     };
 
     const labels: Record<string, string> = {
-      donor_call: 'Donor Call',
+      grant: t('admin.common.grant'),
+      fellowship: t('admin.common.fellowship'),
+      donor_call: t('admin.common.donorCall'),
+      scholarship: t('admin.common.scholarship'),
+      award: t('admin.common.award'),
+      loan: t('admin.common.loan'),
+      other: t('admin.common.other'),
     };
 
     return (
@@ -286,7 +294,11 @@ export function FundingOpportunitiesTable() {
     };
 
     const labels: Record<string, string> = {
-      closing_soon: 'Closing Soon',
+      open: t('admin.common.open'),
+      closing_soon: t('admin.common.closingSoon'),
+      closed: t('admin.common.closed'),
+      postponed: t('admin.common.postponed'),
+      cancelled: t('admin.common.cancelled'),
     };
 
     return (
@@ -322,9 +334,9 @@ export function FundingOpportunitiesTable() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <p className="text-red-600 mb-4">Failed to load funding opportunities</p>
+        <p className="text-red-600 mb-4">{t('admin.errors.loading')}</p>
         <Button onClick={() => refetch()} variant="outline">
-          Try Again
+          {t('admin.common.refresh')}
         </Button>
       </div>
     );
@@ -335,28 +347,28 @@ export function FundingOpportunitiesTable() {
       {/* Header and Actions */}
       <div className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Funding Opportunities</h2>
+          <h2 className="text-2xl font-bold">{t('admin.pages.funding.title')}</h2>
           <p className="text-muted-foreground">
-            Manage grants, fellowships, and donor calls for CSO organizations
+            {t('admin.pages.funding.description')}
           </p>
         </div>
         <Button onClick={() => setFormModal({ isOpen: true, mode: 'create' })}>
           <Plus className="h-4 w-4 mr-2" />
-          Add Opportunity
+          {t('admin.common.create')} {t('admin.common.opportunity')}
         </Button>
       </div>
 
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Filters</CardTitle>
+          <CardTitle>{t('admin.common.filter')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search opportunities..."
+                placeholder={t('admin.common.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="pl-10"
@@ -365,67 +377,67 @@ export function FundingOpportunitiesTable() {
 
             <Select value={selectedType} onValueChange={handleTypeFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Opportunity Type" />
+                <SelectValue placeholder={t('admin.common.opportunityType')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="grant">Grant</SelectItem>
-                <SelectItem value="fellowship">Fellowship</SelectItem>
-                <SelectItem value="donor_call">Donor Call</SelectItem>
-                <SelectItem value="scholarship">Scholarship</SelectItem>
-                <SelectItem value="award">Award</SelectItem>
-                <SelectItem value="loan">Loan</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.types')}</SelectItem>
+                <SelectItem value="grant">{t('admin.common.grant')}</SelectItem>
+                <SelectItem value="fellowship">{t('admin.common.fellowship')}</SelectItem>
+                <SelectItem value="donor_call">{t('admin.common.donorCall')}</SelectItem>
+                <SelectItem value="scholarship">{t('admin.common.scholarship')}</SelectItem>
+                <SelectItem value="award">{t('admin.common.award')}</SelectItem>
+                <SelectItem value="loan">{t('admin.common.loan')}</SelectItem>
+                <SelectItem value="other">{t('admin.common.other')}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedStatus || undefined} onValueChange={(value) => handleStatusFilter(value as FundingOpportunityStatus)}>
               <SelectTrigger>
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder={t('admin.common.status')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="open">Open</SelectItem>
-                <SelectItem value="closing_soon">Closing Soon</SelectItem>
-                <SelectItem value="closed">Closed</SelectItem>
-                <SelectItem value="postponed">Postponed</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.status')}</SelectItem>
+                <SelectItem value="open">{t('admin.common.open')}</SelectItem>
+                <SelectItem value="closing_soon">{t('admin.common.closingSoon')}</SelectItem>
+                <SelectItem value="closed">{t('admin.common.closed')}</SelectItem>
+                <SelectItem value="postponed">{t('admin.common.postponed')}</SelectItem>
+                <SelectItem value="cancelled">{t('admin.common.cancelled')}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedFunderType || undefined} onValueChange={(value) => handleFunderTypeFilter(value as FundingOpportunityFunderType)}>
               <SelectTrigger>
-                <SelectValue placeholder="Funder Type" />
+                <SelectValue placeholder={t('admin.common.funderType')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Funders</SelectItem>
-                <SelectItem value="government">Government</SelectItem>
-                <SelectItem value="foundation">Foundation</SelectItem>
-                <SelectItem value="ngo">NGO</SelectItem>
-                <SelectItem value="international_organization">International Org</SelectItem>
-                <SelectItem value="private_corporation">Private Corp</SelectItem>
-                <SelectItem value="multilateral_agency">Multilateral</SelectItem>
-                <SelectItem value="bilateral_agency">Bilateral</SelectItem>
-                <SelectItem value="university">University</SelectItem>
-                <SelectItem value="research_institute">Research Institute</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.funders')}</SelectItem>
+                <SelectItem value="government">{t('admin.common.government')}</SelectItem>
+                <SelectItem value="foundation">{t('admin.common.foundation')}</SelectItem>
+                <SelectItem value="ngo">{t('admin.common.ngo')}</SelectItem>
+                <SelectItem value="international_organization">{t('admin.common.internationalOrg')}</SelectItem>
+                <SelectItem value="private_corporation">{t('admin.common.privateCorp')}</SelectItem>
+                <SelectItem value="multilateral_agency">{t('admin.common.multilateral')}</SelectItem>
+                <SelectItem value="bilateral_agency">{t('admin.common.bilateral')}</SelectItem>
+                <SelectItem value="university">{t('admin.common.university')}</SelectItem>
+                <SelectItem value="research_institute">{t('admin.common.researchInstitute')}</SelectItem>
+                <SelectItem value="other">{t('admin.common.other')}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedVisibility ? 'visible' : 'hidden'} onValueChange={(value) => handleVisibilityFilter(value === 'visible')}>
               <SelectTrigger>
-                <SelectValue placeholder="Visibility" />
+                <SelectValue placeholder={t('admin.common.visibility')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="visible">Visible</SelectItem>
-                <SelectItem value="hidden">Hidden</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')}</SelectItem>
+                <SelectItem value="visible">{t('admin.common.visible')}</SelectItem>
+                <SelectItem value="hidden">{t('admin.common.hidden')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="text-sm text-muted-foreground">
-            {data?.count || 0} opportunities found
+            {data?.count || 0} {t('admin.common.opportunities')} {t('admin.common.found')}
           </div>
         </CardContent>
       </Card>
@@ -440,18 +452,18 @@ export function FundingOpportunitiesTable() {
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('title')}
                 >
-                  Opportunity {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.opportunity')} {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Funder</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t('admin.common.type')}</TableHead>
+                <TableHead>{t('admin.common.funder')}</TableHead>
+                <TableHead>{t('admin.common.status')}</TableHead>
                 <TableHead 
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('created_at')}
                 >
-                  Created {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.created')} {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('admin.common.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -687,6 +699,7 @@ export function FundingOpportunitiesTable() {
 
       {/* Form Modal */}
       <Dialog open={formModal.isOpen} onOpenChange={(open) => setFormModal({ ...formModal, isOpen: open })}>
+        <DialogTitle className="sr-only">Funding Opportunity Form</DialogTitle>
         <DialogContent className="md:max-w-4xl max-h-[90vh] overflow-y-auto">
           <FundingOpportunityForm
             initialData={formModal.opportunityData as unknown as FundingOpportunityFormData || {

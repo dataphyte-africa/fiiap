@@ -86,7 +86,7 @@ export const basicInfoSchema = z.object({
   size: z.enum(['Local', 'National', 'Regional', 'International'], {
     message: 'Please select organisation size'
   }),
-  country: z.enum(['Nigeria', 'Benin', 'Gambia'], {
+  country: z.enum(['Nigeria', 'Benin', 'The Gambia', 'Gambia'], {
     message: 'Please select your country'
   }),
   registration_number: z.string().optional(),
@@ -113,8 +113,8 @@ export const contactInfoSchema = z.object({
 })
 
 export const detailsSchema = z.object({
-  mission: z.string().max(500, 'Mission statement must be less than 500 characters').optional(),
-  vision: z.string().max(500, 'Vision statement must be less than 500 characters').optional(),
+  mission: z.string().max(750, 'Mission statement must be less than 500 characters').optional(),
+  vision: z.string().max(750, 'Vision statement must be less than 500 characters').optional(),
   thematic_focus: z.array(z.string()).optional(),
   staff_count: z.number().min(0, 'Staff count cannot be negative').optional(),
   volunteer_count: z.number().min(0, 'Volunteer count cannot be negative').optional(),
@@ -198,7 +198,7 @@ export const ORGANISATION_SIZES: Database['public']['Enums']['organisation_size_
 ]
 
 export const COUNTRIES: Database['public']['Enums']['country_enum'][] = [
-  'Nigeria', 'Benin', 'Gambia'
+  'Nigeria', 'Benin', 'The Gambia'
 ]
 
 export const LANGUAGES: Database['public']['Enums']['language_enum'][] = [

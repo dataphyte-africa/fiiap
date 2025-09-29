@@ -16,7 +16,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Flag, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
 import { useModerateForumThread } from '@/hooks/use-admin-forum';
 import type { Database } from '@/types/db';
-import type { AdminForumThread } from '@/lib/data/admin-forum';
+import type { AdminForumThreadSingle } from '@/lib/data/admin-forum';
 
 type ForumModerationStatus = Database['public']['Enums']['forum_moderation_status_enum'];
 
@@ -24,7 +24,7 @@ interface ForumModerationModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  forumPost: AdminForumThread;
+  forumPost: AdminForumThreadSingle;
   action: ForumModerationStatus;
 }
 

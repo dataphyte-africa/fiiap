@@ -4,3 +4,4 @@ export { useCreateReply } from './use-create-reply';
 export { useForumReplies, useReplyChildren } from './use-forum-replies';
 export { useUserAffiliationRequest, useOrganisationAffiliationRequests, useCreateAffiliationRequest } from './use-affiliation-requests';
 export { useUserOrganisationState } from './use-user-organisation-state';
+export { useCountryStatistics } from './use-country-statistics';

@@ -334,7 +334,12 @@ export function DetailsStep({ onNext, onPrev, currentStep, totalSteps }: FormSte
               <Input
                 id="staff_count"
                 type="number"
-                {...register('staff_count', { valueAsNumber: true })}
+                {...register('staff_count', { 
+                  setValueAs: (value) => {
+                    const num = Number(value)
+                    return value === '' || isNaN(num) ? undefined : num
+                  }
+                })}
                 placeholder="e.g. 15"
                 min="0"
               />
@@ -350,7 +355,12 @@ export function DetailsStep({ onNext, onPrev, currentStep, totalSteps }: FormSte
               <Input
                 id="volunteer_count"
                 type="number"
-                {...register('volunteer_count', { valueAsNumber: true })}
+                {...register('volunteer_count', { 
+                  setValueAs: (value) => {
+                    const num = Number(value)
+                    return value === '' || isNaN(num) ? undefined : num
+                  }
+                })}
                 placeholder="e.g. 50"
                 min="0"
               />

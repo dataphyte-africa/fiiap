@@ -546,7 +546,10 @@ export function FundingOpportunityForm({ initialData, mode = 'create', onSuccess
                   <Input
                     id="funding_amount_min"
                     type="number"
-                    {...register('funding_amount_min', { valueAsNumber: true })}
+                    {...register('funding_amount_min', { setValueAs: (value) => {
+                      const num = Number(value)
+                      return isNaN(num) ? undefined : num
+                    } })}
                     placeholder="0"
                     className={errors.funding_amount_min ? 'border-red-500' : ''}
                   />
@@ -560,7 +563,10 @@ export function FundingOpportunityForm({ initialData, mode = 'create', onSuccess
                   <Input
                     id="funding_amount_max"
                     type="number"
-                    {...register('funding_amount_max', { valueAsNumber: true })}
+                    {...register('funding_amount_max', { setValueAs: (value) => {
+                      const num = Number(value)
+                      return isNaN(num) ? undefined : num
+                    } })}
                     placeholder="0"
                     className={errors.funding_amount_max ? 'border-red-500' : ''}
                   />
@@ -595,7 +601,10 @@ export function FundingOpportunityForm({ initialData, mode = 'create', onSuccess
                 <Input
                   id="funding_duration_months"
                   type="number"
-                  {...register('funding_duration_months', { valueAsNumber: true })}
+                  {...register('funding_duration_months', {  setValueAs: (value) => {
+                    const num = Number(value)
+                    return isNaN(num) ? undefined : num
+                  } })}
                   placeholder="12"
                   className={errors.funding_duration_months ? 'border-red-500' : ''}
                 />
@@ -907,7 +916,7 @@ export function FundingOpportunityForm({ initialData, mode = 'create', onSuccess
                 <Input
                   id="target_countries"
                   {...register('target_countries')}
-                  placeholder="Nigeria, Benin, Gambia"
+                  placeholder="Nigeria, Benin, The Gambia"
                   className={errors.target_countries ? 'border-red-500' : ''}
                 />
                 {errors.target_countries && (

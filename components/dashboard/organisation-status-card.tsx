@@ -10,6 +10,7 @@ import { AffiliationRequestDialog } from "@/components/organisations/affiliation
 import Link from "next/link"
 import Image from "next/image"
 import { useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 
 
 interface OrganisationStatusCardProps {
@@ -20,6 +21,7 @@ interface OrganisationStatusCardProps {
 
 
 export function OrganisationStatusCard({ userId, className }: OrganisationStatusCardProps) {
+  const t = useTranslations('dashboard.organisationStatus')
   const userState = useUserOrganisationState(userId)
   const queryClient = useQueryClient()
   
@@ -35,7 +37,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
       <Card className={cn("transition-all duration-200 hover:shadow-lg hover:-translate-y-1", className)}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">Organisation Status</CardTitle>
+            <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
             <Building2 className="h-5 w-5 text-muted-foreground" />
           </div>
         </CardHeader>
@@ -55,7 +57,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
       <Card className={cn("transition-all duration-200 hover:shadow-lg hover:-translate-y-1", className)}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">Organisation Status</CardTitle>
+            <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
             <Building2 className="h-5 w-5 text-muted-foreground" />
           </div>
         </CardHeader>
@@ -63,20 +65,20 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
           <div className="mx-auto mb-4 h-12 w-12 rounded-lg bg-muted flex items-center justify-center">
             <Building2 className="h-6 w-6 text-muted-foreground" />
           </div>
-          <h3 className="font-semibold text-sm mb-2">No Organisation Linked</h3>
+          <h3 className="font-semibold text-sm mb-2">{t('noOrganisationLinked')}</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Register your organisation or join an existing one to start collaborating with other CSOs in the region.
+            {t('noOrganisationDescription')}
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Button asChild size="sm">
-              <Link href="/dashboard/organisation/">Register Organisation</Link>
+              <Link href="/dashboard/organisation/">{t('registerOrganisation')}</Link>
             </Button>
             <AffiliationRequestDialog 
               userId={userId}
               trigger={
                 <Button variant="outline" size="sm">
                   <UserPlus className="h-4 w-4 mr-2" />
-                  Join Organisation
+                  {t('joinOrganisation')}
                 </Button>
               }
             />
@@ -123,7 +125,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
       <Card className={cn("transition-all duration-200 hover:shadow-lg hover:-translate-y-1", className)}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">Affiliation Request</CardTitle>
+            <CardTitle className="text-lg font-semibold">{t('affiliationRequest')}</CardTitle>
             <Clock className="h-5 w-5 text-yellow-500" />
           </div>
         </CardHeader>
@@ -156,7 +158,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
                   )}
                   {request.admin_response && (
                     <div className="mt-2 p-2 bg-muted rounded text-xs">
-                      <strong>Response:</strong> {request.admin_response}
+                      <strong>{t('response')}:</strong> {request.admin_response}
                     </div>
                   )}
                 </div>
@@ -165,7 +167,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
           </div>
           <div className="flex justify-center">
             <Button variant="outline" size="sm" onClick={handleRefresh}>
-              Refresh Status
+              {t('refreshStatus')}
             </Button>
           </div>
         </CardContent>
@@ -180,7 +182,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
       <Card className={cn("transition-all duration-200 hover:shadow-lg hover:-translate-y-1", className)}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">Organisation Registration</CardTitle>
+            <CardTitle className="text-lg font-semibold">{t('organisationRegistration')}</CardTitle>
             <FileText className="h-5 w-5 text-yellow-500" />
           </div>
         </CardHeader>
@@ -211,16 +213,16 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
 
           <div className="text-center">
             <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 text-xs">
-              Pending Approval
+              {t('pendingApproval')}
             </Badge>
             <p className="text-xs text-muted-foreground mt-2">
-              Your organisation registration is currently under review. You&apos;ll be notified once it&apos;s approved.
+              {t('pendingApprovalDescription')}
             </p>
           </div>
 
           <div className="flex justify-center">
             <Button variant="outline" size="sm" asChild>
-              <Link href="/dashboard/organisation">View Details</Link>
+              <Link href="/dashboard/organisation">{t('viewDetails')}</Link>
             </Button>
           </div>
         </CardContent>
@@ -247,7 +249,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg font-semibold">
-              {userState.type === 'created' ? 'My Organisation' : 'Organisation'}
+              {userState.type === 'created' ? t('myOrganisation') : t('organisation')}
             </CardTitle>
             <Building2 className="h-5 w-5 text-muted-foreground" />
           </div>
@@ -280,7 +282,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
           {org.staff_count && (
             <div className="flex items-center text-sm text-muted-foreground">
               <Users className="h-4 w-4 mr-2" />
-              <span>{org.staff_count} staff members</span>
+              <span>{org.staff_count} {t('staffMembers')}</span>
             </div>
           )}
 
@@ -308,7 +310,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
                 size="sm"
                 asChild
               >
-                <Link href="/dashboard/organisation">View Details</Link>
+                <Link href="/dashboard/organisation">{t('viewDetails')}</Link>
               </Button>
             </div>
           </div>
@@ -322,7 +324,7 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
     <Card className={cn("transition-all duration-200 hover:shadow-lg hover:-translate-y-1", className)}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-semibold">Organisation Status</CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
           <Building2 className="h-5 w-5 text-muted-foreground" />
           </div>
         </CardHeader>
@@ -330,12 +332,12 @@ export function OrganisationStatusCard({ userId, className }: OrganisationStatus
           <div className="mx-auto mb-4 h-12 w-12 rounded-lg bg-muted flex items-center justify-center">
             <Building2 className="h-6 w-6 text-muted-foreground" />
           </div>
-          <h3 className="font-semibold text-sm mb-2">Unable to load status</h3>
+          <h3 className="font-semibold text-sm mb-2">{t('unableToLoadStatus')}</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            There was an error loading your organisation status. Please try refreshing the page.
+            {t('unableToLoadDescription')}
           </p>
           <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
-            Refresh Page
+            {t('refreshPage')}
           </Button>
         </CardContent>
       </Card>

@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Database } from "@/types/db";
 import { OrganisationProjectsList } from "./organisation-projects-list";
+import { OrganisationStoriesGrid } from "./organisation-stories-grid";
 
 type Organisation = Database['public']['Tables']['organisations']['Row'];
 
@@ -37,14 +38,13 @@ interface TabItem {
 }
 
 export function OrganisationDetailView({ organisation }: OrganisationDetailViewProps) {
-  const t = useTranslations('organisations.detail');
+  const t = useTranslations('organisations-client.detail');
   const [activeTab, setActiveTab] = useState("about");
   
   const tabs: TabItem[] = [
     { id: "about", label: t('tabs.about'), icon: Info },
     { id: "stories", label: t('tabs.stories'), icon: FileText },
     { id: "projects", label: t('tabs.projects'), icon: FolderOpen },
-    { id: "documents", label: t('tabs.documents'), icon: FileText },
   ];
 
   return (
@@ -163,7 +163,7 @@ export function OrganisationDetailView({ organisation }: OrganisationDetailViewP
 
 // About Tab Component
 function AboutTab({ organisation }: { organisation: Organisation }) {
-  const t = useTranslations('organisations.detail.about');
+  const t = useTranslations('organisations-client.detail.about');
   
   const formatSocialLinks = (socialLinks: unknown) => {
     if (!socialLinks || typeof socialLinks !== 'object') return [];
@@ -316,15 +316,12 @@ function AboutTab({ organisation }: { organisation: Organisation }) {
   );
 }
 
-// Placeholder tabs - these would be implemented based on your requirements
 function StoriesTab({ organisation }: { organisation: Organisation }) {
-  const t = useTranslations('organisations.detail.stories');
-  
   return (
-    <div className="bg-white rounded-lg shadow-sm border p-6">
-      <h2 className="text-xl font-semibold mb-4">{t('title')}</h2>
-      <p className="text-gray-500">{t('placeholder', { organisationName: organisation.name })}</p>
-    </div>
+    <OrganisationStoriesGrid 
+      organisationId={organisation.id} 
+      organisationName={organisation.name}
+    />
   );
 }
 
@@ -337,7 +334,7 @@ function ProjectsTab({ organisation }: { organisation: Organisation }) {
 }
 
 function DocumentsTab({ organisation }: { organisation: Organisation }) {
-  const t = useTranslations('organisations.detail.documents');
+  const t = useTranslations('organisations-client.detail.documents');
   
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">

@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Loader2, Shield } from 'lucide-react'
 import { setUserRole } from '@/lib/data/admin-users'
 import type { Database } from '@/types/db'
+import { useTranslations } from 'next-intl'
 
 type UserRole = Database['public']['Enums']['user_role_enum']
 
@@ -25,14 +26,14 @@ interface SetUserRoleModalProps {
   onSuccess: () => void
 }
 
-const ROLE_LABELS: Record<UserRole, string> = {
-  admin: 'Administrator',
-  cso_rep: 'CSO Representative',
-  donor: 'Donor',
-  media: 'Media',
-  'policy_maker': 'Policy Maker',
-  public: 'Public User'
-}
+const getRoleLabels = (t: (key: string) => string): Record<UserRole, string> => ({
+  admin: t('admin.common.administrator'),
+  cso_rep: t('admin.common.csoRepresentative'),
+  donor: t('admin.common.donor'),
+  media: t('admin.common.media'),
+  'policy_maker': t('admin.common.policyMaker'),
+  public: t('admin.common.publicUser')
+})
 
 const ROLE_COLORS: Record<UserRole, string> = {
   admin: 'bg-red-100 text-red-800 border-red-200',
@@ -44,9 +45,12 @@ const ROLE_COLORS: Record<UserRole, string> = {
 }
 
 export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRoleModalProps) {
+  const t = useTranslations()
   const [selectedRole, setSelectedRole] = useState<UserRole | ''>('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  
+  const ROLE_LABELS = getRoleLabels(t)
 
   // Set initial role when modal opens
   useEffect(() => {
@@ -59,7 +63,7 @@ export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRo
 
   const handleSubmit = async () => {
     if (!selectedRole) {
-      setError('Please select a role')
+      setError(t('admin.forms.validation.required'))
       return
     }
 
@@ -73,10 +77,10 @@ export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRo
         onSuccess()
         onClose()
       } else {
-        setError('Failed to update user role')
+        setError(t('admin.errors.saving'))
       }
     } catch (error) {
-      setError('An error occurred while updating the user role')
+      setError(t('admin.errors.saving'))
       console.error('Error updating user role:', error)
     } finally {
       setIsLoading(false)
@@ -96,10 +100,10 @@ export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRo
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5" />
-            Set User Role
+            {t('admin.forms.edit')} {t('admin.common.status')}
           </DialogTitle>
           <DialogDescription>
-            Update the role for this user. This will affect their permissions and access levels.
+            {t('admin.forms.edit')} {t('admin.common.status')} {t('admin.common.for')} {t('admin.common.this')} {t('admin.common.user')}. {t('admin.common.this')} {t('admin.common.will')} {t('admin.common.affect')} {t('admin.common.their')} {t('admin.common.permissions')} {t('admin.common.and')} {t('admin.common.access')} {t('admin.common.levels')}.
           </DialogDescription>
         </DialogHeader>
 
@@ -124,10 +128,10 @@ export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRo
 
           {/* Role Selection */}
           <div className="space-y-2">
-            <Label htmlFor="role">Select Role</Label>
+            <Label htmlFor="role">{t('admin.forms.selectRole')}</Label>
             <Select value={selectedRole} onValueChange={(value) => setSelectedRole(value as UserRole)}>
               <SelectTrigger>
-                <SelectValue placeholder="Choose a role" />
+                <SelectValue placeholder={t('admin.forms.selectOption')} />
               </SelectTrigger>
               <SelectContent>
                 {Object.entries(ROLE_LABELS).map(([role, label]) => (
@@ -153,16 +157,16 @@ export function SetUserRoleModal({ isOpen, onClose, user, onSuccess }: SetUserRo
 
         <DialogFooter>
           <Button variant="outline" onClick={handleClose} disabled={isLoading}>
-            Cancel
+            {t('admin.common.cancel')}
           </Button>
           <Button onClick={handleSubmit} disabled={isLoading || !selectedRole}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Updating...
+                {t('admin.common.updating')}
               </>
             ) : (
-              'Update Role'
+              t('admin.common.updateRole')
             )}
           </Button>
         </DialogFooter>

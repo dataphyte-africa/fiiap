@@ -34,7 +34,7 @@ interface OrganisationResult {
 }
 
 export function OrganisationsGrid() {
-  const t = useTranslations('organisations.grid');
+  const t = useTranslations('organisations-client.grid');
   const router = useRouter();
   const searchParams = useSearchParams();
   

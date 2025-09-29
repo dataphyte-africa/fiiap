@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import {
   Calendar,
   Edit,
@@ -56,6 +57,7 @@ import { EventFormData } from '@/lib/schemas/admin-content-schemas';
 type DBEvent = Database['public']['Tables']['events']['Row']; 
 export function EventsTable() {
   const queryClient = useQueryClient();
+  const t = useTranslations();
   const [filters, setFilters] = useState<EventFilters>({
     page: 1,
     limit: 20,
@@ -219,9 +221,20 @@ export function EventsTable() {
       other: 'bg-gray-100 text-gray-800',
     };
 
+    const labels: Record<string, string> = {
+      conference: t('admin.common.conference'),
+      workshop: t('admin.common.workshop'),
+      webinar: t('admin.common.webinar'),
+      training: t('admin.common.training'),
+      seminar: t('admin.common.seminar'),
+      networking: t('admin.common.networking'),
+      fundraiser: t('admin.common.fundraiser'),
+      other: t('admin.common.other'),
+    };
+
     return (
       <Badge className={colors[eventType] || colors.other}>
-        {eventType?.replace('_', ' ').toUpperCase()}
+        {labels[eventType] || eventType?.replace('_', ' ').toUpperCase()}
       </Badge>
     );
   };
@@ -229,9 +242,9 @@ export function EventsTable() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <p className="text-red-600 mb-4">Failed to load events</p>
+        <p className="text-red-600 mb-4">{t('admin.errors.loading')}</p>
         <Button onClick={() => refetch()} variant="outline">
-          Try Again
+          {t('admin.common.refresh')}
         </Button>
       </div>
     );
@@ -242,28 +255,28 @@ export function EventsTable() {
       {/* Header and Actions */}
       <div className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Events Management</h2>
+          <h2 className="text-2xl font-bold">{t('admin.pages.events.title')}</h2>
           <p className="text-muted-foreground">
-            Manage and organize events for the platform
+            {t('admin.pages.events.description')}
           </p>
         </div>
         <Button onClick={() => setFormModal({ isOpen: true, mode: 'create' })}>
           <Plus className="h-4 w-4 mr-2" />
-          Create Event
+          {t('admin.common.create')} {t('admin.common.event')}
         </Button>
       </div>
 
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Filters</CardTitle>
+          <CardTitle>{t('admin.common.filter')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search events..."
+                placeholder={t('admin.common.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="pl-10"
@@ -272,34 +285,34 @@ export function EventsTable() {
 
             <Select value={selectedEventType} onValueChange={handleEventTypeFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Event Type" />
+                <SelectValue placeholder={t('admin.common.eventType')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="conference">Conference</SelectItem>
-                <SelectItem value="workshop">Workshop</SelectItem>
-                <SelectItem value="webinar">Webinar</SelectItem>
-                <SelectItem value="training">Training</SelectItem>
-                <SelectItem value="seminar">Seminar</SelectItem>
-                <SelectItem value="networking">Networking</SelectItem>
-                <SelectItem value="fundraiser">Fundraiser</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.types')}</SelectItem>
+                <SelectItem value="conference">{t('admin.common.conference')}</SelectItem>
+                <SelectItem value="workshop">{t('admin.common.workshop')}</SelectItem>
+                <SelectItem value="webinar">{t('admin.common.webinar')}</SelectItem>
+                <SelectItem value="training">{t('admin.common.training')}</SelectItem>
+                <SelectItem value="seminar">{t('admin.common.seminar')}</SelectItem>
+                <SelectItem value="networking">{t('admin.common.networking')}</SelectItem>
+                <SelectItem value="fundraiser">{t('admin.common.fundraiser')}</SelectItem>
+                <SelectItem value="other">{t('admin.common.other')}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedVisibility} onValueChange={handleVisibilityFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Visibility" />
+                <SelectValue placeholder={t('admin.common.visibility')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Events</SelectItem>
-                <SelectItem value="visible">Visible</SelectItem>
-                <SelectItem value="hidden">Hidden</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.events')}</SelectItem>
+                <SelectItem value="visible">{t('admin.common.visible')}</SelectItem>
+                <SelectItem value="hidden">{t('admin.common.hidden')}</SelectItem>
               </SelectContent>
             </Select>
 
             <div className="text-sm text-muted-foreground flex items-center">
-              {data?.count || 0} events found
+              {data?.count || 0} {t('admin.common.eventsFound')}
             </div>
           </div>
         </CardContent>
@@ -315,18 +328,18 @@ export function EventsTable() {
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('title')}
                 >
-                  Title {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.title')} {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Type</TableHead>
+                <TableHead>{t('admin.common.type')}</TableHead>
                 <TableHead 
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('created_at')}
                 >
-                  Event Date {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.eventDate')} {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('admin.common.location')}</TableHead>
+                <TableHead>{t('admin.common.status')}</TableHead>
+                <TableHead>{t('admin.common.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -356,7 +369,7 @@ export function EventsTable() {
               ) : data?.data.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-8">
-                    No events found
+                    {t('admin.common.noEventsFound')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -385,7 +398,7 @@ export function EventsTable() {
                         {event.is_virtual && (
                           <Badge variant="outline" className="w-fit">
                             <Video className="h-3 w-3" />
-                            Virtual
+                            {t('admin.common.virtual')}
                           </Badge>
                         )}
                       </div>
@@ -402,25 +415,25 @@ export function EventsTable() {
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm">
-                          {event.location || event.venue_name || 'TBD'}
+                          {event.location || event.venue_name || t('admin.common.tbd')}
                         </span>
                       </div>
                       {event.max_participants && (
                         <div className="flex items-center gap-1 text-xs text-muted-foreground">
                           <Users className="h-3 w-3" />
-                          Max {event.max_participants}
+                          {t('admin.common.maxParticipants')} {event.max_participants}
                         </div>
                       )}
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
                         <Badge variant={event.is_visible ? 'default' : 'secondary'}>
-                          {event.is_visible ? 'Visible' : 'Hidden'}
+                          {event.is_visible ? t('admin.common.visible') : t('admin.common.hidden')}
                         </Badge>
                         {event.is_featured && (
                           <Badge variant="outline" className="w-fit">
                             <Star className="h-3 w-3" />
-                            Featured
+                            {t('admin.common.featured')}
                           </Badge>
                         )}
                       </div>
@@ -429,7 +442,7 @@ export function EventsTable() {
                      
                         <div className="flex items-center gap-2">
                           <Tooltip>
-                            <TooltipContent>Edit Event</TooltipContent>
+                            <TooltipContent>{t('admin.common.editEvent')}</TooltipContent>
                             <TooltipTrigger asChild>
                           <Button onClick={() => handleEdit(event)} size="icon" variant="outline">
                             <Edit className="h-4 w-4 mr-2" />
@@ -437,7 +450,7 @@ export function EventsTable() {
                           </TooltipTrigger>
                           </Tooltip>
                           <Tooltip>
-                            <TooltipContent>{event.is_visible ? 'Hide' : 'Show'} Event</TooltipContent>
+                            <TooltipContent>{event.is_visible ? t('admin.common.hideEvent') : t('admin.common.showEvent')}</TooltipContent>
                             <TooltipTrigger asChild>
                           <Button onClick={() => handleToggleVisibility(event)} size="icon" variant="outline">
                             {event.is_visible ? (
@@ -449,7 +462,7 @@ export function EventsTable() {
                           </TooltipTrigger>
                           </Tooltip>
                           <Tooltip>
-                            <TooltipContent>{event.is_featured ? 'Unfeature' : 'Feature'} Event</TooltipContent>
+                            <TooltipContent>{event.is_featured ? t('admin.common.unfeatureEvent') : t('admin.common.featureEvent')}</TooltipContent>
                             <TooltipTrigger asChild>
                           <Button onClick={() => handleToggleFeatured(event)} size="icon" variant="outline">
                             {event.is_featured ? (
@@ -461,7 +474,7 @@ export function EventsTable() {
                           </TooltipTrigger>
                           </Tooltip>
                           <Tooltip>
-                            <TooltipContent>Delete Event</TooltipContent>
+                            <TooltipContent>{t('admin.common.deleteEvent')}</TooltipContent>
                             <TooltipTrigger asChild>
                           <Button 
                             onClick={() => handleDelete(event)}
@@ -492,24 +505,24 @@ export function EventsTable() {
             onClick={() => handlePageChange(filters.page! - 1)}
             disabled={!data.hasPrevPage}
           >
-            Previous
+            {t('admin.common.previous')}
           </Button>
           <span className="flex items-center px-4">
-            Page {data.currentPage} of {data.totalPages}
+            {t('admin.common.page')} {data.currentPage} {t('admin.common.of')} {data.totalPages}
           </span>
           <Button
             variant="outline"
             onClick={() => handlePageChange(filters.page! + 1)}
             disabled={!data.hasNextPage}
           >
-            Next
+            {t('admin.common.next')}
           </Button>
         </div>
       )}
 
       {/* Form Modal */}
       <Dialog open={formModal.isOpen} onOpenChange={(open) => setFormModal({ ...formModal, isOpen: open })}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="md:max-w-4xl max-h-[90vh] overflow-y-auto">
           <EventForm
             initialData={formModal.eventData as EventFormData & { id?: string }}
             mode={formModal.mode}
@@ -523,9 +536,9 @@ export function EventsTable() {
       <Dialog open={deleteModal.isOpen} onOpenChange={(open) => setDeleteModal({ ...deleteModal, isOpen: open })}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Event</DialogTitle>
+            <DialogTitle>{t('admin.common.deleteEvent')}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete &quot;{deleteModal.eventTitle}&quot;? This action cannot be undone.
+              {t('admin.common.deleteEventConfirm')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -533,14 +546,14 @@ export function EventsTable() {
               variant="outline"
               onClick={() => setDeleteModal({ isOpen: false, eventId: null, eventTitle: '' })}
             >
-              Cancel
+              {t('admin.common.cancel')}
             </Button>
             <Button
               variant="destructive"
               onClick={() => deleteModal.eventId && deleteMutation.mutate(deleteModal.eventId)}
               disabled={deleteMutation.isPending}
             >
-              {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+              {deleteMutation.isPending ? t('admin.common.deleting') : t('admin.common.delete')}
             </Button>
           </DialogFooter>
         </DialogContent>

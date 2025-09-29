@@ -410,7 +410,7 @@ export interface Organisation {
   id: string;
   name: string;
   mission?: string;
-  country: 'Nigeria' | 'Benin' | 'Gambia';
+  country: 'Nigeria' | 'Benin' | 'The Gambia';
   type: 'NGO' | 'CBO' | 'Network' | 'Foundation' | 'Coalition' | 'Association' | 'Cooperative' | 'Other';
   status: 'active' | 'pending_approval' | 'flagged' | 'inactive';
   // ... other fields

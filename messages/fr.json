@@ -45,9 +45,10 @@
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Bénin",
-                "gambia": "La Gambie",
+                "thegambia": "La Gambie",
                 "organizations": "organisations",
-                "resources": "ressources"
+                "resources": "ressources",
+                "projects": "projets"
             },
             "exploreButton": "Explorer les organisations →"
         },
@@ -57,6 +58,16 @@
             "viewAllButton": "Voir tout →",
             "projects": "Projets",
             "blogs": "Blogs"
+        },
+        "featuredBlogs": {
+            "title": "Articles de Blog en Vedette",
+            "subtitle": "Découvrez les dernières idées, histoires et mises à jour des organisations de la société civile en Afrique de l'Ouest.",
+            "viewAllButton": "Voir Tous les Blogs"
+        },
+        "featuredPosts": {
+            "title": "Publications Communautaires en Vedette",
+            "subtitle": "Restez connecté avec les dernières discussions, annonces et initiatives de notre communauté.",
+            "viewAllButton": "Voir Toutes les Publications"
         },
         "feature4": {
             "cta": {
@@ -133,7 +144,7 @@
             "saving": "Enregistrement..."
         }
     },
-    "organisations": {
+    "organisations-client": {
         "page": {
             "title": "Découvrir les Organisations",
             "description": "Trouvez et connectez-vous avec les organisations de la société civile travaillant au Nigeria, au Bénin et en Gambie"
@@ -206,7 +217,37 @@
             },
             "stories": {
                 "title": "Histoires",
-                "placeholder": "Les histoires et actualités de {organisationName} apparaîtront ici."
+                "subtitle": "Explorez {count} histoires et actualités de {organisationName}",
+                "placeholder": "Les histoires et actualités de {organisationName} apparaîtront ici.",
+                "filters": {
+                    "searchPlaceholder": "Rechercher des histoires...",
+                    "languagePlaceholder": "Sélectionner la langue",
+                    "allLanguages": "Toutes les langues",
+                    "sortByPlaceholder": "Trier par",
+                    "sortByDate": "Date de publication",
+                    "sortByTitle": "Titre",
+                    "sortByViews": "Vues",
+                    "sortByLikes": "J'aime",
+                    "ascending": "Croissant",
+                    "descending": "Décroissant",
+                    "featured": "À la une seulement",
+                    "clearAll": "Effacer les filtres",
+                    "filterByTags": "Filtrer par étiquettes :"
+                },
+                "empty": {
+                    "title": "Aucune histoire trouvée",
+                    "noStoriesMessage": "{organisationName} n'a pas encore publié d'histoires.",
+                    "noResultsMessage": "Aucune histoire ne correspond à vos filtres actuels. Essayez d'ajuster vos critères de recherche."
+                },
+                "error": {
+                    "title": "Impossible de charger les histoires",
+                    "retry": "Réessayer"
+                },
+                "pagination": {
+                    "previous": "Précédent",
+                    "next": "Suivant",
+                    "pageInfo": "Page {current} sur {total}"
+                }
             },
             "projects": {
                 "title": "Projets",
@@ -448,6 +489,818 @@
         "pagination": {
             "showing": "Affichage de {count} sur {total} publications",
             "inCategory": "dans la catégorie sélectionnée"
+        }
+    },
+    "aboutPage": {
+        "hero": {
+            "title": "Autonomiser la Société Civile par",
+            "subtitle": "la Collaboration et la Connectivité",
+            "description": "Notre plateforme est conçue pour connecter les Organisations de la Société Civile (OSC), les donateurs et les parties prenantes au Nigeria, au Bénin et en Gambie — permettant des partenariats significatifs et un impact partagé.",
+            "aboutButton": "À propos de nous"
+        },
+        "mission": {
+            "title": "Combler les Lacunes et Connecter la Société Civile",
+            "subtitle": "pour un Plus Grand Impact en Afrique de l'Ouest",
+            "description": "Nous avons construit cette plateforme pour autonomiser les Organisations de la Société Civile en favorisant la collaboration, le partage de ressources et les partenariats transfrontaliers au Nigeria, au Bénin et en Gambie."
+        },
+        "missionValue": {
+            "ourMission": "Notre mission",
+            "missionText": "Renforcer l'écosystème de la société civile en fournissant une plateforme où les organisations peuvent se connecter, partager des ressources et collaborer pour un plus grand impact social.",
+            "ourValue": "Notre Valeur",
+            "valueText": "Une société civile unifiée et autonomisée en Afrique de l'Ouest, travaillant ensemble pour construire des communautés résilientes, inclusives et durables."
+        },
+        "impact": {
+            "title": "Impulser le Changement au Nigeria, au Bénin et en Gambie",
+            "impactLabel": "IMPACT",
+            "countriesReach": "PORTÉE DES PAYS",
+            "csoOnboarded": "OSC INTÉGRÉES",
+            "partnershipCreated": "PARTENARIATS CRÉÉS",
+            "resourcesShared": "RESSOURCES PARTAGÉES"
+        },
+        "coreValues": {
+            "title": "Nos Valeurs Fondamentales Favorisant la Collaboration",
+            "collaboration": "Collaboration",
+            "inclusivity": "Inclusivité",
+            "transparency": "Transparence",
+            "innovation": "Innovation"
+        }
+    },
+    "contactPage": {
+        "hero": {
+            "badge": "Contactez-nous",
+            "title": "Construisons des Connexions Ensemble",
+            "description": "Contactez-nous pour obtenir de l'aide, des demandes de partenariat ou toute question sur notre plateforme de collaboration OSC."
+        },
+        "info": {
+            "title": "Vos Questions Comptent —",
+            "subtitle": "Nous Sommes Là pour Vous Aider !",
+            "ourEmail": "Notre Email",
+            "ourPhone": "Notre Téléphone",
+            "socialMedia": "Vous pouvez également nous contacter sur nos réseaux sociaux"
+        },
+        "form": {
+            "fullName": "Nom complet",
+            "fullNamePlaceholder": "Saisissez votre nom",
+            "email": "Email",
+            "emailPlaceholder": "Saisissez votre email",
+            "phone": "Téléphone",
+            "phonePlaceholder": "+44123647837",
+            "optional": "optionnel",
+            "subject": "Sujet",
+            "subjectPlaceholder": "Quel est le sujet de votre message",
+            "message": "Message",
+            "messagePlaceholder": "Tapez votre message ici",
+            "sendMessage": "Envoyer le message",
+            "submitting": "Envoi en cours...",
+            "success": {
+                "title": "Message Envoyé avec Succès !",
+                "description": "Merci de nous avoir contactés. Nous vous répondrons dans les 24 heures.",
+                "sendAnother": "Envoyer un Autre Message"
+            }
+        }
+    },
+    "faqPage": {
+        "hero": {
+            "title": "Foire Aux Questions",
+            "description": "Trouvez des réponses aux questions courantes sur notre plateforme de collaboration OSC et comment elle peut aider votre organisation à se connecter et grandir."
+        },
+        "faqs": {
+            "whatIsPlatform": {
+                "question": "Qu'est-ce que le Réseau OSC pour l'Afrique de l'Ouest ?",
+                "answer": "Le Réseau OSC pour l'Afrique de l'Ouest est une plateforme numérique conçue pour connecter les Organisations de la Société Civile (OSC) au Nigeria, au Bénin et en Gambie. Notre plateforme permet aux organisations de découvrir des partenaires, partager des ressources, collaborer sur des projets et accéder aux opportunités de financement tout en construisant des partenariats transfrontaliers significatifs."
+            },
+            "whoCanJoin": {
+                "question": "Qui peut rejoindre la plateforme ?",
+                "answer": "Notre plateforme est ouverte aux Organisations de la Société Civile, ONGs, organisations communautaires, donateurs, personnel des médias, décideurs politiques et toute personne intéressée à soutenir le travail de la société civile en Afrique de l'Ouest. Nous avons différents rôles d'utilisateurs avec des niveaux d'accès appropriés pour chaque type d'utilisateur."
+            },
+            "howToRegister": {
+                "question": "Comment puis-je enregistrer mon organisation ?",
+                "answer": "Pour enregistrer votre organisation, cliquez sur 'Rejoindre en tant qu'Organisation' et complétez notre processus d'inscription en 5 étapes : Informations de Base, Informations de Contact, Détails Organisationnels, informations Juridiques et Financières, et Médias et Documents. Une fois soumis, notre équipe examinera et approuvera votre candidature."
+            },
+            "whatFeatures": {
+                "question": "Quelles fonctionnalités offre la plateforme ?",
+                "answer": "Notre plateforme offre la découverte et le réseautage d'organisations, l'accès à la bibliothèque de ressources, la présentation et collaboration de projets, les discussions du forum communautaire, les listes d'opportunités de financement, l'hébergement d'événements et webinaires, l'accès aux cours en ligne, le partage de blogs et actualités, et le support multilingue en anglais, français et espagnol."
+            },
+            "isFree": {
+                "question": "L'utilisation de la plateforme est-elle gratuite ?",
+                "answer": "Oui, les fonctionnalités de base de notre plateforme sont gratuites pour toutes les Organisations de la Société Civile enregistrées. Cela inclut la création de profil organisationnel, le partage de ressources, la participation aux forums et l'accès aux opportunités de financement. Certaines fonctionnalités premium peuvent être introduites à l'avenir."
+            },
+            "howToPartner": {
+                "question": "Comment puis-je trouver et me connecter avec d'autres organisations ?",
+                "answer": "Vous pouvez découvrir des organisations en utilisant notre système avancé de recherche et de filtres par pays (Nigeria, Bénin, Gambie), domaines thématiques, régions et types de projets. Une fois que vous trouvez des organisations pertinentes, vous pouvez consulter leurs profils, projets en cours et les contacter directement via la plateforme."
+            },
+            "dataPrivacy": {
+                "question": "Comment les données de mon organisation sont-elles protégées ?",
+                "answer": "Nous prenons la confidentialité des données au sérieux. Notre plateforme utilise des mesures de sécurité avancées incluant les politiques de Sécurité au Niveau des Lignes (RLS), l'authentification sécurisée, la transmission de données chiffrée et des audits de sécurité réguliers. Vous contrôlez quelles informations sont publiques et lesquelles restent privées à votre organisation."
+            },
+            "languages": {
+                "question": "Quelles langues sont supportées ?",
+                "answer": "Notre plateforme supporte trois langues : anglais, français et espagnol. Vous pouvez changer de langue à tout moment, et tout le contenu incluant la navigation, les formulaires et le texte d'aide est disponible dans votre langue préférée."
+            },
+            "technicalSupport": {
+                "question": "Que faire si j'ai besoin d'aide pour utiliser la plateforme ?",
+                "answer": "Nous fournissons un support complet à travers plusieurs canaux : guides utilisateur détaillés et tutoriels, support email pour les problèmes techniques, forum communautaire pour l'assistance par les pairs, et webinaires réguliers pour la formation sur la plateforme. Notre équipe de support s'engage à vous aider à réussir."
+            },
+            "contentModeration": {
+                "question": "Comment le contenu est-il modéré sur la plateforme ?",
+                "answer": "Tout le contenu est modéré par notre équipe administrative pour assurer la qualité et la pertinence. Nous avons des directives communautaires qui promeuvent le dialogue respectueux, le partage d'informations précises et la collaboration constructive. Les utilisateurs peuvent également signaler du contenu inapproprié pour examen."
+            }
+        }
+    },
+    "organisations": {
+        "registration": {
+            "steps": {
+                "basicInfo": {
+                    "title": "Informations de Base",
+                    "description": "Nom, type, taille et localisation de l'organisation"
+                },
+                "contactInfo": {
+                    "title": "Informations de Contact",
+                    "description": "Email, téléphone, site web et détails d'adresse"
+                },
+                "details": {
+                    "title": "Détails de l'Organisation",
+                    "description": "Mission, vision et informations organisationnelles"
+                },
+                "legalFinancial": {
+                    "title": "Légal et Financier",
+                    "description": "Statut légal, certifications et informations budgétaires"
+                },
+                "media": {
+                    "title": "Médias et Documents",
+                    "description": "Logo, image de couverture et téléchargements de documents"
+                }
+            },
+            "form": {
+                "title": "Enregistrer Votre Organisation",
+                "editTitle": "Modifier l'Organisation",
+                "description": "Complétez les étapes suivantes pour enregistrer votre organisation",
+                "editDescription": "Mettez à jour les informations de votre organisation",
+                "step": "Étape {current} sur {total}",
+                "next": "Suivant",
+                "previous": "Précédent",
+                "submit": "Soumettre l'Enregistrement",
+                "update": "Mettre à Jour l'Organisation",
+                "submitting": "Soumission...",
+                "updating": "Mise à jour..."
+            },
+            "progress": {
+                "step": "Étape",
+                "of": "sur",
+                "complete": "terminé"
+            },
+            "loading": {
+                "title": "Traitement de votre demande",
+                "description": "Veuillez patienter pendant que nous sauvegardons vos informations"
+            },
+            "basicInfo": {
+                "title": "Informations de Base",
+                "organizationName": "Nom de l'Organisation",
+                "organizationNamePlaceholder": "Entrez le nom de votre organisation",
+                "organizationType": "Type d'Organisation",
+                "selectType": "Sélectionnez le type d'organisation",
+                "organizationSize": "Taille de l'Organisation",
+                "selectSize": "Sélectionnez la taille de l'organisation",
+                "primaryCountry": "Pays Principal",
+                "selectCountry": "Sélectionnez votre pays principal",
+                "otherCountries": "Autres Pays d'Opération",
+                "addCountry": "Ajouter un autre pays",
+                "registrationNumber": "Numéro d'Enregistrement",
+                "registrationNumberPlaceholder": "Entrez le numéro d'enregistrement (optionnel)",
+                "establishmentYear": "Année d'Établissement",
+                "establishmentYearPlaceholder": "Entrez l'année (optionnel)"
+            },
+            "contactInfo": {
+                "title": "Informations de Contact",
+                "contactEmail": "Email de Contact",
+                "contactEmailPlaceholder": "Entrez l'email de contact",
+                "contactPhone": "Téléphone de Contact",
+                "contactPhonePlaceholder": "Entrez le numéro de téléphone de contact",
+                "websiteUrl": "URL du Site Web",
+                "websiteUrlPlaceholder": "https://exemple.com",
+                "address": "Adresse",
+                "addressPlaceholder": "Entrez l'adresse complète",
+                "region": "Région",
+                "regionPlaceholder": "Entrez la région",
+                "stateProvince": "État/Province",
+                "stateProvincePlaceholder": "Entrez l'état ou la province",
+                "city": "Ville",
+                "cityPlaceholder": "Entrez la ville",
+                "socialLinks": "Liens de Médias Sociaux",
+                "languagesSpoken": "Langues Parlées",
+                "geographicCoverage": "Couverture Géographique"
+            }
+        },
+        "success": {
+            "registrationSuccessful": "Enregistrement Réussi !",
+            "registrationMessage": "Votre organisation a été soumise pour examen. Nous vous notifierons une fois qu'elle sera approuvée.",
+            "gotIt": "Compris !",
+            "updateSuccessful": "Mise à Jour Réussie !",
+            "updateMessage": "Les informations de votre organisation ont été mises à jour avec succès."
+        },
+        "errors": {
+            "organizationNotFound": "Organisation Non Trouvée",
+            "organizationNotFoundMessage": "L'organisation que vous recherchez n'existe pas.",
+            "registrationFailed": "Échec de l'enregistrement",
+            "updateFailed": "Échec de la mise à jour",
+            "somethingWentWrong": "Quelque chose s'est mal passé. Veuillez réessayer."
+        },
+        "view": {
+            "alsoOperatesIn": "Opère également dans :",
+            "editOrganisation": "Modifier l'Organisation",
+            "missionVision": "Mission et Vision",
+            "mission": "Mission",
+            "vision": "Vision",
+            "geographicCoverage": "Couverture Géographique",
+            "focusAreas": "Domaines d'Intervention",
+            "targetPopulations": "Populations Cibles",
+            "mediaCommunications": "Médias et Communications",
+            "mediaPlatforms": "Plateformes Médias",
+            "mediaWorkTypes": "Types de Travail Médias",
+            "primaryWorkMethods": "Méthodes de Travail Principales",
+            "networkMemberships": "Adhésions aux Réseaux",
+            "partnerships": "Partenariats",
+            "awardsRecognition": "Prix et Reconnaissances",
+            "contactInformation": "Informations de Contact",
+            "visitWebsite": "Visiter le Site Web",
+            "operationalLevels": "Niveaux Opérationnels",
+            "organisationDetails": "Détails de l'Organisation",
+            "established": "Établie",
+            "registration": "Enregistrement",
+            "teamSize": "Taille de l'Équipe",
+            "staff": "Personnel",
+            "volunteers": "Bénévoles",
+            "annualBudget": "Budget Annuel",
+            "languages": "Langues",
+            "legalStatus": "Statut Légal",
+            "taxStatus": "Statut Fiscal",
+            "taxExempt": "Exonéré d'Impôts",
+            "registeredOn": "Enregistrée le",
+            "digitalTools": "Outils Numériques",
+            "visitTool": "Visiter l'Outil",
+            "certifications": "Certifications"
+        }
+    },
+    "organisationProjectsList": {
+        "loading": {
+            "loadingProjects": "Chargement des projets..."
+        },
+        "error": {
+            "failedToLoad": "Échec du chargement des projets",
+            "errorMessage": "Une erreur s'est produite lors de la récupération des projets",
+            "tryAgain": "Réessayer"
+        },
+        "empty": {
+            "noProjectsYet": "Aucun projet encore",
+            "noProjectsMessage": "Cette organisation n'a pas encore publié de projets."
+        },
+        "header": {
+            "projectsCount": "Projets ({count})"
+        },
+        "project": {
+            "noDescriptionAvailable": "Aucune description disponible",
+            "notSpecified": "Non spécifié",
+            "notSet": "Non défini",
+            "started": "Commencé : {date}",
+            "beneficiaries": "{count} bénéficiaires",
+            "budget": "Budget : {amount}",
+            "location": "Lieu : {location}"
+        },
+        "details": {
+            "projectDetails": "Détails du Projet",
+            "featured": "Mis en vedette",
+            "public": "Public",
+            "private": "Privé",
+            "language": "Langue : {lang}",
+            "startDate": "Date de Début :",
+            "endDate": "Date de Fin :",
+            "objectives": "Objectifs",
+            "expectedOutcomes": "Résultats Attendus",
+            "contactInformation": "Informations de Contact",
+            "externalResources": "Ressources Externes",
+            "projectWebsite": "Site Web du Projet",
+            "documents": "Documents ({count})",
+            "documentNumber": "Document {number}",
+            "moreDocuments": "+{count} documents de plus",
+            "secondarySectors": "Secteurs Secondaires",
+            "sustainableDevelopmentGoals": "Objectifs de Développement Durable",
+            "featuredImage": "Image Mise en Vedette",
+            "gallery": "Galerie ({count})",
+            "moreGalleryImages": "+{count} images de galerie de plus",
+            "mediaFiles": "Fichiers Média ({count})",
+            "moreMediaFiles": "+{count} fichiers média de plus",
+            "impactMetrics": "Métriques d'Impact",
+            "beneficiariesDemographics": "Démographie des Bénéficiaires",
+            "recentEvents": "Événements Récents ({count})",
+            "virtual": "Virtuel",
+            "eventType": "Type : {type}",
+            "moreEvents": "+{count} événements de plus",
+            "milestones": "Jalons ({count})",
+            "deliverables": "Livrables :",
+            "moreDeliverables": "+{count} livrables de plus",
+            "progress": "Progrès",
+            "due": "Échéance : {date}",
+            "completed": "Terminé : {date}",
+            "moreMilestones": "+{count} jalons de plus"
+        },
+        "status": {
+            "ongoing": "EN COURS",
+            "completed": "TERMINÉ",
+            "planning": "PLANIFICATION",
+            "cancelled": "ANNULÉ",
+            "onHold": "EN ATTENTE",
+            "unknown": "INCONNU"
+        },
+        "milestoneStatus": {
+            "achieved": "atteint",
+            "inProgress": "en cours",
+            "planned": "planifié",
+            "delayed": "retardé",
+            "unknown": "inconnu"
+        },
+        "eventStatus": {
+            "completed": "terminé",
+            "scheduled": "programmé"
+        }
+    },
+    "projects": {
+        "form": {
+            "tabs": {
+                "basic": "Informations de Base",
+                "media": "Médias",
+                "events": "Événements",
+                "milestones": "Jalons"
+            },
+            "descriptions": {
+                "basic": "Détails du projet, calendrier et informations de contact",
+                "media": "Images, documents, vidéos et autres fichiers",
+                "events": "Ateliers, réunions et activités du projet",
+                "milestones": "Jalons clés et livrables"
+            },
+            "title": "Modifier le Projet",
+            "createTitle": "Créer un Nouveau Projet",
+            "saveChanges": "Enregistrer les Modifications",
+            "createProject": "Créer le Projet",
+            "saving": "Enregistrement...",
+            "creating": "Création..."
+        },
+        "basicInfo": {
+            "title": "Informations du Projet",
+            "projectTitle": "Titre du Projet",
+            "projectTitlePlaceholder": "Entrez le titre du projet",
+            "summary": "Résumé",
+            "summaryPlaceholder": "Bref résumé du projet",
+            "description": "Description",
+            "descriptionPlaceholder": "Description détaillée du projet",
+            "status": "Statut",
+            "selectStatus": "Sélectionnez le statut du projet",
+            "location": "Emplacement",
+            "locationPlaceholder": "Emplacement du projet",
+            "startDate": "Date de Début",
+            "endDate": "Date de Fin",
+            "budget": "Budget",
+            "budgetPlaceholder": "Entrez le montant du budget",
+            "currency": "Devise",
+            "beneficiariesCount": "Nombre de Bénéficiaires",
+            "beneficiariesPlaceholder": "Entrez le nombre de bénéficiaires",
+            "contactPerson": "Personne de Contact",
+            "contactPersonPlaceholder": "Entrez le nom de la personne de contact",
+            "contactEmail": "Email de Contact",
+            "contactEmailPlaceholder": "Entrez l'email de contact",
+            "contactPhone": "Téléphone de Contact",
+            "contactPhonePlaceholder": "Entrez le téléphone de contact",
+            "projectWebsite": "Site Web du Projet",
+            "projectWebsitePlaceholder": "https://exemple.com",
+            "publicVisibility": "Visibilité Publique",
+            "objectives": "Objectifs",
+            "outcomes": "Résultats",
+            "sdgGoals": "Objectifs de Développement Durable"
+        },
+        "list": {
+            "title": "Projets",
+            "description": "Gérez les projets de votre organisation",
+            "createProject": "Créer un Projet",
+            "searchProjects": "Rechercher des projets...",
+            "filterByStatus": "Filtrer par statut",
+            "sortBy": "Trier par",
+            "allStatus": "Tous les Statuts",
+            "planning": "Planification",
+            "ongoing": "En Cours",
+            "completed": "Terminé",
+            "onHold": "En Attente",
+            "cancelled": "Annulé",
+            "newestFirst": "Plus Récents d'Abord",
+            "oldestFirst": "Plus Anciens d'Abord",
+            "titleAZ": "Titre A-Z",
+            "titleZA": "Titre Z-A",
+            "startDateLatest": "Date de Début (Plus Récente)",
+            "startDateEarliest": "Date de Début (Plus Ancienne)",
+            "failedToLoad": "Échec du chargement des projets",
+            "tryAgain": "Réessayer",
+            "noProjectsFound": "Aucun projet trouvé",
+            "noProjectsYet": "Aucun projet encore",
+            "adjustCriteria": "Essayez d'ajuster vos critères de recherche ou de filtrage.",
+            "getStarted": "Commencez par créer votre premier projet.",
+            "createFirstProject": "Créer Votre Premier Projet",
+            "showingResults": "Affichage de {count} sur {total} projets"
+        },
+        "card": {
+            "noDescription": "Aucune description disponible",
+            "started": "Commencé :",
+            "beneficiaries": "bénéficiaires",
+            "budget": "Budget :",
+            "notSpecified": "Non spécifié",
+            "notSet": "Non défini",
+            "sdgMore": "+{count} de plus",
+            "viewDetails": "Voir les Détails"
+        }
+    },
+    "dashboard": {
+        "page": {
+            "title": "Tableau de Bord",
+            "welcome": "Bon retour ! Voici un aperçu de l'activité de votre organisation.",
+            "noOrganisation": "Aucune Organisation Trouvée",
+            "noOrganisationDescription": "Vous devez rejoindre une organisation pour gérer les articles de blog.",
+            "loading": "Chargement..."
+        },
+        "organisationStatus": {
+            "title": "Statut de l'Organisation",
+            "noOrganisationLinked": "Aucune Organisation Liée",
+            "noOrganisationDescription": "Enregistrez votre organisation ou rejoignez-en une existante pour commencer à collaborer avec d'autres OSC dans la région.",
+            "registerOrganisation": "Enregistrer l'Organisation",
+            "joinOrganisation": "Rejoindre l'Organisation",
+            "affiliationRequest": "Demande d'Affiliation",
+            "refreshStatus": "Actualiser le Statut",
+            "organisationRegistration": "Enregistrement de l'Organisation",
+            "pendingApproval": "En Attente d'Approbation",
+            "pendingApprovalDescription": "L'enregistrement de votre organisation est en cours d'examen. Vous serez notifié une fois qu'il sera approuvé.",
+            "viewDetails": "Voir les Détails",
+            "myOrganisation": "Mon Organisation",
+            "organisation": "Organisation",
+            "staffMembers": "membres du personnel",
+            "unableToLoadStatus": "Impossible de charger le statut",
+            "unableToLoadDescription": "Il y a eu une erreur lors du chargement du statut de votre organisation. Veuillez essayer de rafraîchir la page.",
+            "refreshPage": "Actualiser la Page",
+            "response": "Réponse"
+        },
+        "projects": {
+            "title": "Projets",
+            "noProjectsYet": "Aucun Projet Encore",
+            "noProjectsDescription": "Créez votre premier projet pour commencer à suivre les progrès et l'impact.",
+            "createFirstProject": "Créer le Premier Projet",
+            "active": "Actif",
+            "completed": "Terminé",
+            "totalProjects": "projets au total",
+            "viewAll": "Voir Tout",
+            "beneficiaries": "bénéficiaires"
+        },
+        "posts": {
+            "title": "Publications Récentes",
+            "posts": "Publications"
+        },
+        "blogs": {
+            "title": "Gestion du Blog",
+            "description": "Créez, modifiez et gérez les articles de blog de votre organisation.",
+            "totalPosts": "Total des Articles",
+            "publishedDrafts": "publiés, {drafts} brouillons",
+            "totalViews": "Total des Vues",
+            "acrossAllPublished": "Sur tous les articles publiés",
+            "totalLikes": "Total des J'aime",
+            "commentsTotal": "{comments} commentaires au total",
+            "thisMonth": "Ce Mois",
+            "newPostsCreated": "Nouveaux articles créés",
+            "deleteBlogPost": "Supprimer l'Article de Blog",
+            "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cet article de blog ? Cette action ne peut pas être annulée. Tous les commentaires et j'aime associés à cet article seront également supprimés.",
+            "cancel": "Annuler",
+            "deletePost": "Supprimer l'Article",
+            "deleting": "Suppression...",
+            "createNewBlogPost": "Créer un Nouvel Article de Blog",
+            "createNewBlogPostDescription": "Créer un nouvel article de blog pour votre organisation"
+        }
+    },
+    "admin": {
+        "navigation": {
+            "dashboard": "Tableau de Bord",
+            "manageOrganisations": "Gérer les Organisations",
+            "manageUsers": "Gérer les Utilisateurs",
+            "manageBlogPosts": "Gérer les Articles de Blog",
+            "managePosts": "Gérer les Publications",
+            "manageResourceLibrary": "Gérer la Bibliothèque de Ressources",
+            "manageOnlineCourses": "Gérer les Cours en Ligne",
+            "manageFundingOpportunities": "Gérer les Opportunités de Financement",
+            "manageEvents": "Gérer les Événements",
+            "myOrganisation": "Mon Organisation",
+            "manageProjects": "Gérer les Projets",
+            "manageBlogs": "Gérer les Blogs"
+        },
+        "pages": {
+            "organisations": {
+                "title": "Gestion des Organisations",
+                "description": "Gérer et modérer les organisations dans le système"
+            },
+            "users": {
+                "title": "Gestion des Utilisateurs",
+                "description": "Gérer les rôles des utilisateurs et les affectations d'organisations"
+            },
+            "blogs": {
+                "title": "Gestion des Articles de Blog",
+                "description": "Gérer, modérer et surveiller tous les articles de blog sur la plateforme. Vous pouvez approuver, signaler ou rejeter les publications, ainsi que les mettre en vedette sur la page d'accueil."
+            },
+            "posts": {
+                "title": "Gestion des Publications du Forum",
+                "description": "Gérer, modérer et surveiller toutes les publications du forum sur la plateforme. Vous pouvez approuver, signaler ou rejeter les publications, ainsi que modérer leurs réponses."
+            },
+            "events": {
+                "title": "Gestion des Événements",
+                "description": "Gérer les événements et activités sur la plateforme"
+            },
+            "funding": {
+                "title": "Gestion des Opportunités de Financement",
+                "description": "Gérer les subventions, bourses et appels de donateurs pour les organisations OSC"
+            },
+            "courses": {
+                "title": "Gestion des Cours en Ligne",
+                "description": "Gérer les cours en ligne et programmes de formation"
+            },
+            "resources": {
+                "title": "Gestion de la Bibliothèque de Ressources",
+                "description": "Gérer les boîtes à outils, documents de recherche et matériels éducatifs"
+            }
+        },
+        "common": {
+            "loading": "Chargement...",
+            "search": "Rechercher",
+            "searchPlaceholder": "Rechercher...",
+            "filter": "Filtrer",
+            "all": "Tous",
+            "none": "Aucun",
+            "create": "Créer",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "save": "Enregistrer",
+            "cancel": "Annuler",
+            "confirm": "Confirmer",
+            "close": "Fermer",
+            "refresh": "Actualiser",
+            "previous": "Précédent",
+            "next": "Suivant",
+            "page": "Page",
+            "of": "sur",
+            "showing": "Affichage",
+            "results": "résultats",
+            "noResults": "Aucun résultat trouvé",
+            "actions": "Actions",
+            "status": "Statut",
+            "created": "Créé",
+            "updated": "Mis à jour",
+            "name": "Nom",
+            "title": "Titre",
+            "description": "Description",
+            "type": "Type",
+            "category": "Catégorie",
+            "date": "Date",
+            "author": "Auteur",
+            "organisation": "Organisation",
+            "visibility": "Visibilité",
+            "featured": "Mis en vedette",
+            "moderation": "Modération",
+            "approved": "Approuvé",
+            "flagged": "Signalé",
+            "rejected": "Rejeté",
+            "pending": "En attente",
+            "draft": "Brouillon",
+            "published": "Publié",
+            "archived": "Archivé",
+            "visible": "Visible",
+            "hidden": "Masqué",
+            "active": "Actif",
+            "inactive": "Inactif",
+            "public": "Public",
+            "private": "Privé",
+            "yes": "Oui",
+            "no": "Non",
+            "enabled": "Activé",
+            "disabled": "Désactivé",
+            "online": "En ligne",
+            "offline": "Hors ligne",
+            "virtual": "Virtuel",
+            "inPerson": "En personne",
+            "hybrid": "Hybride",
+            "grant": "Subvention",
+            "fellowship": "Bourse",
+            "scholarship": "Bourse d'études",
+            "award": "Prix",
+            "contract": "Contrat",
+            "open": "Ouvert",
+            "closed": "Fermé",
+            "upcoming": "À venir",
+            "ongoing": "En cours",
+            "completed": "Terminé",
+            "cancelled": "Annulé",
+            "beginner": "Débutant",
+            "intermediate": "Intermédiaire",
+            "advanced": "Avancé",
+            "expert": "Expert",
+            "government": "Gouvernement",
+            "ngo": "ONG",
+            "foundation": "Fondation",
+            "corporate": "Entreprise",
+            "individual": "Individuel",
+            "international": "International",
+            "national": "National",
+            "local": "Local",
+            "administrator": "Administrateur",
+            "csoRepresentative": "Représentant OSC",
+            "donor": "Donateur",
+            "media": "Médias",
+            "policyMaker": "Décideur politique",
+            "publicUser": "Utilisateur public",
+            "view": "Voir",
+            "moderated": "Modéré",
+            "stats": "Statistiques",
+            "clearFilters": "Effacer les Filtres",
+            "unknown": "Inconnu",
+            "previousModeration": "Modération Précédente",
+            "moderatedBy": "Modéré par",
+            "processing": "Traitement...",
+            "for": "pour",
+            "this": "cet",
+            "user": "utilisateur",
+            "will": "affectera",
+            "affect": "affecter",
+            "their": "leurs",
+            "permissions": "permissions",
+            "and": "et",
+            "access": "accès",
+            "levels": "niveaux",
+            "updating": "Mise à jour...",
+            "updateRole": "Mettre à jour le Rôle",
+            "opportunity": "Opportunité",
+            "opportunities": "opportunités",
+            "found": "trouvées",
+            "types": "Types",
+            "donorCall": "Appel de Donateur",
+            "loan": "Prêt",
+            "closingSoon": "Fermeture Prochaine",
+            "postponed": "Reporté",
+            "funderType": "Type de Financeur",
+            "funders": "Financeurs",
+            "internationalOrg": "Org. Internationale",
+            "privateCorp": "Corp. Privée",
+            "multilateral": "Multilatéral",
+            "bilateral": "Bilatéral",
+            "university": "Université",
+            "researchInstitute": "Institut de Recherche",
+            "funder": "Financeur",
+            "course": "Cours",
+            "courses": "cours",
+            "difficultyLevel": "Niveau de Difficulté",
+            "levels": "Niveaux",
+            "instructor": "Instructeur",
+            "platform": "Plateforme",
+            "duration": "Durée",
+            "difficulty": "Difficulté",
+            "event": "Événement",
+            "events": "Événements",
+            "eventType": "Type d'Événement",
+            "eventTypes": "Types d'Événements",
+            "conference": "Conférence",
+            "workshop": "Atelier",
+            "webinar": "Webinaire",
+            "training": "Formation",
+            "seminar": "Séminaire",
+            "networking": "Réseautage",
+            "fundraiser": "Collecte de Fonds",
+            "virtual": "Virtuel",
+            "location": "Lieu",
+            "maxParticipants": "Max Participants",
+            "eventDate": "Date de l'Événement",
+            "title": "Titre",
+            "description": "Description",
+            "tbd": "À Définir",
+            "editEvent": "Modifier l'Événement",
+            "hideEvent": "Masquer l'Événement",
+            "showEvent": "Afficher l'Événement",
+            "unfeatureEvent": "Retirer la Mise en Avant",
+            "featureEvent": "Mettre en Avant l'Événement",
+            "deleteEvent": "Supprimer l'Événement",
+            "deleteEventConfirm": "Êtes-vous sûr de vouloir supprimer cet événement ? Cette action ne peut pas être annulée.",
+            "deleting": "Suppression...",
+            "noEventsFound": "Aucun événement trouvé",
+            "eventsFound": "événements trouvés",
+            "other": "Autre",
+            "opportunityType": "Type d'Opportunité",
+            "network": "Réseau",
+            "coalition": "Coalition",
+            "association": "Association",
+            "cooperative": "Coopérative",
+            "country": "Pays",
+            "countries": "Pays",
+            "organisations": "Organisations",
+            "cbo": "OCB",
+            "gotoAdmin": "Aller à l'Admin",
+            "gotoDashboard": "Aller au Tableau de Bord"
+        },
+        "stats": {
+            "totalBlogs": "Total des Articles de Blog",
+            "publishedBlogs": "Articles Publiés",
+            "pendingBlogs": "Articles en Attente",
+            "flaggedBlogs": "Articles Signalés",
+            "featuredBlogs": "Articles Mis en Vedette",
+            "totalPosts": "Total des Publications du Forum",
+            "pendingPosts": "Publications en Attente",
+            "flaggedPosts": "Publications Signalées",
+            "approvedPosts": "Publications Approuvées",
+            "totalUsers": "Total des Utilisateurs",
+            "activeUsers": "Utilisateurs Actifs",
+            "adminUsers": "Utilisateurs Admin",
+            "csoUsers": "Utilisateurs OSC",
+            "totalOrganisations": "Total des Organisations",
+            "approvedOrganisations": "Organisations Approuvées",
+            "pendingOrganisations": "Organisations en Attente",
+            "flaggedOrganisations": "Organisations Signalées",
+            "totalEvents": "Total des Événements",
+            "upcomingEvents": "Événements à Venir",
+            "featuredEvents": "Événements Mis en Vedette",
+            "virtualEvents": "Événements Virtuels",
+            "totalFunding": "Total des Opportunités de Financement",
+            "openFunding": "Opportunités Ouvertes",
+            "featuredFunding": "Opportunités Mis en Vedette",
+            "governmentFunding": "Financement Gouvernemental",
+            "totalCourses": "Total des Cours",
+            "publishedCourses": "Cours Publiés",
+            "featuredCourses": "Cours Mis en Vedette",
+            "totalResources": "Total des Ressources",
+            "featuredResources": "Ressources Mis en Vedette",
+            "toolkitResources": "Ressources Boîte à Outils"
+        },
+        "modals": {
+            "moderation": {
+                "title": "Modérer le Contenu",
+                "approve": "Approuver",
+                "flag": "Signaler",
+                "reject": "Rejeter",
+                "reason": "Raison",
+                "reasonPlaceholder": "Entrez la raison de modération...",
+                "confirmApproval": "Êtes-vous sûr de vouloir approuver ce contenu ?",
+                "confirmFlagging": "Êtes-vous sûr de vouloir signaler ce contenu ?",
+                "confirmRejection": "Êtes-vous sûr de vouloir rejeter ce contenu ?",
+                "successApproved": "Contenu approuvé avec succès",
+                "successFlagged": "Contenu signalé avec succès",
+                "successRejected": "Contenu rejeté avec succès"
+            },
+            "delete": {
+                "title": "Confirmer la Suppression",
+                "message": "Êtes-vous sûr de vouloir supprimer cet élément ? Cette action ne peut pas être annulée.",
+                "confirm": "Oui, supprimer",
+                "cancel": "Annuler",
+                "success": "Élément supprimé avec succès"
+            },
+            "feature": {
+                "title": "Mettre en Vedette le Contenu",
+                "feature": "Mettre en vedette",
+                "unfeature": "Retirer des vedettes",
+                "confirmFeature": "Êtes-vous sûr de vouloir mettre en vedette ce contenu ?",
+                "confirmUnfeature": "Êtes-vous sûr de vouloir retirer ce contenu des vedettes ?",
+                "successFeatured": "Contenu mis en vedette avec succès",
+                "successUnfeatured": "Contenu retiré des vedettes avec succès"
+            },
+            "visibility": {
+                "title": "Changer la Visibilité",
+                "makeVisible": "Rendre Visible",
+                "makeHidden": "Masquer",
+                "confirmVisible": "Êtes-vous sûr de vouloir rendre ce contenu visible ?",
+                "confirmHidden": "Êtes-vous sûr de vouloir masquer ce contenu ?",
+                "successVisible": "Contenu rendu visible avec succès",
+                "successHidden": "Contenu masqué avec succès"
+            }
+        },
+        "forms": {
+            "create": "Créer Nouveau",
+            "edit": "Modifier",
+            "required": "Requis",
+            "optional": "Optionnel",
+            "selectOption": "Sélectionner une option",
+            "noOptions": "Aucune option disponible",
+            "selectRole": "Sélectionner le Rôle",
+            "validation": {
+                "required": "Ce champ est requis",
+                "email": "Veuillez entrer une adresse email valide",
+                "url": "Veuillez entrer une URL valide",
+                "minLength": "Doit contenir au moins {min} caractères",
+                "maxLength": "Ne doit pas dépasser {max} caractères",
+                "date": "Veuillez entrer une date valide",
+                "number": "Veuillez entrer un nombre valide"
+            }
+        },
+        "errors": {
+            "loading": "Erreur lors du chargement des données",
+            "saving": "Erreur lors de la sauvegarde des données",
+            "deleting": "Erreur lors de la suppression des données",
+            "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+            "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action",
+            "notFound": "Élément non trouvé",
+            "serverError": "Erreur du serveur. Veuillez réessayer plus tard."
         }
     }
 }

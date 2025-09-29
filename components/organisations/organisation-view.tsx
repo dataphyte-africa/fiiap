@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import { Organisation } from './types'
 import { OrganisationStatusBadge, getStatusDescription } from './organisation-status-badge'
+import { useTranslations } from 'next-intl'
 
 interface OrganisationViewProps {
   organisation: Organisation
@@ -45,6 +46,7 @@ export function OrganisationView({
   canEdit = false,
   className 
 }: OrganisationViewProps) {
+  const t = useTranslations('organisations.view')
   const [coverImageLoaded, setCoverImageLoaded] = useState(false)
 
   const getInitials = (name: string) => {
@@ -139,7 +141,7 @@ export function OrganisationView({
                   {organisation.other_countries && organisation.other_countries.length > 0 && (
                     <div className="mt-2">
                       <p className="text-sm text-muted-foreground">
-                        Also operates in: {organisation.other_countries.join(', ')}
+                        {t('alsoOperatesIn')} {organisation.other_countries.join(', ')}
                       </p>
                     </div>
                   )}
@@ -150,7 +152,7 @@ export function OrganisationView({
                   {canEdit && onEdit && (
                     <Button onClick={onEdit} size="sm">
                       <Edit className="h-4 w-4 mr-2" />
-                      Edit Organisation
+                      {t('editOrganisation')}
                     </Button>
                   )}
                 </div>
@@ -179,13 +181,13 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-primary" />
-                  Mission & Vision
+                  {t('missionVision')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {organisation.mission && (
                   <div>
-                    <h4 className="font-semibold mb-2">Mission</h4>
+                    <h4 className="font-semibold mb-2">{t('mission')}</h4>
                     <p className="text-muted-foreground leading-relaxed">
                       {organisation.mission}
                     </p>
@@ -193,7 +195,7 @@ export function OrganisationView({
                 )}
                 {organisation.vision && (
                   <div>
-                    <h4 className="font-semibold mb-2">Vision</h4>
+                    <h4 className="font-semibold mb-2">{t('vision')}</h4>
                     <p className="text-muted-foreground leading-relaxed">
                       {organisation.vision}
                     </p>
@@ -209,7 +211,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Map className="h-5 w-5 text-primary" />
-                  Geographic Coverage
+                  {t('geographicCoverage')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -224,7 +226,7 @@ export function OrganisationView({
           {organisation.thematic_focus && organisation.thematic_focus.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Focus Areas</CardTitle>
+                <CardTitle>{t('focusAreas')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -244,7 +246,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <UserCheck className="h-5 w-5 text-primary" />
-                  Target Populations
+                  {t('targetPopulations')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -266,7 +268,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Radio className="h-5 w-5 text-primary" />
-                  Media & Communications
+                  {t('mediaCommunications')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -274,7 +276,7 @@ export function OrganisationView({
                   <div>
                     <h4 className="font-semibold mb-2 flex items-center gap-2">
                       <Radio className="h-4 w-4" />
-                      Media Platforms
+                      {t('mediaPlatforms')}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {organisation.media_platforms.map((platform, index) => (
@@ -290,7 +292,7 @@ export function OrganisationView({
                   <div>
                     <h4 className="font-semibold mb-2 flex items-center gap-2">
                       <Video className="h-4 w-4" />
-                      Media Work Types
+                      {t('mediaWorkTypes')}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {organisation.media_work_types.map((workType, index) => (
@@ -311,7 +313,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Briefcase className="h-5 w-5 text-primary" />
-                  Primary Work Methods
+                  {t('primaryWorkMethods')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -332,7 +334,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Network className="h-5 w-5 text-primary" />
-                  Network Memberships
+                  {t('networkMemberships')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -354,7 +356,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Handshake className="h-5 w-5 text-primary" />
-                  Partnerships
+                  {t('partnerships')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -376,7 +378,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-primary" />
-                  Awards & Recognition
+                  {t('awardsRecognition')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -398,7 +400,7 @@ export function OrganisationView({
           {/* Contact Information */}
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
+              <CardTitle>{t('contactInformation')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {organisation.contact_email && (
@@ -434,7 +436,7 @@ export function OrganisationView({
                     rel="noopener noreferrer"
                     className="text-sm text-primary hover:underline"
                   >
-                    Visit Website
+                    {t('visitWebsite')}
                   </a>
                 </div>
               )}
@@ -459,7 +461,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  Operational Levels
+                  {t('operationalLevels')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -477,14 +479,14 @@ export function OrganisationView({
           {/* Organisation Details */}
           <Card>
             <CardHeader>
-              <CardTitle>Organisation Details</CardTitle>
+              <CardTitle>{t('organisationDetails')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {organisation.establishment_year && (
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Established</span>
+                    <span className="text-sm text-muted-foreground">{t('established')}</span>
                   </div>
                   <span className="text-sm font-medium">{organisation.establishment_year}</span>
                 </div>
@@ -494,7 +496,7 @@ export function OrganisationView({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <FileText className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Registration</span>
+                    <span className="text-sm text-muted-foreground">{t('registration')}</span>
                   </div>
                   <span className="text-sm font-medium">{organisation.registration_number}</span>
                 </div>
@@ -504,14 +506,14 @@ export function OrganisationView({
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Team Size</span>
+                    <span className="text-sm text-muted-foreground">{t('teamSize')}</span>
                   </div>
                   <div className="ml-6 space-y-1">
                     {organisation.staff_count && (
-                      <p className="text-sm">{organisation.staff_count} Staff</p>
+                      <p className="text-sm">{organisation.staff_count} {t('staff')}</p>
                     )}
                     {organisation.volunteer_count && (
-                      <p className="text-sm">{organisation.volunteer_count} Volunteers</p>
+                      <p className="text-sm">{organisation.volunteer_count} {t('volunteers')}</p>
                     )}
                   </div>
                 </div>
@@ -521,7 +523,7 @@ export function OrganisationView({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Annual Budget</span>
+                    <span className="text-sm text-muted-foreground">{t('annualBudget')}</span>
                   </div>
                   <span className="text-sm font-medium">{formatCurrency(organisation.annual_budget)}</span>
                 </div>
@@ -531,7 +533,7 @@ export function OrganisationView({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Languages className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Languages</span>
+                    <span className="text-sm text-muted-foreground">{t('languages')}</span>
                   </div>
                   <span className="text-sm font-medium">{organisation.languages_spoken.join(', ')}</span>
                 </div>
@@ -539,22 +541,22 @@ export function OrganisationView({
 
               {organisation.legal_status && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Legal Status</span>
+                  <span className="text-sm text-muted-foreground">{t('legalStatus')}</span>
                   <span className="text-sm font-medium">{organisation.legal_status}</span>
                 </div>
               )}
 
               {organisation.tax_exemption_status && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Tax Status</span>
-                  <Badge variant="secondary" className="text-xs">Tax Exempt</Badge>
+                  <span className="text-sm text-muted-foreground">{t('taxStatus')}</span>
+                  <Badge variant="secondary" className="text-xs">{t('taxExempt')}</Badge>
                 </div>
               )}
 
               <Separator />
 
               <div className="text-xs text-muted-foreground">
-                Registered on {formatDate(organisation.created_at || '')}
+                {t('registeredOn')} {formatDate(organisation.created_at || '')}
               </div>
             </CardContent>
           </Card>
@@ -565,7 +567,7 @@ export function OrganisationView({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Laptop className="h-5 w-5 text-primary" />
-                  Digital Tools
+                  {t('digitalTools')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -591,7 +593,7 @@ export function OrganisationView({
                           className="text-xs text-primary hover:underline inline-flex items-center gap-1"
                         >
                           <Globe className="h-3 w-3" />
-                          Visit Tool
+                          {t('visitTool')}
                         </a>
                       )}
                     </div>
@@ -605,7 +607,7 @@ export function OrganisationView({
           {organisation.certifications && organisation.certifications.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Certifications</CardTitle>
+                <CardTitle>{t('certifications')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">

@@ -215,7 +215,11 @@ export function SetUserOrganisationModal({ isOpen, onClose, user, onSuccess }: S
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setSelectedOrganisation(null)}
+                onClick={() => {
+                  setSelectedOrganisation(null)
+                  handleSubmit()
+                }}
+                disabled={isLoading}
                 className="w-full"
               >
                 Remove from Organisation

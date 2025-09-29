@@ -500,11 +500,11 @@ export async function createFundingOpportunity(opportunityData: FundingOpportuni
   const processedData = {
     ...opportunityData,
     tags: opportunityData.tags ? opportunityData.tags.split(',').map(t => t.trim()) : null,
-    thematic_areas: opportunityData.thematic_areas ? opportunityData.thematic_areas.split(',').map(t => t.trim()) : null,
+    thematic_areas: opportunityData.thematic_areas ? opportunityData.thematic_areas.split(',').map(t => t.trim().replace(" ", "_").toLowerCase()) : null,
     target_countries: opportunityData.target_countries ? opportunityData.target_countries.split(',').map(t => t.trim()) : null,
-    geographic_focus: opportunityData.geographic_focus ? opportunityData.geographic_focus.split(',').map(t => t.trim()) : null,
-    target_populations: opportunityData.target_populations ? opportunityData.target_populations.split(',').map(t => t.trim()) : null,
-    application_requirements: opportunityData.application_requirements ? opportunityData.application_requirements.split(',').map(t => t.trim()) : null,
+    geographic_focus: opportunityData.geographic_focus ? opportunityData.geographic_focus.split(',').map(t => t.trim().replace(" ", "_").toLowerCase()) : null,
+    target_populations: opportunityData.target_populations ? opportunityData.target_populations.split(',').map(t => t.trim().replace(" ", "_").toLowerCase()) : null,
+    application_requirements: opportunityData.application_requirements ? opportunityData.application_requirements.split(',').map(t => t.trim().replace(" ", "_").toLowerCase()) : null,
   } as FundingOpportunityInsert;
 
   const { data, error } = await supabase

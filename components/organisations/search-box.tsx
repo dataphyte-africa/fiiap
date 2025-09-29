@@ -13,7 +13,7 @@ interface SearchBoxProps {
 }
 
 export const SearchBox = ({ label, value, onChange, placeholder }: SearchBoxProps) => {
-  const t = useTranslations('organisations.search');
+  const t = useTranslations('organisations-client.search');
   
   return (
    <div

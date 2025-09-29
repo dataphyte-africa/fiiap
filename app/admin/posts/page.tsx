@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { AdminForumPostsTable } from '@/components/admin/admin-forum-posts-table';
 import { Card, CardContent } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 function AdminForumPostsTableSkeleton() {
   return (
@@ -105,15 +106,16 @@ function AdminForumPostsTableWithSuspense() {
 }
 
 export default function AdminForumPostsPage() {
+  const t = useTranslations();
+  
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Forum Posts Management
+          {t('admin.pages.posts.title')}
         </h1>
         <p className="text-gray-600">
-          Manage, moderate, and monitor all forum posts across the platform. 
-          You can approve, flag, or reject posts, as well as moderate their replies.
+          {t('admin.pages.posts.description')}
         </p>
       </div>
 

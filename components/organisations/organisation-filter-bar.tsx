@@ -23,7 +23,7 @@ export function OrganisationFilterBar({
   regionOptions = [],
   className,
 }: OrganisationFilterBarProps) {
-  const t = useTranslations('organisations');
+  const t = useTranslations('organisations-client');
   const router = useRouter();
   const searchParams = useSearchParams();
 

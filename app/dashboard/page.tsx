@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
 import { ProjectLoadingCard } from "@/components/dashboard/project-loading-card"
+import { getTranslations } from "next-intl/server"
 
 
 
@@ -48,6 +49,7 @@ import { ProjectLoadingCard } from "@/components/dashboard/project-loading-card"
 // ]
 
 export default async function DashboardPage() {
+  const t = await getTranslations('dashboard.page')
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
@@ -67,9 +69,9 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
           <p className="text-muted-foreground">
-            Welcome back! Here&apos;s an overview of your organisation&apos;s activity.
+            {t('welcome')}
           </p>
         </div>
         

@@ -29,17 +29,18 @@ import { getAdminUsers, type AdminUserFilters, type AdminUser } from '@/lib/data
 import { SetUserRoleModal } from './set-user-role-modal'
 import { SetUserOrganisationModal } from './set-user-organisation-modal'
 import type { Database } from '@/types/db'
+import { useTranslations } from 'next-intl'
 
 type UserRole = Database['public']['Enums']['user_role_enum']
 
-const ROLE_LABELS: Record<UserRole, string> = {
-  admin: 'Administrator',
-  cso_rep: 'CSO Representative',
-  donor: 'Donor',
-  media: 'Media',
-  'policy_maker': 'Policy Maker',
-  public: 'Public User'
-}
+const getRoleLabels = (t: (key: string) => string): Record<UserRole, string> => ({
+  admin: t('admin.common.administrator'),
+  cso_rep: t('admin.common.csoRepresentative'),
+  donor: t('admin.common.donor'),
+  media: t('admin.common.media'),
+  'policy_maker': t('admin.common.policyMaker'),
+  public: t('admin.common.publicUser')
+})
 
 const ROLE_COLORS: Record<UserRole, string> = {
   admin: 'bg-red-100 text-red-800 border-red-200',
@@ -52,6 +53,7 @@ const ROLE_COLORS: Record<UserRole, string> = {
 
 export function AdminUsersTable() {
   const queryClient = useQueryClient()
+  const t = useTranslations()
   const [filters, setFilters] = useState<AdminUserFilters>({
     page: 1,
     limit: 20,
@@ -64,6 +66,8 @@ export function AdminUsersTable() {
   // Modal states
   const [roleModalUser, setRoleModalUser] = useState<AdminUser | null>(null)
   const [organisationModalUser, setOrganisationModalUser] = useState<AdminUser | null>(null)
+  
+  const ROLE_LABELS = getRoleLabels(t)
 
   // Fetch users with React Query
   const { data, isLoading, error, refetch } = useQuery({
@@ -73,7 +77,7 @@ export function AdminUsersTable() {
       search: searchTerm || undefined,
       role: selectedRole === 'all' ? undefined : selectedRole,
     }),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 0, // 5 minutes
   })
 
   const handleSearch = useCallback((value: string) => {
@@ -134,10 +138,10 @@ export function AdminUsersTable() {
       <Card>
         <CardContent className="p-6">
           <div className="text-center text-red-600">
-            <p>Error loading users: {error instanceof Error ? error.message : 'Unknown error'}</p>
+            <p>{t('admin.errors.loading')}: {error instanceof Error ? error.message : 'Unknown error'}</p>
             <Button onClick={() => refetch()} className="mt-2">
               <RefreshCw className="mr-2 h-4 w-4" />
-              Retry
+              {t('admin.common.refresh')}
             </Button>
           </div>
         </CardContent>
@@ -152,7 +156,7 @@ export function AdminUsersTable() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5" />
-            User Management
+            {t('admin.pages.users.title')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -162,7 +166,7 @@ export function AdminUsersTable() {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Search users by name or title..."
+                  placeholder={t('admin.common.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   className="pl-10"
@@ -173,10 +177,10 @@ export function AdminUsersTable() {
             {/* Role Filter */}
             <Select value={selectedRole} onValueChange={handleRoleFilter}>
               <SelectTrigger className="w-full sm:w-48">
-                <SelectValue placeholder="Filter by role" />
+                <SelectValue placeholder={t('admin.common.filter')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')}</SelectItem>
                 {Object.entries(ROLE_LABELS).map(([role, label]) => (
                   <SelectItem key={role} value={role}>
                     {label}
@@ -185,10 +189,7 @@ export function AdminUsersTable() {
               </SelectContent>
             </Select>
 
-            {/* Refresh Button */}
-            <Button variant="outline" onClick={() => refetch()}>
-              <RefreshCw className="h-4 w-4" />
-            </Button>
+          
           </div>
         </CardContent>
       </Card>
@@ -205,7 +206,7 @@ export function AdminUsersTable() {
                     onClick={() => handleSort('name')}
                   >
                     <div className="flex items-center gap-1">
-                      User
+                      {t('admin.common.name')}
                       {filters.sortBy === 'name' && (
                         <span className="text-xs text-gray-500">
                           {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -213,14 +214,14 @@ export function AdminUsersTable() {
                       )}
                     </div>
                   </TableHead>
-                  <TableHead>Role</TableHead>
-                  <TableHead>Organisation</TableHead>
+                  <TableHead>{t('admin.common.status')}</TableHead>
+                  <TableHead>{t('admin.common.organisation')}</TableHead>
                   <TableHead 
                     className="cursor-pointer hover:bg-gray-50"
                     onClick={() => handleSort('created_at')}
                   >
                     <div className="flex items-center gap-1">
-                      Joined
+                      {t('admin.common.created')}
                       {filters.sortBy === 'created_at' && (
                         <span className="text-xs text-gray-500">
                           {filters.sortOrder === 'asc' ? '↑' : '↓'}
@@ -228,7 +229,7 @@ export function AdminUsersTable() {
                       )}
                     </div>
                   </TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>{t('admin.common.actions')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -237,7 +238,7 @@ export function AdminUsersTable() {
                     <TableCell colSpan={5} className="text-center py-8">
                       <div className="flex items-center justify-center">
                         <RefreshCw className="h-6 w-6 animate-spin text-gray-400" />
-                        <span className="ml-2 text-gray-500">Loading users...</span>
+                        <span className="ml-2 text-gray-500">{t('admin.common.loading')}</span>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -246,8 +247,8 @@ export function AdminUsersTable() {
                     <TableCell colSpan={5} className="text-center py-8">
                       <div className="text-gray-500">
                         <Users className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                        <p>No users found</p>
-                        {searchTerm && <p className="text-sm">Try adjusting your search criteria</p>}
+                        <p>{t('admin.common.noResults')}</p>
+                        {searchTerm && <p className="text-sm">{t('admin.common.noResults')}</p>}
                       </div>
                     </TableCell>
                   </TableRow>
@@ -280,7 +281,7 @@ export function AdminUsersTable() {
                           </Badge>
                         ) : (
                           <Badge variant="outline" className="text-gray-500">
-                            No Role
+                            {t('admin.common.none')}
                           </Badge>
                         )}
                       </TableCell>
@@ -291,7 +292,7 @@ export function AdminUsersTable() {
                             <span className="text-sm">{user.organisation_name}</span>
                           </div>
                         ) : (
-                          <span className="text-sm text-gray-500">No Organisation</span>
+                          <span className="text-sm text-gray-500">{t('admin.common.none')}</span>
                         )}
                       </TableCell>
                       <TableCell>
@@ -308,7 +309,7 @@ export function AdminUsersTable() {
                             className="flex items-center gap-1"
                           >
                             <Shield className="h-4 w-4" />
-                            Set Role
+                            {t('admin.forms.edit')}
                           </Button>
                           <Button
                             variant="outline"
@@ -317,7 +318,7 @@ export function AdminUsersTable() {
                             className="flex items-center gap-1"
                           >
                             <Building2 className="h-4 w-4" />
-                            Set Organisation
+                            {t('admin.forms.edit')}
                           </Button>
                         </div>
                       </TableCell>
@@ -336,8 +337,8 @@ export function AdminUsersTable() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-500">
-                Showing {((data.currentPage - 1) * filters.limit) + 1} to{' '}
-                {Math.min(data.currentPage * filters.limit, data.count)} of {data.count} users
+                {t('admin.common.showing')} {((data.currentPage - 1) * filters.limit) + 1} to{' '}
+                {Math.min(data.currentPage * filters.limit, data.count)} {t('admin.common.of')} {data.count} {t('admin.common.results')}
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -347,10 +348,10 @@ export function AdminUsersTable() {
                   disabled={!data.hasPrevPage}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  Previous
+                  {t('admin.common.previous')}
                 </Button>
                 <span className="text-sm text-gray-500">
-                  Page {data.currentPage} of {data.totalPages}
+                  {t('admin.common.page')} {data.currentPage} {t('admin.common.of')} {data.totalPages}
                 </span>
                 <Button
                   variant="outline"
@@ -358,7 +359,7 @@ export function AdminUsersTable() {
                   onClick={() => handlePageChange(data.currentPage + 1)}
                   disabled={!data.hasNextPage}
                 >
-                  Next
+                  {t('admin.common.next')}
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>

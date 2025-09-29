@@ -26,7 +26,7 @@ export interface AdminForumFilters extends BaseFilters {
 
 // Admin forum thread interface
 export type AdminForumThread = Database['public']['Functions']['admin_get_forum_threads_with_likes']['Returns'][0];
-
+export type AdminForumThreadSingle = Database['public']['Functions']['admin_get_forum_thread_with_likes']['Returns'][0];
 // Admin forum reply interface
 export interface AdminForumReply {
   id: string;
@@ -67,6 +67,8 @@ export async function getAdminForumThreads(filters: AdminForumFilters = {}) {
     page = 1,
     limit = 20,
     category_id,
+    search,
+    moderation_status
   } = filters;
 
   try {
@@ -77,7 +79,9 @@ export async function getAdminForumThreads(filters: AdminForumFilters = {}) {
       .rpc('admin_get_forum_threads_with_likes', {
         category_id_param: category_id,
         limit_param: limit,
-        offset_param: offset
+        offset_param: offset,
+        search_param: search,
+        status_param: moderation_status,
       });
 
     if (error) {
@@ -85,20 +89,12 @@ export async function getAdminForumThreads(filters: AdminForumFilters = {}) {
       throw new Error('Failed to fetch forum threads');
     }
 
-    // Get total count for pagination
-    let totalCount = 0;
-    const { count, error: countError } = await supabase
-      .from('forum_threads')
-      .select('*', { count: 'exact', head: true })
-      .eq(category_id ? 'category_id' : 'id', category_id || '!null');
-
-    if (!countError) {
-      totalCount = count || 0;
-    }
-
-    const totalPages = Math.ceil(totalCount / limit);
-    const hasNextPage = page < totalPages;
-    const hasPrevPage = page > 1;
+    
+    const sampleThread = threads[0]
+    const totalCount = sampleThread.total_count || 0
+    const totalPages = sampleThread.total_pages || 0;
+    const hasNextPage = sampleThread.has_next_page || false;
+    const hasPrevPage = sampleThread.has_previous_page || false;
 
     return {
       threads: threads || [],

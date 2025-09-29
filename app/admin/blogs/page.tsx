@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { AdminBlogPostsTable } from '@/components/admin/admin-blog-posts-table';
 import { Card, CardContent } from '@/components/ui/card';
+import { useTranslations } from 'next-intl';
 
 function AdminBlogPostsTableSkeleton() {
   return (
@@ -83,15 +84,16 @@ function AdminBlogPostsTableWithSuspense() {
 }
 
 export default function AdminBlogPostsPage() {
+  const t = useTranslations();
+  
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Blog Posts Management
+          {t('admin.pages.blogs.title')}
         </h1>
         <p className="text-gray-600">
-          Manage, moderate, and monitor all blog posts across the platform. 
-          You can approve, flag, or reject posts, as well as feature them on the homepage.
+          {t('admin.pages.blogs.description')}
         </p>
       </div>
 

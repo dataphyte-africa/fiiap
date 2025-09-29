@@ -38,12 +38,10 @@ export function BlogPostEditPage({
 }: BlogPostEditPageProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  console.log(blogPost?.content,'blogPost?.content ℹ️');
   const [activeTab, setActiveTab] = useState('settings');
   const [blogContent, setBlogContent] = useState<(Block | PartialBlock)[] | undefined>( blogPost?.content && !isEmptyObject(blogPost?.content) ? (JSON.parse(blogPost?.content as string) as Block[]) : undefined);
   const [blogContentHtml, setBlogContentHtml] = useState<string>(blogPost?.content_html || '');
-  console.log(blogContent,'blogContent ℹ️');
-  console.log(blogContentHtml,'blogContentHtml ℹ️');
+ 
   const [formData, setFormData] = useState<BlogPostFormData | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 

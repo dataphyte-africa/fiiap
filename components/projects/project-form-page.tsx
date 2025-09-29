@@ -5,8 +5,10 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { format } from 'date-fns';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -28,6 +30,7 @@ import {
     transformProjectDataToInsert,
     transformProjectMediaDataToInsert,
     transformProjectEventDataToInsert,
+    transformProjectMilestoneDataToInsert,
 } from './project-form-schemas';
 import { ProjectBasicInfoSection } from './project-basic-info-section';
 import { ProjectMediaSection } from './project-media-section';
@@ -55,32 +58,7 @@ interface TabInfo {
     description: string;
 }
 
-const TABS: TabInfo[] = [
-    {
-        id: 'basic',
-        label: 'Basic Info',
-        icon: Info,
-        description: 'Project details, timeline, and contact information',
-    },
-    {
-        id: 'media',
-        label: 'Media',
-        icon: Upload,
-        description: 'Images, documents, videos, and other files',
-    },
-    {
-        id: 'events',
-        label: 'Events',
-        icon: Calendar,
-        description: 'Workshops, meetings, and project activities',
-    },
-    {
-        id: 'milestones',
-        label: 'Milestones',
-        icon: Target,
-        description: 'Key milestones and deliverables',
-    },
-];
+// TABS will be defined inside the component to access translations
 
 export function ProjectFormPage({
     projectId,
@@ -88,11 +66,39 @@ export function ProjectFormPage({
     userId,
     isEditing = true,
 }: ProjectFormPageProps) {
+    const t = useTranslations('projects.form')
     const [activeTab, setActiveTab] = useState<TabId>('basic');
     // const [savedSections, setSavedSections] = useState<Set<TabId>>(new Set());
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const queryClient = useQueryClient();
+
+    const TABS: TabInfo[] = [
+        {
+            id: 'basic',
+            label: t('tabs.basic'),
+            icon: Info,
+            description: t('descriptions.basic'),
+        },
+        {
+            id: 'media',
+            label: t('tabs.media'),
+            icon: Upload,
+            description: t('descriptions.media'),
+        },
+        {
+            id: 'events',
+            label: t('tabs.events'),
+            icon: Calendar,
+            description: t('descriptions.events'),
+        },
+        {
+            id: 'milestones',
+            label: t('tabs.milestones'),
+            icon: Target,
+            description: t('descriptions.milestones'),
+        },
+    ];
 
     const methods = useForm({
         resolver: zodResolver(projectFullFormSchema),
@@ -176,6 +182,18 @@ export function ProjectFormPage({
         enabled: isEditing && !!projectId,
     });
 
+    // Helper function to format dates safely
+    const formatDateForInput = (dateString: string | null | undefined, includeTime = false): string => {
+        if (!dateString) return '';
+        try {
+            const formatString = includeTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+            return format(new Date(dateString), formatString);
+        } catch (error) {
+            console.warn('Error formatting date:', dateString, error);
+            return '';
+        }
+    };
+
     // Populate form with existing data
     useEffect(() => {
         if (existingProject || relatedData) {
@@ -186,8 +204,8 @@ export function ProjectFormPage({
                     description: existingProject?.description || '',
                     status: existingProject?.status || 'planning',
                     location: existingProject?.location || '',
-                    start_date: existingProject?.start_date || '',
-                    end_date: existingProject?.end_date || '',
+                    start_date: formatDateForInput(existingProject?.start_date),
+                    end_date: formatDateForInput(existingProject?.end_date),
                     budget: existingProject?.budget || undefined,
                     currency: existingProject?.currency || 'USD',
                     beneficiaries_count:
@@ -232,14 +250,14 @@ export function ProjectFormPage({
                     title: item.title,
                     description: item.description || '',
                     event_type: item.event_type || '',
-                    event_date: item.event_date,
-                    event_end_date: item.event_end_date || '',
+                    event_date: formatDateForInput(item.event_date, true),
+                    event_end_date: formatDateForInput(item.event_end_date, true),
                     event_location: item.event_location || '',
                     venue_details: item.venue_details || {} as string,
                     is_virtual: !!item.is_virtual,
                     meeting_link: item.meeting_link || '',
                     registration_link: item.registration_link || '',
-                    registration_deadline: item.registration_deadline || '',
+                    registration_deadline: formatDateForInput(item.registration_deadline, true),
                     max_participants: item.max_participants || undefined,
                     current_participants: item.current_participants || 0,
                     event_status: item.event_status || 'scheduled',
@@ -252,8 +270,8 @@ export function ProjectFormPage({
                     project_id: item.project_id,
                     title: item.title,
                     description: item.description || '',
-                    due_date: item.due_date || '',
-                    completion_date: item.completion_date || '',
+                    due_date: formatDateForInput(item.due_date),
+                    completion_date: formatDateForInput(item.completion_date),
                     status: item.status || 'planned',
                     progress_percentage: item.progress_percentage || 0,
                     deliverables: item.deliverables || [],
@@ -340,6 +358,7 @@ export function ProjectFormPage({
                 const { error: eventsError } = await supabase
                     .from('project_events')
                     .insert(eventsData);
+                // console.log(eventsData, "💸 events data")
                 if (eventsError) throw eventsError;
             }
 
@@ -347,7 +366,8 @@ export function ProjectFormPage({
             if (data.milestones && data.milestones.length > 0) {
                 // Delete existing milestones if editing
                 if (projectId) {
-                    await updateProjectMilestones(projectId, data.milestones);
+                    const milestonesData = data.milestones.map((milestone) => transformProjectMilestoneDataToInsert(milestone, userId, projectId));
+                    await updateProjectMilestones(projectId, milestonesData);
                 }
             }
 

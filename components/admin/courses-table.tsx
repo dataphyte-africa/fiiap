@@ -53,11 +53,13 @@ import { CourseForm } from './course-form';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { OnlineCourseFormData } from '@/lib/schemas/admin-content-schemas';
 import { Database } from '@/types/db';
+import { useTranslations } from 'next-intl';
 
 type DBCourse = Database['public']['Tables']['online_courses']['Row'];
 
 export function CoursesTable() {
   const queryClient = useQueryClient();
+  const t = useTranslations();
   const [filters, setFilters] = useState<OnlineCourseFilters>({
     page: 1,
     limit: 20,
@@ -204,9 +206,15 @@ export function CoursesTable() {
       advanced: 'bg-red-100 text-red-800',
     };
 
+    const labels: Record<string, string> = {
+      beginner: t('admin.common.beginner'),
+      intermediate: t('admin.common.intermediate'),
+      advanced: t('admin.common.advanced'),
+    };
+
     return (
       <Badge className={colors[difficulty] || 'bg-gray-100 text-gray-800'}>
-        {difficulty?.toUpperCase()}
+        {labels[difficulty] || difficulty?.toUpperCase()}
       </Badge>
     );
   };
@@ -214,9 +222,9 @@ export function CoursesTable() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <p className="text-red-600 mb-4">Failed to load courses</p>
+        <p className="text-red-600 mb-4">{t('admin.errors.loading')}</p>
         <Button onClick={() => refetch()} variant="outline">
-          Try Again
+          {t('admin.common.refresh')}
         </Button>
       </div>
     );
@@ -227,28 +235,28 @@ export function CoursesTable() {
       {/* Header and Actions */}
       <div className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Online Courses</h2>
+          <h2 className="text-2xl font-bold">{t('admin.pages.courses.title')}</h2>
           <p className="text-muted-foreground">
-            Manage links to online courses and training programs
+            {t('admin.pages.courses.description')}
           </p>
         </div>
         <Button onClick={() => setFormModal({ isOpen: true, mode: 'create' })}>
           <Plus className="h-4 w-4 mr-2" />
-          Add Course
+          {t('admin.common.create')} {t('admin.common.course')}
         </Button>
       </div>
 
       {/* Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Filters</CardTitle>
+          <CardTitle>{t('admin.common.filter')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search courses..."
+                placeholder={t('admin.common.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="pl-10"
@@ -257,29 +265,29 @@ export function CoursesTable() {
 
             <Select value={selectedDifficulty} onValueChange={handleDifficultyFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Difficulty Level" />
+                <SelectValue placeholder={t('admin.common.difficultyLevel')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Levels</SelectItem>
-                <SelectItem value="beginner">Beginner</SelectItem>
-                <SelectItem value="intermediate">Intermediate</SelectItem>
-                <SelectItem value="advanced">Advanced</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.levels')}</SelectItem>
+                <SelectItem value="beginner">{t('admin.common.beginner')}</SelectItem>
+                <SelectItem value="intermediate">{t('admin.common.intermediate')}</SelectItem>
+                <SelectItem value="advanced">{t('admin.common.advanced')}</SelectItem>
               </SelectContent>
             </Select>
 
             <Select value={selectedVisibility} onValueChange={handleVisibilityFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Visibility" />
+                <SelectValue placeholder={t('admin.common.visibility')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Courses</SelectItem>
-                <SelectItem value="visible">Visible</SelectItem>
-                <SelectItem value="hidden">Hidden</SelectItem>
+                <SelectItem value="all">{t('admin.common.all')} {t('admin.common.courses')}</SelectItem>
+                <SelectItem value="visible">{t('admin.common.visible')}</SelectItem>
+                <SelectItem value="hidden">{t('admin.common.hidden')}</SelectItem>
               </SelectContent>
             </Select>
 
             <div className="text-sm text-muted-foreground flex items-center">
-              {data?.count || 0} courses found
+              {data?.count || 0} {t('admin.common.courses')} {t('admin.common.found')}
             </div>
           </div>
         </CardContent>
@@ -295,19 +303,19 @@ export function CoursesTable() {
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('title')}
                 >
-                  Course {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.course')} {filters.sortBy === 'title' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Instructor/Platform</TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>Difficulty</TableHead>
+                <TableHead>{t('admin.common.instructor')}/{t('admin.common.platform')}</TableHead>
+                <TableHead>{t('admin.common.duration')}</TableHead>
+                <TableHead>{t('admin.common.difficulty')}</TableHead>
                 <TableHead 
                   className="cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort('created_at')}
                 >
-                  Created {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
+                  {t('admin.common.created')} {filters.sortBy === 'created_at' && (filters.sortOrder === 'asc' ? '↑' : '↓')}
                 </TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('admin.common.status')}</TableHead>
+                <TableHead>{t('admin.common.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

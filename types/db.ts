@@ -511,6 +511,36 @@ export type Database = {
           },
         ]
       }
+      contact_submissions: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          message: string
+          phone: string | null
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          message: string
+          phone?: string | null
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string
+          phone?: string | null
+          subject?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           contact_email: string | null
@@ -2409,6 +2439,8 @@ export type Database = {
           category_id_param?: string
           limit_param?: number
           offset_param?: number
+          search_param?: string
+          status_param?: Database["public"]["Enums"]["forum_moderation_status_enum"]
         }
         Returns: {
           author_avatar_url: string
@@ -2422,6 +2454,9 @@ export type Database = {
           category_name_fr: string
           content: string
           created_at: string
+          current_page: number
+          has_next_page: boolean
+          has_previous_page: boolean
           id: string
           language: string
           like_count: number
@@ -2437,6 +2472,8 @@ export type Database = {
           reply_count: number
           tags: string[]
           title: string
+          total_count: number
+          total_pages: number
           updated_at: string
           user_has_liked: boolean
           view_count: number
@@ -2638,6 +2675,14 @@ export type Database = {
           view_count: number
         }[]
       }
+      get_country_statistics: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          country: Database["public"]["Enums"]["country_enum"]
+          organisation_count: number
+          project_count: number
+        }[]
+      }
       get_featured_blog_posts: {
         Args: { limit_count?: number }
         Returns: {
@@ -2824,7 +2869,7 @@ export type Database = {
     Enums: {
       blog_moderation_status_enum: "approved" | "flagged" | "rejected"
       comment_moderation_status_enum: "approved" | "flagged" | "hidden"
-      country_enum: "Nigeria" | "Benin" | "Gambia"
+      country_enum: "Nigeria" | "Benin" | "Gambia" | "The Gambia"
       export_status_enum: "pending" | "processing" | "completed" | "failed"
       file_type_enum: "image" | "pdf" | "video" | "audio" | "document" | "other"
       forum_moderation_status_enum: "approved" | "flagged" | "rejected"
@@ -3088,7 +3133,7 @@ export const Constants = {
     Enums: {
       blog_moderation_status_enum: ["approved", "flagged", "rejected"],
       comment_moderation_status_enum: ["approved", "flagged", "hidden"],
-      country_enum: ["Nigeria", "Benin", "Gambia"],
+      country_enum: ["Nigeria", "Benin", "Gambia", "The Gambia"],
       export_status_enum: ["pending", "processing", "completed", "failed"],
       file_type_enum: ["image", "pdf", "video", "audio", "document", "other"],
       forum_moderation_status_enum: ["approved", "flagged", "rejected"],

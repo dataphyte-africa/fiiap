@@ -9,7 +9,7 @@ import {
 import { getTranslations } from 'next-intl/server';
 
 export default async function OrganisationsPage() {
-  const t = await getTranslations('organisations.page');
+  const t = await getTranslations('organisations-client.page');
 
   return (
     <div className="min-h-screen w-full">

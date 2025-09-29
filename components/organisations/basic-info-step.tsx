@@ -18,8 +18,10 @@ import {
   Country
 } from './types'
 import { Database } from '@/types/db'
+import { useTranslations } from 'next-intl'
 
 export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps) {
+  const t = useTranslations('organisations.registration.basicInfo')
   const { 
     register, 
     formState: { errors }, 
@@ -102,7 +104,7 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-primary" />
-            Organisation Details
+            {t('title')}
           </CardTitle>
           <CardDescription>
             Tell us about your organisation. This information will be publicly visible on your profile.
@@ -112,12 +114,12 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
           {/* Organisation Name */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium">
-              Organisation Name *
+              {t('organizationName')} *
             </Label>
             <Input
               id="name"
               {...register('name')}
-              placeholder="Enter your organisation name"
+              placeholder={t('organizationNamePlaceholder')}
               className={errors.name ? 'border-destructive' : ''}
             />
             {errors.name && (
@@ -129,14 +131,14 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="type" className="text-sm font-medium">
-                Organisation Type *
+                {t('organizationType')} *
               </Label>
               <Select
                 onValueChange={(value) => setValue('type', value as Database['public']['Enums']['organisation_type_enum'], { shouldValidate: true })}
                 value={watch('type')}
               >
                 <SelectTrigger className={`w-full ${errors.type ? 'border-destructive' : ''}`}>
-                  <SelectValue placeholder="Select organisation type" />
+                  <SelectValue placeholder={t('selectType')} />
                 </SelectTrigger>
                 <SelectContent>
                   {ORGANISATION_TYPES.map((type) => (
@@ -153,7 +155,7 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
 
             <div className="space-y-2">
               <Label htmlFor="size" className="text-sm font-medium">
-                Organisation Size *
+                {t('organizationSize')} *
               </Label>
               <Select
                 onValueChange={(value) => setValue('size', value as Database['public']['Enums']['organisation_size_enum'], { shouldValidate: true })}
@@ -161,7 +163,7 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
                 
               >
                 <SelectTrigger className={`w-full ${errors.size ? 'border-destructive' : ''}`}>
-                  <SelectValue placeholder="Select organisation size" />
+                  <SelectValue placeholder={t('selectSize')} />
                 </SelectTrigger>
                 <SelectContent>
                   {ORGANISATION_SIZES.map((size) => (
@@ -181,14 +183,14 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
           <div className="space-y-2">
             <Label htmlFor="country" className="text-sm font-medium flex items-center gap-2">
               <MapPin className="h-4 w-4" />
-              Primary Country *
+              {t('primaryCountry')} *
             </Label>
             <Select
               onValueChange={(value) => setValue('country', value as Database['public']['Enums']['country_enum'], { shouldValidate: true })}
               value={watch('country')}
             >
               <SelectTrigger className={`w-full ${errors.country ? 'border-destructive' : ''}`}>
-                <SelectValue placeholder="Select your primary country" />
+                <SelectValue placeholder={t('selectCountry')} />
               </SelectTrigger>
               <SelectContent>
                 {COUNTRIES.map((country) => (
@@ -207,7 +209,7 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
           <div className="space-y-2">
             <Label className="text-sm font-medium flex items-center gap-2">
               <Globe className="h-4 w-4" />
-              Other Countries of Operation
+              {t('otherCountries')}
             </Label>
             <div className="space-y-2">
               {/* Selected countries display */}
@@ -277,12 +279,12 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
             <div className="space-y-2">
               <Label htmlFor="registration_number" className="text-sm font-medium flex items-center gap-2">
                 <FileText className="h-4 w-4" />
-                Registration Number
+                {t('registrationNumber')}
               </Label>
               <Input
                 id="registration_number"
                 {...register('registration_number')}
-                placeholder="Enter registration number (optional)"
+                placeholder={t('registrationNumberPlaceholder')}
               />
               <p className="text-xs text-muted-foreground">
                 Official registration number if available
@@ -292,12 +294,17 @@ export function BasicInfoStep({ onNext, currentStep, totalSteps }: FormStepProps
             <div className="space-y-2">
               <Label htmlFor="establishment_year" className="text-sm font-medium flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                Establishment Year
+                {t('establishmentYear')}
               </Label>
               <Input
                 id="establishment_year"
                 type="number"
-                {...register('establishment_year', { valueAsNumber: true })}
+                {...register('establishment_year', { 
+                  setValueAs: (value) => {
+                    const num = Number(value)
+                    return value === '' || isNaN(num) ? undefined : num
+                  }
+                })}
                 placeholder="e.g. 2010"
                 min="1900"
                 max={new Date().getFullYear()}

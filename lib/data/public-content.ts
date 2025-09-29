@@ -46,7 +46,7 @@ export async function getPublicEvents(filters: PublicContentFilters = {}): Promi
     .from('events')
     .select('*', { count: 'exact' })
     .eq('is_visible', true)
-    .gte('event_date', new Date().toISOString()); // Only upcoming events
+    // .gte('event_date', new Date().toISOString()); // Only upcoming events
 
   // Apply filters
   if (search) {
@@ -63,7 +63,7 @@ export async function getPublicEvents(filters: PublicContentFilters = {}): Promi
   }
 
   // Apply sorting and pagination
-  query = query.order('event_date', { ascending: true });
+  query = query.order('event_date', { ascending: false });
   const offset = (page - 1) * limit;
   query = query.range(offset, offset + limit - 1);
 
@@ -91,7 +91,7 @@ export async function getFeaturedEvents(): Promise<Event[]> {
     .select('*')
     .eq('is_visible', true)
     .eq('is_featured', true)
-    .gte('event_date', new Date().toISOString())
+    // .gte('event_date', new Date().toISOString())
     .order('event_date', { ascending: true })
     .limit(5);
 

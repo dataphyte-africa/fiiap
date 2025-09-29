@@ -232,6 +232,92 @@ export async function getPublishedBlogPostBySlug(slug: string): Promise<BlogPost
   return data as BlogPostWithAuthor;
 }
 
+// Get published blog posts for a specific organisation (for public access)
+export async function getOrganisationBlogPosts(
+  organisationId: string, 
+  filters: Omit<BlogPostFilters, 'organisation_id'> = {}
+): Promise<BlogPostsResult> {
+  const supabase = createClient();
+  
+  const {
+    author_id,
+    search,
+    tags,
+    is_featured,
+    language,
+    sortBy = 'published_at',
+    sortOrder = 'desc',
+    page = 1,
+    limit = 12
+  } = filters;
+
+  let query = supabase
+    .from('blog_posts')
+    .select(`
+      *,
+      profiles!blog_posts_author_id_fkey (
+        id,
+        name,
+        avatar_url
+      ),
+      organisations!blog_posts_organisation_id_fkey (
+        id,
+        name,
+        logo_url
+      )
+    `, { count: 'exact' })
+    .eq('organisation_id', organisationId)
+    .eq('status', 'published')
+    .eq('moderation_status', 'approved');
+
+  // Apply additional filters
+  if (author_id) {
+    query = query.eq('author_id', author_id);
+  }
+
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,excerpt.ilike.%${search}%,content_html.ilike.%${search}%`);
+  }
+
+  if (tags && tags.length > 0) {
+    query = query.overlaps('tags', tags);
+  }
+
+  if (is_featured !== undefined) {
+    query = query.eq('is_featured', is_featured);
+  }
+
+  if (language) {
+    query = query.eq('language', language);
+  }
+
+  // Apply sorting
+  query = query.order(sortBy, { ascending: sortOrder === 'asc' });
+
+  // Apply pagination
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+  query = query.range(from, to);
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    console.error('Error fetching organisation blog posts:', error);
+    throw error;
+  }
+
+  const totalPages = Math.ceil((count || 0) / limit);
+
+  return {
+    data: data as BlogPostWithAuthor[],
+    count: count || 0,
+    totalPages,
+    currentPage: page,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1,
+  };
+}
+
 // Create a new blog post
 export async function createBlogPost(data: CreateBlogPostData): Promise<BlogPost> {
   const supabase = createClient();

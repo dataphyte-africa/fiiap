@@ -25,11 +25,11 @@ import {
    
     SidebarRail,
 } from '@/components/ui/sidebar';
-import Image from 'next/image';
 import { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { Database } from '@/types/db';
 import LanguageSwitcher from './landing-page/langauage-switcher';
+import { useTranslations } from 'next-intl';
 type NavItem = {
     title: string;
     url: string;
@@ -37,87 +37,73 @@ type NavItem = {
     isActive?: boolean;
     items?: NavItem[];
 };
-const defaultNavItems: NavItem[] = [
+const getDefaultNavItems = (t: (key: string) => string): NavItem[] => [
     {
-        title: 'Dashboard',
+        title: t('admin.navigation.dashboard'),
         url: '/dashboard',
         icon: LayoutDashboard,
         isActive: true,
     },
     {
-        title: 'My Organisation',
+        title: t('admin.navigation.myOrganisation'),
         url: '/dashboard/organisation',
         icon: LucideBuilding,
     },
     {
-        title: 'Manage Projects',
+        title: t('admin.navigation.manageProjects'),
         url: '/dashboard/projects',
         icon: LucideBriefcaseBusiness,
-        // items: [
-        //     {
-        //         title: 'Water Initiative',
-        //         url: '#',
-        //     },
-        //     {
-        //         title: 'Another Project',
-        //         url: '#',
-        //     },
-        //     {
-        //         title: 'Projects Project',
-        //         url: '#',
-        //     },
-        // ],
     },
     {
-        title: 'Manage Posts',
+        title: t('admin.navigation.managePosts'),
         url: '/dashboard/posts',
         icon: LucideImagePlus,
     },
     {
-        title: 'Manage Blogs',
+        title: t('admin.navigation.manageBlogs'),
         url: '/dashboard/blogs',
         icon: LucideBookOpen,
     },
 ];
 
-const adminNavItems = [
+const getAdminNavItems = (t: (key: string) => string) => [
   {
-      title: 'Manage Organisations',
+      title: t('admin.navigation.manageOrganisations'),
       url: '/admin/organisations',
       icon: LucideBuilding,
   },
   {
-      title: 'Manage Users',
+      title: t('admin.navigation.manageUsers'),
       url: '/admin/users',
       icon: LucideUsers,
   },
   {
-      title: 'Manage Blog Posts',
+      title: t('admin.navigation.manageBlogPosts'),
       url: '/admin/blogs',
       icon: LucideBookOpen,
   },
   {
-      title: 'Manage Posts',
+      title: t('admin.navigation.managePosts'),
       url: '/admin/posts',
       icon: LucideImagePlus,
   },
   {
-      title: "Manage Resource Library",
+      title: t('admin.navigation.manageResourceLibrary'),
       url: '/admin/resource-library',
       icon: LucideBookOpen,
   },
   {
-      title: "Manage Online Courses",
+      title: t('admin.navigation.manageOnlineCourses'),
       url: '/admin/online-courses',
       icon:  LucideGraduationCap,
   },
   {
-      title: "Manage Funding Opportunities",
+      title: t('admin.navigation.manageFundingOpportunities'),
       url: '/admin/funding-opportunities',
       icon: LucideBriefcaseBusiness,
   },
   {
-      title: "Manage Events",
+      title: t('admin.navigation.manageEvents'),
       url: '/admin/events',
       icon: LucideUsers,
   },
@@ -125,7 +111,7 @@ const adminNavItems = [
 
 export function AppSidebar({
     user,
-    navItems = defaultNavItems,
+    navItems,
     // projects = defaultProjects,
     cookieLang,
     ...props
@@ -143,10 +129,12 @@ export function AppSidebar({
 }) {
     const pathname = usePathname();
     const isAdmin = user.isAdmin && pathname.includes('/admin');
+    const t = useTranslations();
     
     const navmain = useMemo(() => {
-        
-        const items =  (isAdmin ? adminNavItems : navItems).map((item) => {
+        const defaultNavItems = getDefaultNavItems(t);
+        const adminNavItems = getAdminNavItems(t);
+        const items = (isAdmin ? adminNavItems : (navItems || defaultNavItems)).map((item) => {
             return {
                 ...item,
                 isActive: pathname === item.url,
@@ -162,39 +150,35 @@ export function AppSidebar({
             });
         }
         return items;
-    }, [pathname, navItems, isAdmin, user.role]);
+    }, [pathname, navItems, isAdmin, user.role, t]);
     const navsecondary = useMemo(() => {
         const projects = [];
         if (user.isAdmin && !pathname.includes('/admin')) {
             projects.push({
-                title: "Goto Admin",
+                title: t('admin.common.gotoAdmin'),
                 url: "/admin",
                 icon: LucideShieldCheck,
             });
         }
         if(user.isAdmin && pathname.includes('/admin')) {
             projects.push({
-                title: "Goto Dashboard",
+                title: t('admin.common.gotoDashboard'),
                 url: "/dashboard",
                 icon: LayoutDashboard,
             });
         }
         return projects;
-    }, [pathname, user.isAdmin]);
+    }, [pathname, user.isAdmin, t]);
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <div
                     className="flex flex-row items-center justify-between"
                 >
-                    <div className="text-sidebar-primary-foreground flex aspect-auto size-12 items-center justify-center rounded-lg">
-                        <Link href="/"> <Image
-                            src="/logo.png"
-                            alt="logo"
-                            // className='w-full h-full'
-                            width={250}
-                            height={90}
-                        /></Link>
+                    <div className="text-sidebar-foreground flex items-center justify-center rounded-lg">
+                    <Link href="/">
+            <h5 className='text-sm md:text-base font-bold'>{t('landingPage.navigation.title')}</h5>
+            </Link>
                     
                     </div>
                     <LanguageSwitcher cookieLang={cookieLang} />

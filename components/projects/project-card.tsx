@@ -8,20 +8,23 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CalendarIcon, MapPinIcon, UsersIcon, DollarSignIcon } from 'lucide-react';
 import type { ProjectWithOrganisation } from '@/lib/data/projects';
 import { formatProjectStatus } from '@/lib/data/projects';
+import { useTranslations } from 'next-intl';
 
 interface ProjectCardProps {
   project: ProjectWithOrganisation;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const t = useTranslations('projects.card')
+  
   const formatCurrency = (amount: number | null, currency: string | null) => {
-    if (!amount) return 'Not specified';
+    if (!amount) return t('notSpecified');
     const currencySymbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency || '';
     return `${currencySymbol}${amount.toLocaleString()}`;
   };
 
   const formatDate = (dateString: string | null) => {
-    if (!dateString) return 'Not set';
+    if (!dateString) return t('notSet');
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -67,7 +70,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <CardContent className="flex-1 pb-3">
         <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
-          {project.summary || project.description || 'No description available'}
+          {project.summary || project.description || t('noDescription')}
         </p>
 
         <div className="space-y-2">
@@ -81,21 +84,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.start_date && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <CalendarIcon className="h-4 w-4 shrink-0" />
-              <span>Started: {formatDate(project.start_date)}</span>
+              <span>{t('started')} {formatDate(project.start_date)}</span>
             </div>
           )}
 
           {project.beneficiaries_count && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <UsersIcon className="h-4 w-4 shrink-0" />
-              <span>{project.beneficiaries_count.toLocaleString()} beneficiaries</span>
+              <span>{project.beneficiaries_count.toLocaleString()} {t('beneficiaries')}</span>
             </div>
           )}
 
           {project.budget && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <DollarSignIcon className="h-4 w-4 shrink-0" />
-              <span>Budget: {formatCurrency(project.budget, project.currency)}</span>
+              <span>{t('budget')} {formatCurrency(project.budget, project.currency)}</span>
             </div>
           )}
         </div>
@@ -110,7 +113,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               ))}
               {project.sdg_goals.length > 3 && (
                 <Badge variant="outline" className="text-xs">
-                  +{project.sdg_goals.length - 3} more
+                  {t('sdgMore', { count: project.sdg_goals.length - 3 })}
                 </Badge>
               )}
             </div>
@@ -121,7 +124,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <CardFooter className="pt-3">
         <Link href={`/dashboard/projects/${project.id}`} className="w-full">
           <Button variant="outline" className="w-full">
-            View Details
+            {t('viewDetails')}
           </Button>
         </Link>
       </CardFooter>

@@ -34,6 +34,7 @@ export { OrganisationDetailView } from './organisation-detail-view'
 export { OrganisationDetailServer } from './organisation-detail-server'
 export { OrganisationDetailSkeleton } from './organisation-detail-skeleton'
 export { OrganisationProjectsList } from './organisation-projects-list'
+export { OrganisationStoriesGrid } from './organisation-stories-grid'
 
 // Dashboard components
 export { 

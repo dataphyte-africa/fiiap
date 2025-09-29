@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import { ChevronDown, ChevronRight, Calendar, MapPin, Users, DollarSign, Target, ImageIcon, Clock, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, Calendar, MapPin, Users, DollarSign, Target, ImageIcon, Clock, CheckCircle, AlertCircle, Loader2, ExternalLink, Phone, Mail, User, FileText, Globe, Eye, EyeOff, Star, Building2, Link } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Progress } from '@/components/ui/progress';
 import type { Database } from '@/types/db';
 import { getProjectsByOrganisationId } from '@/lib/data/projects';
+import { useTranslations } from 'next-intl';
 
 // Types based on database schema
 type ProjectStatus = Database['public']['Enums']['project_status_enum'];
@@ -57,7 +58,20 @@ function ProjectsLoadingSkeleton() {
 
 
 export function OrganisationProjectsList({ organisationId }: OrganisationProjectsListProps) {
+  const t = useTranslations('organisationProjectsList');
   const [expandedProjects, setExpandedProjects] = useState<{ [key: string]: boolean }>({});
+
+  // Get current locale from the browser or use 'en' as fallback
+  const getCurrentLocale = () => {
+    if (typeof window !== 'undefined') {
+      const cookieLocale = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('NEXT_LOCALE='))
+        ?.split('=')[1];
+      return cookieLocale || navigator.language.split('-')[0] || 'en';
+    }
+    return 'en';
+  };
 
   const { 
     data: projects = [], 
@@ -78,14 +92,46 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
   };
 
   const formatCurrency = (amount: number | null, currency: string | null) => {
-    if (!amount) return 'Not specified';
-    const currencySymbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency || '';
-    return `${currencySymbol}${amount.toLocaleString()}`;
+    if (!amount) return t('project.notSpecified');
+    const locale = getCurrentLocale();
+    const localeMap: Record<string, string> = {
+      'en': 'en-US',
+      'es': 'es-ES',
+      'fr': 'fr-FR'
+    };
+    const fullLocale = localeMap[locale] || 'en-US';
+    
+    // Use Intl.NumberFormat for proper currency formatting
+    if (currency) {
+      try {
+        return new Intl.NumberFormat(fullLocale, {
+          style: 'currency',
+          currency: currency,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(amount);
+      } catch {
+        // Fallback to simple format if currency is not supported
+        const currencySymbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency || '';
+        return `${currencySymbol}${amount.toLocaleString(fullLocale)}`;
+      }
+    }
+    
+    return amount.toLocaleString(fullLocale);
   };
 
   const formatDate = (dateString: string | null) => {
-    if (!dateString) return 'Not set';
-    return new Date(dateString).toLocaleDateString('en-US', {
+    if (!dateString) return t('project.notSet');
+    const locale = getCurrentLocale();
+    // Map locale codes to full locale strings for better date formatting
+    const localeMap: Record<string, string> = {
+      'en': 'en-US',
+      'es': 'es-ES',
+      'fr': 'fr-FR'
+    };
+    const fullLocale = localeMap[locale] || 'en-US';
+    
+    return new Date(dateString).toLocaleDateString(fullLocale, {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -154,13 +200,13 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
               <AlertCircle className="h-6 w-6 text-red-500" />
             </div>
           </div>
-          <h3 className="text-lg font-semibold mb-2 text-red-900">Failed to load projects</h3>
+          <h3 className="text-lg font-semibold mb-2 text-red-900">{t('error.failedToLoad')}</h3>
           <p className="text-red-600 mb-4">
-            {error instanceof Error ? error.message : 'An error occurred while fetching projects'}
+            {error instanceof Error ? error.message : t('error.errorMessage')}
           </p>
           <Button onClick={() => refetch()} variant="outline">
             <Loader2 className="h-4 w-4 mr-2" />
-            Try Again
+            {t('error.tryAgain')}
           </Button>
         </div>
       </div>
@@ -177,9 +223,9 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
               <Target className="h-6 w-6 text-muted-foreground" />
             </div>
           </div>
-          <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
+          <h3 className="text-lg font-semibold mb-2">{t('empty.noProjectsYet')}</h3>
           <p className="text-muted-foreground">
-            This organisation hasn&apos;t published any projects yet.
+            {t('empty.noProjectsMessage')}
           </p>
         </div>
       </div>
@@ -189,7 +235,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold">Projects ({projects.length})</h2>
+        <h2 className="text-xl font-semibold">{t('header.projectsCount', { count: projects.length })}</h2>
       </div>
 
       {projects.map((project) => (
@@ -213,12 +259,12 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                       </CardTitle>
                     </div>
                     <p className="text-sm text-muted-foreground line-clamp-2 ml-7">
-                      {project.summary || project.description || 'No description available'}
+                      {project.summary || project.description || t('project.noDescriptionAvailable')}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                                       <Badge variant="secondary" className={getStatusColor(project.status)}>
-                    {project.status?.replace('_', ' ').toUpperCase() || 'UNKNOWN'}
+                    {project.status ? t(`status.${project.status}`) : t('status.unknown')}
                   </Badge>
                   </div>
                 </div>
@@ -228,7 +274,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                   {project.start_date && (
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
-                      <span>Started: {formatDate(project.start_date)}</span>
+                      <span>{t('project.started', { date: formatDate(project.start_date) })}</span>
                     </div>
                   )}
                   {project.location && (
@@ -240,7 +286,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                   {project.beneficiaries_count && (
                     <div className="flex items-center gap-1">
                       <Users className="w-4 h-4" />
-                      <span>{project.beneficiaries_count.toLocaleString()} beneficiaries</span>
+                      <span>{t('project.beneficiaries', { count: project.beneficiaries_count.toLocaleString() })}</span>
                     </div>
                   )}
                   {project.budget && (
@@ -260,30 +306,197 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                   <div className="space-y-6">
                     {/* Project Details */}
                     <div>
-                      <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Project Details</h4>
+                      <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">{t('details.projectDetails')}</h4>
                       <div className="space-y-3 text-sm">
                         {project.description && (
                           <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                             {project.description}
                           </p>
                         )}
+                        
+                        {/* Project Status Indicators */}
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {project.featured && (
+                            <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
+                              <Star className="w-3 h-3 mr-1" />
+                              {t('details.featured')}
+                            </Badge>
+                          )}
+                          {project.public_visibility !== null && (
+                            <Badge variant="outline" className={project.public_visibility ? "bg-green-50 text-green-700" : "bg-gray-50 text-gray-700"}>
+                              {project.public_visibility ? <Eye className="w-3 h-3 mr-1" /> : <EyeOff className="w-3 h-3 mr-1" />}
+                              {project.public_visibility ? t('details.public') : t('details.private')}
+                            </Badge>
+                          )}
+                          {project.language && (
+                            <Badge variant="outline" className="bg-blue-50 text-blue-700">
+                              <Globe className="w-3 h-3 mr-1" />
+                              {project.language}
+                            </Badge>
+                          )}
+                        </div>
+
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <span className="font-medium text-gray-700 dark:text-gray-300">Start Date:</span>
+                            <span className="font-medium text-gray-700 dark:text-gray-300">{t('details.startDate')}</span>
                             <p className="text-gray-600 dark:text-gray-400">{formatDate(project.start_date)}</p>
                           </div>
                           <div>
-                            <span className="font-medium text-gray-700 dark:text-gray-300">End Date:</span>
+                            <span className="font-medium text-gray-700 dark:text-gray-300">{t('details.endDate')}</span>
                             <p className="text-gray-600 dark:text-gray-400">{formatDate(project.end_date)}</p>
                           </div>
                         </div>
                       </div>
                     </div>
 
+                    {/* Project Objectives */}
+                    {project.objectives && project.objectives.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          {t('details.objectives')}
+                        </h4>
+                        <ul className="space-y-2">
+                          {project.objectives.map((objective, index) => (
+                            <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                              {objective}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Project Outcomes */}
+                    {project.outcomes && project.outcomes.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          {t('details.expectedOutcomes')}
+                        </h4>
+                        <ul className="space-y-2">
+                          {project.outcomes.map((outcome, index) => (
+                            <li key={index} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300">
+                              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />
+                              {outcome}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Contact Information */}
+                    {(project.contact_person || project.contact_email || project.contact_phone) && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <User className="w-4 h-4" />
+                          {t('details.contactInformation')}
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          {project.contact_person && (
+                            <div className="flex items-center gap-2">
+                              <User className="w-4 h-4 text-gray-500" />
+                              <span className="text-gray-600 dark:text-gray-300">{project.contact_person}</span>
+                            </div>
+                          )}
+                          {project.contact_email && (
+                            <div className="flex items-center gap-2">
+                              <Mail className="w-4 h-4 text-gray-500" />
+                              <a 
+                                href={`mailto:${project.contact_email}`}
+                                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                              >
+                                {project.contact_email}
+                              </a>
+                            </div>
+                          )}
+                          {project.contact_phone && (
+                            <div className="flex items-center gap-2">
+                              <Phone className="w-4 h-4 text-gray-500" />
+                              <a 
+                                href={`tel:${project.contact_phone}`}
+                                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                              >
+                                {project.contact_phone}
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* External Links */}
+                    {(project.project_website || (project.documents_urls && project.documents_urls.length > 0)) && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Link className="w-4 h-4" />
+                          {t('details.externalResources')}
+                        </h4>
+                        <div className="space-y-2">
+                          {project.project_website && (
+                            <a
+                              href={project.project_website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                            >
+                              <Globe className="w-4 h-4" />
+                              {t('details.projectWebsite')}
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                          {project.documents_urls && project.documents_urls.length > 0 && (
+                            <div>
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2 mb-2">
+                                <FileText className="w-4 h-4" />
+                                {t('details.documents', { count: project.documents_urls.length })}
+                              </span>
+                              <div className="space-y-1 ml-6">
+                                {project.documents_urls.slice(0, 3).map((docUrl, index) => (
+                                  <a
+                                    key={index}
+                                    href={docUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                                  >
+                                    {t('details.documentNumber', { number: index + 1 })}
+                                    <ExternalLink className="w-3 h-3" />
+                                  </a>
+                                ))}
+                                {project.documents_urls.length > 3 && (
+                                  <p className="text-xs text-gray-500">
+                                    {t('details.moreDocuments', { count: project.documents_urls.length - 3 })}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Secondary Sectors */}
+                    {project.secondary_sectors && project.secondary_sectors.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Building2 className="w-4 h-4" />
+                          {t('details.secondarySectors')}
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.secondary_sectors.map((sector, index) => (
+                            <Badge key={index} variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+                              {sector}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* SDG Goals */}
                     {project.sdg_goals && project.sdg_goals.length > 0 && (
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Sustainable Development Goals</h4>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">{t('details.sustainableDevelopmentGoals')}</h4>
                         <div className="flex flex-wrap gap-2">
                           {project.sdg_goals.map((goal) => (
                             <Badge key={goal} variant="outline" className="text-xs">
@@ -294,12 +507,59 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                       </div>
                     )}
 
+                    {/* Featured Image */}
+                    {project.featured_image_url && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Star className="w-4 h-4" />
+                          {t('details.featuredImage')}
+                        </h4>
+                        <div className="relative group">
+                          <Image
+                            src={project.featured_image_url}
+                            alt="Featured project image"
+                            width={400}
+                            height={200}
+                            className="w-full h-48 object-cover rounded-lg"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Gallery Images */}
+                    {project.gallery_images && project.gallery_images.length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <ImageIcon className="w-4 h-4" />
+                          {t('details.gallery', { count: project.gallery_images.length })}
+                        </h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {project.gallery_images.slice(0, 4).map((imageUrl, index) => (
+                            <div key={index} className="relative group">
+                              <Image
+                                src={imageUrl}
+                                alt={`Gallery image ${index + 1}`}
+                                width={200}
+                                height={96}
+                                className="w-full h-24 object-cover rounded-lg"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                        {project.gallery_images.length > 4 && (
+                          <p className="text-sm text-muted-foreground mt-2">
+                            {t('details.moreGalleryImages', { count: project.gallery_images.length - 4 })}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
                     {/* Project Media */}
                     {project.project_media && project.project_media.length > 0 && (
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                           <ImageIcon className="w-4 h-4" />
-                          Media ({project.project_media.length})
+                          {t('details.mediaFiles', { count: project.project_media.length })}
                         </h4>
                         <div className="grid grid-cols-2 gap-2">
                           {project.project_media.slice(0, 4).map((media) => (
@@ -312,7 +572,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                                 className="w-full h-24 object-cover rounded-lg"
                               />
                               {media.is_featured && (
-                                <Badge className="absolute top-1 left-1 text-xs">Featured</Badge>
+                                <Badge className="absolute top-1 left-1 text-xs">{t('details.featured')}</Badge>
                               )}
                               {media.caption && (
                                 <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-end p-2">
@@ -324,7 +584,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                         </div>
                         {project.project_media.length > 4 && (
                           <p className="text-sm text-muted-foreground mt-2">
-                            +{project.project_media.length - 4} more media files
+                            {t('details.moreMediaFiles', { count: project.project_media.length - 4 })}
                           </p>
                         )}
                       </div>
@@ -333,28 +593,88 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
 
                   {/* Right Column */}
                   <div className="space-y-6">
+                    {/* Impact Metrics */}
+                    {project.impact_metrics && Object.keys(project.impact_metrics).length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Target className="w-4 h-4" />
+                          {t('details.impactMetrics')}
+                        </h4>
+                        <div className="grid grid-cols-2 gap-3">
+                          {Object.entries(project.impact_metrics as Record<string, unknown>).map(([key, value]) => (
+                            <div key={key} className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                              <div className="text-xs text-gray-500 dark:text-gray-400 capitalize">
+                                {key.replace(/_/g, ' ')}
+                              </div>
+                              <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                {typeof value === 'number' ? value.toLocaleString() : String(value)}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Beneficiaries Demographics */}
+                    {project.beneficiaries_demographics && Object.keys(project.beneficiaries_demographics).length > 0 && (
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
+                          <Users className="w-4 h-4" />
+                          {t('details.beneficiariesDemographics')}
+                        </h4>
+                        <div className="space-y-2">
+                          {Object.entries(project.beneficiaries_demographics as Record<string, unknown>).map(([key, value]) => (
+                            <div key={key} className="flex justify-between items-center text-sm">
+                              <span className="text-gray-600 dark:text-gray-400 capitalize">
+                                {key.replace(/_/g, ' ')}:
+                              </span>
+                              <span className="text-gray-900 dark:text-gray-100 font-medium">
+                                {typeof value === 'number' ? value.toLocaleString() : String(value)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+
                     {/* Project Events */}
                     {project.project_events && project.project_events.length > 0 && (
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
-                          Recent Events ({project.project_events.length})
+                          {t('details.recentEvents', { count: project.project_events.length })}
                         </h4>
                         <div className="space-y-3">
                           {project.project_events.slice(0, 3).map((event) => (
                             <div key={event.id} className="border-l-2 border-blue-200 pl-3 py-2">
                               <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0 flex-1">
-                                  <h5 className="font-medium text-sm text-gray-900 dark:text-gray-100 line-clamp-1">
-                                    {event.title}
-                                  </h5>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <h5 className="font-medium text-sm text-gray-900 dark:text-gray-100 line-clamp-1">
+                                      {event.title}
+                                    </h5>
+                                    {event.is_virtual && (
+                                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
+                                        {t('details.virtual')}
+                                      </Badge>
+                                    )}
+                                  </div>
                                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                                     {formatDate(event.event_date)}
+                                    {event.event_end_date && event.event_end_date !== event.event_date && (
+                                      <span> - {formatDate(event.event_end_date)}</span>
+                                    )}
                                   </p>
                                   {event.event_location && (
                                     <p className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1 mt-1">
                                       <MapPin className="w-3 h-3" />
                                       {event.event_location}
+                                    </p>
+                                  )}
+                                  {event.event_type && (
+                                    <p className="text-xs text-gray-500 dark:text-gray-500 capitalize mt-1">
+                                      {t('details.eventType', { type: event.event_type.replace(/_/g, ' ') })}
                                     </p>
                                   )}
                                 </div>
@@ -366,7 +686,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                                     'bg-gray-50 text-gray-700'
                                   }`}
                                 >
-                                  {event.event_status}
+                                  {event.event_status ? t(`eventStatus.${event.event_status}`) : event.event_status}
                                 </Badge>
                               </div>
                             </div>
@@ -374,7 +694,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                         </div>
                         {project.project_events.length > 3 && (
                           <p className="text-sm text-muted-foreground mt-2">
-                            +{project.project_events.length - 3} more events
+                            {t('details.moreEvents', { count: project.project_events.length - 3 })}
                           </p>
                         )}
                       </div>
@@ -385,7 +705,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3 flex items-center gap-2">
                           <Target className="w-4 h-4" />
-                          Milestones ({project.project_milestones.length})
+                          {t('details.milestones', { count: project.project_milestones.length })}
                         </h4>
                         <div className="space-y-4">
                           {project.project_milestones.slice(0, 4).map((milestone) => (
@@ -401,14 +721,41 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                                   variant="outline" 
                                   className={`text-xs shrink-0 ${getMilestoneStatusColor(milestone.status)}`}
                                 >
-                                  {milestone.status?.replace('_', ' ') || 'unknown'}
+                                  {milestone.status ? t(`milestoneStatus.${milestone.status}`) : t('milestoneStatus.unknown')}
                                 </Badge>
                               </div>
+                              
+                              {milestone.description && (
+                                <p className="text-xs text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                                  {milestone.description}
+                                </p>
+                              )}
+
+                              {milestone.deliverables && milestone.deliverables.length > 0 && (
+                                <div className="mb-2">
+                                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                                    {t('details.deliverables')}
+                                  </span>
+                                  <ul className="mt-1 space-y-1">
+                                    {milestone.deliverables.slice(0, 2).map((deliverable, index) => (
+                                      <li key={index} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1">
+                                        <div className="w-1 h-1 rounded-full bg-gray-400 mt-1.5 shrink-0" />
+                                        {deliverable}
+                                      </li>
+                                    ))}
+                                    {milestone.deliverables.length > 2 && (
+                                      <li className="text-xs text-gray-500">
+                                        {t('details.moreDeliverables', { count: milestone.deliverables.length - 2 })}
+                                      </li>
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
                               
                               {(milestone.progress_percentage || 0) > 0 && (
                                 <div className="mb-2">
                                   <div className="flex items-center justify-between text-xs mb-1">
-                                    <span className="text-gray-600 dark:text-gray-400">Progress</span>
+                                    <span className="text-gray-600 dark:text-gray-400">{t('details.progress')}</span>
                                     <span className="text-gray-600 dark:text-gray-400">
                                       {milestone.progress_percentage || 0}%
                                     </span>
@@ -416,12 +763,13 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                                   <Progress value={milestone.progress_percentage || 0} className="h-2" />
                                 </div>
                               )}
+
                               
                               <div className="text-xs text-gray-600 dark:text-gray-400">
-                                Due: {formatDate(milestone.due_date)}
+                                {t('details.due', { date: formatDate(milestone.due_date) })}
                                 {milestone.completion_date && (
                                   <span className="ml-2">
-                                    • Completed: {formatDate(milestone.completion_date)}
+                                    • {t('details.completed', { date: formatDate(milestone.completion_date) })}
                                   </span>
                                 )}
                               </div>
@@ -430,7 +778,7 @@ export function OrganisationProjectsList({ organisationId }: OrganisationProject
                         </div>
                         {project.project_milestones.length > 4 && (
                           <p className="text-sm text-muted-foreground mt-2">
-                            +{project.project_milestones.length - 4} more milestones
+                            {t('details.moreMilestones', { count: project.project_milestones.length - 4 })}
                           </p>
                         )}
                       </div>

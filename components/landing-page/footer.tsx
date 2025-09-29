@@ -5,14 +5,15 @@ import { Facebook, Twitter, Instagram } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
-export const Feature4 = async () => {
+export const Footer = async () => {
   const t = await getTranslations('landingPage.feature4')
+  const title = await getTranslations('landingPage.navigation')
   
   return (
-    <div className='bg-primary py-24 px-24 rounded-tr-[100px] rounded-tl-[100px] w-full'>
+    <div className='bg-primary md:py-24 py-12 md:px-24 px-4  md:rounded-tr-[100px] md:rounded-tl-[100px] w-full'>
       <div className='w-full mx-auto'>
         {/* Call to Action Section */}
-        <div className='bg-white rounded-3xl p-8 mb-16'>
+        <div className='bg-white rounded-3xl p-3 md:p-8 mb-16'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
             {/* Left side - Illustration */}
             <div className='flex justify-center'>
@@ -40,7 +41,7 @@ export const Feature4 = async () => {
               </h2>
               
               {/* Description */}
-              <p className='text-primary-foreground/70 text-lg leading-relaxed'>
+              <p className=' text-lg leading-relaxed'>
                 {t('cta.description')}
               </p>
               
@@ -67,7 +68,9 @@ export const Feature4 = async () => {
             {/* Logo and Description */}
             <div className='md:col-span-1 space-y-4'>
               <div className='flex items-center space-x-2'>
-                <Image src="/logo-white.png" alt="fiap" width={100} height={100} />
+              <Link href="/">
+            <h1 className='text-lg md:text-xl font-bold'>{title('title')}</h1>
+            </Link>
               </div>
               <p className='text-white/70 text-sm leading-relaxed'>
                 {t('footer.description')}
@@ -93,8 +96,8 @@ export const Feature4 = async () => {
             <div className='space-y-4'>
               <h3 className='font-semibold text-white'>{t('footer.company')}</h3>
               <div className='space-y-2 text-sm text-white/70'>
-                <div className='hover:text-white cursor-pointer'>{t('footer.aboutUs')}</div>
-                <div className='hover:text-white cursor-pointer'>{t('footer.faq')}</div>
+                <div className='hover:text-white cursor-pointer'> <Link href="/about">{t('footer.aboutUs')}</Link></div>
+                <div className='hover:text-white cursor-pointer'> <Link href="/faq">{t('footer.faq')}</Link></div>
                 <div className='hover:text-white cursor-pointer'>{t('footer.contact')}</div>
               </div>
             </div>

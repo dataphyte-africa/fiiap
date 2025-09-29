@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
 
 
@@ -19,6 +20,7 @@ export async function ProjectSummaryCard({
   userId,
   className
 }: ProjectSummaryCardProps) {
+  const t = await getTranslations('dashboard.projects')
   const supabase = await createClient()
   const { data: projects, error, count } = await supabase.from('projects').select('*', { count: 'exact' }).eq('created_by', userId)
 
@@ -30,7 +32,7 @@ export async function ProjectSummaryCard({
       )}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">Projects</CardTitle>
+            <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
             <FolderOpen className="h-5 w-5 text-muted-foreground" />
           </div>
         </CardHeader>
@@ -38,14 +40,14 @@ export async function ProjectSummaryCard({
           <div className="mx-auto mb-4 h-12 w-12 rounded-lg bg-muted flex items-center justify-center">
             <FolderOpen className="h-6 w-6 text-muted-foreground" />
           </div>
-          <h3 className="font-semibold text-sm mb-2">No Projects Yet</h3>
+          <h3 className="font-semibold text-sm mb-2">{t('noProjectsYet')}</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Create your first project to start tracking progress and impact.
+            {t('noProjectsDescription')}
           </p>
           <Button asChild size="sm">
             <Link href={`/dashboard/projects/`}>
               <Plus className="h-4 w-4 mr-1" />
-              Create First Project
+              {t('createFirstProject')}
             </Link>
           </Button>
         </CardContent>
@@ -74,18 +76,18 @@ export async function ProjectSummaryCard({
     )}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-semibold">Projects</CardTitle>
+          <CardTitle className="text-lg font-semibold">{t('title')}</CardTitle>
           <FolderOpen className="h-5 w-5 text-muted-foreground" />
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Active</p>
+            <p className="text-xs text-muted-foreground">{t('active')}</p>
             <p className="text-2xl font-bold text-green-600">{activeProjects}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-xs text-muted-foreground">Completed</p>
+            <p className="text-xs text-muted-foreground">{t('completed')}</p>
             <p className="text-2xl font-bold text-gray-600">{completedProjects}</p>
           </div>
         </div>
@@ -120,7 +122,7 @@ export async function ProjectSummaryCard({
                 {project.beneficiaries_count && (
                   <div className="flex items-center">
                     <Target className="h-3 w-3 mr-1" />
-                    {project.beneficiaries_count.toLocaleString()} beneficiaries
+                    {project.beneficiaries_count.toLocaleString()} {t('beneficiaries')}
                   </div>
                 )}
               </div>
@@ -131,26 +133,17 @@ export async function ProjectSummaryCard({
         <div className="flex items-center justify-between pt-2 border-t">
           <div className="flex items-center text-sm text-muted-foreground">
             <TrendingUp className="h-4 w-4 mr-1" />
-            {count} total projects
+            {count} {t('totalProjects')}
           </div>
           <div className="flex space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              asChild
-            >
-              <Link href={`/dashboard/projects/create`}>
-                <Plus className="h-3 w-3 mr-1" />
-                New
-              </Link>
-            </Button>
+            
             <Button
               variant="outline"
               size="sm"
               asChild
             >
               <Link href={`/dashboard/projects`}>
-                View All
+                {t('viewAll')}
               </Link>
             </Button>
           </div>

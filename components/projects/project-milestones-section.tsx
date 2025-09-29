@@ -15,6 +15,7 @@ import { ProjectMilestoneFormData, ProjectFullFormData, MILESTONE_STATUS_OPTIONS
 import { useMutation } from '@tanstack/react-query';
 import { updateProjectMilestones } from '@/lib/data/projects';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 interface ProjectMilestonesSectionProps {
   onSave?: (data: ProjectMilestoneFormData[]) => Promise<void>;
@@ -29,14 +30,13 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
     getValues,
     register,
     watch,
+    setValue,
   } = useFormContext<ProjectFullFormData>();
 
-  const {  append, remove, update } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'milestones',
   });
-
-  const fields = watch('milestones') || [];
 
   const [expandedMilestones, setExpandedMilestones] = useState<{ [key: number]: boolean }>({});
 
@@ -191,7 +191,7 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
         ) : (
           <div className="space-y-4">
             {fields.map((field, index) => (
-              <Card key={`${field.title}-${index}`} className="border-muted">
+              <Card key={field.id || index} className="border-muted">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -225,9 +225,9 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                         )}
                         
                         <div className="flex items-center gap-2">
-                          <Progress value={field.progress_percentage} className="flex-1 max-w-[200px]" />
+                          <Progress value={watch(`milestones.${index}.progress_percentage`)} className="flex-1 max-w-[200px]" />
                           <span className="text-sm text-muted-foreground min-w-[3rem]">
-                            {field.progress_percentage}%
+                            {watch(`milestones.${index}.progress_percentage`)}%
                           </span>
                         </div>
                       </div>
@@ -271,18 +271,17 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                         <div>
                           <Label htmlFor={`milestone-status-${index}`}>Status</Label>
                           <Select
-                            defaultValue={field.status}
-                            {...register(`milestones.${index}.status`)}
+                            value={watch(`milestones.${index}.status`)}
                             onValueChange={(value) => {
                               // Auto-update progress when status changes
                               if (value === 'achieved') {
-                                register(`milestones.${index}.progress_percentage`).onChange({ target: { value: 100 } });
-                                register(`milestones.${index}.completion_date`).onChange({ target: { value: new Date().toISOString().split('T')[0] } });
+                                setValue(`milestones.${index}.progress_percentage`, 100, { shouldValidate: true });
+                                setValue(`milestones.${index}.completion_date`, new Date().toISOString().split('T')[0], { shouldValidate: true });
                               } else if (value === 'planned') {
-                                register(`milestones.${index}.progress_percentage`).onChange({ target: { value: 0 } });
-                                register(`milestones.${index}.completion_date`).onChange({ target: { value: '' } });
+                                setValue(`milestones.${index}.progress_percentage`, 0, { shouldValidate: true });
+                                setValue(`milestones.${index}.completion_date`, '', { shouldValidate: true });
                               }
-                              register(`milestones.${index}.status`).onChange({ target: { value: value as ProjectMilestoneFormData['status'] } });
+                              setValue(`milestones.${index}.status`, value as ProjectMilestoneFormData['status'], { shouldValidate: true });
                             }}
                           >
                             <SelectTrigger>
@@ -303,7 +302,13 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                           <Input
                             id={`milestone-due-date-${index}`}
                             type="date"
-                            {...register(`milestones.${index}.due_date`)}
+                            {...register(`milestones.${index}.due_date`, {
+                              setValueAs: (value) => {
+                                if (!value) return '';
+                                const correctvalue = format(new Date(value), "yyyy-MM-dd");
+                                return correctvalue;
+                              },
+                            })}
                           />
                         </div>
 
@@ -312,7 +317,13 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                           <Input
                             id={`milestone-completion-date-${index}`}
                             type="date"
-                            {...register(`milestones.${index}.completion_date`)}
+                            {...register(`milestones.${index}.completion_date`, {
+                              setValueAs: (value) => {
+                                if (!value) return '';
+                                const correctvalue = format(new Date(value), "yyyy-MM-dd");
+                                return correctvalue;
+                              },
+                            })}
                             
                           />
                         </div>
@@ -342,9 +353,9 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                             
                             className="w-24"
                           />
-                          <Progress value={field.progress_percentage} className="flex-1" />
+                          <Progress value={watch(`milestones.${index}.progress_percentage`)} className="flex-1" />
                           <span className="text-sm text-muted-foreground min-w-[3rem]">
-                            {field.progress_percentage}%
+                            {watch(`milestones.${index}.progress_percentage`)}%
                           </span>
                         </div>
                       </div>
@@ -457,10 +468,7 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                         <Label htmlFor={`milestone-notes-${index}`}>Notes</Label>
                         <Textarea
                           id={`milestone-notes-${index}`}
-                          value={field.notes || ''}
-                          onChange={(e) => {
-                            update(index, { ...field, notes: e.target.value });
-                          }}
+                          {...register(`milestones.${index}.notes`)}
                           placeholder="Additional notes about this milestone"
                           rows={3}
                         />
@@ -474,10 +482,12 @@ export function ProjectMilestonesSection({ projectId, userId }: ProjectMilestone
                         <Input
                           id={`milestone-sort-${index}`}
                           type="number"
-                          value={field.sort_order}
-                          onChange={(e) => {
-                            update(index, { ...field, sort_order: parseInt(e.target.value) || 0 });
-                          }}
+                          {...register(`milestones.${index}.sort_order`, {
+                            setValueAs: (value) => {
+                              const num = parseInt(value)
+                              return value === '' || isNaN(num) ? 0 : num
+                            }
+                          })}
                           className="w-20"
                           min="0"
                         />

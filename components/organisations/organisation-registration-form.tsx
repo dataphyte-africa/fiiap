@@ -29,7 +29,7 @@ export function OrganisationRegistrationForm({
   const t = useTranslations('organisations.registration');
   const [currentStep, setCurrentStep] = useState(1)
   
-  const methods = useForm<OrganisationFormData>({
+  const methods = useForm({
     resolver: zodResolver(organisationFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -143,12 +143,12 @@ export function OrganisationRegistrationForm({
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">
-          {mode === 'edit' ? t('editTitle') : t('title')}
+          {mode === 'edit' ? t('form.editTitle') : t('form.title')}
         </h1>
         <p className="text-muted-foreground">
           {mode === 'edit' 
-            ? t('editDescription')
-            : t('description')
+            ? t('form.editDescription')
+            : t('form.description')
           }
         </p>
       </div>

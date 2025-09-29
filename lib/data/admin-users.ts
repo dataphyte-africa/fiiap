@@ -127,13 +127,13 @@ export async function getOrganisationsForSearch(search?: string) {
 
 export async function setUserOrganisation(userId: string, organisationId: string | null) {
   const supabase = createClient()
-  if (!organisationId) {
-    throw new Error('Organisation ID is required')
-  }
+  // if (!organisationId) {
+  //   throw new Error('Organisation ID is required')
+  // }
   try {
     const { data, error } = await supabase.rpc('admin_set_user_organisation', {
       target_user_id: userId,
-      new_organisation_id: organisationId
+      new_organisation_id: organisationId as string
     })
 
     if (error) {

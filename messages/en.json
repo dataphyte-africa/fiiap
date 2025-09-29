@@ -36,7 +36,7 @@
                 },
                 "connectBorders": {
                     "title": "Connect Across Borders",
-                    "description": "Break geographic barriers and build lasting partnerships that drive real impact across Nigeria, Benin, and Gambia."
+                    "description": "Break geographic barriers and build lasting partnerships that drive real impact across Nigeria, Benin, and The Gambia."
                 }
             }
         },
@@ -45,9 +45,10 @@
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Benin",
-                "gambia": "The Gambia",
+                "thegambia": "The Gambia",
                 "organizations": "organizations",
-                "resources": "resources"
+                "resources": "resources",
+                "projects": "projects"
             },
             "exploreButton": "Explore organizations →"
         },
@@ -57,6 +58,16 @@
             "viewAllButton": "View all →",
             "projects": "Projects",
             "blogs": "Blogs"
+        },
+        "featuredBlogs": {
+            "title": "Featured Blog Posts",
+            "subtitle": "Discover the latest insights, stories, and updates from civil society organisations across West Africa.",
+            "viewAllButton": "View All Blogs"
+        },
+        "featuredPosts": {
+            "title": "Featured Community Posts",
+            "subtitle": "Stay connected with the latest discussions, announcements, and initiatives from our community.",
+            "viewAllButton": "View All Posts"
         },
         "feature4": {
             "cta": {
@@ -133,10 +144,10 @@
             "saving": "Saving..."
         }
     },
-    "organisations": {
+    "organisations-client": {
         "page": {
             "title": "Discover Organisations",
-            "description": "Find and connect with civil society organisations working across Nigeria, Benin, and Gambia"
+            "description": "Find and connect with civil society organisations working across Nigeria, Benin, and The Gambia"
         },
         "search": {
             "placeholder": "Search organisations...",
@@ -206,7 +217,37 @@
             },
             "stories": {
                 "title": "Stories",
-                "placeholder": "Stories and updates from {organisationName} will appear here."
+                "subtitle": "Explore {count} stories and updates from {organisationName}",
+                "placeholder": "Stories and updates from {organisationName} will appear here.",
+                "filters": {
+                    "searchPlaceholder": "Search stories...",
+                    "languagePlaceholder": "Select language",
+                    "allLanguages": "All Languages",
+                    "sortByPlaceholder": "Sort by",
+                    "sortByDate": "Date Published",
+                    "sortByTitle": "Title",
+                    "sortByViews": "Views",
+                    "sortByLikes": "Likes",
+                    "ascending": "Ascending",
+                    "descending": "Descending",
+                    "featured": "Featured Only",
+                    "clearAll": "Clear Filters",
+                    "filterByTags": "Filter by tags:"
+                },
+                "empty": {
+                    "title": "No Stories Found",
+                    "noStoriesMessage": "{organisationName} hasn't published any stories yet.",
+                    "noResultsMessage": "No stories match your current filters. Try adjusting your search criteria."
+                },
+                "error": {
+                    "title": "Unable to Load Stories",
+                    "retry": "Try Again"
+                },
+                "pagination": {
+                    "previous": "Previous",
+                    "next": "Next",
+                    "pageInfo": "Page {current} of {total}"
+                }
             },
             "projects": {
                 "title": "Projects",
@@ -448,6 +489,818 @@
         "pagination": {
             "showing": "Showing {count} of {total} posts",
             "inCategory": "in selected category"
+        }
+    },
+    "aboutPage": {
+        "hero": {
+            "title": "Empowering Civil Society Through Collaboration & Connectivity",
+            "subtitle": "Collaboration & Connectivity",
+            "description": "Our platform is designed to connect Civil Society Organisations (CSOs), donors, and stakeholders across Nigeria, Benin, and The Gambia — enabling meaningful partnerships and shared impact.",
+            "aboutButton": "About us"
+        },
+        "mission": {
+            "title": "Bridging Gaps and Connecting Civil Society",
+            "subtitle": "for Greater Impact Across West Africa",
+            "description": "We built this platform to empower Civil Society Organisations by fostering collaboration, resource sharing, and cross-border partnerships across Nigeria, Benin, and The Gambia."
+        },
+        "missionValue": {
+            "ourMission": "Our mission",
+            "missionText": "To strengthen the civil society ecosystem by providing a platform where organisations can connect, share resources, and collaborate for greater social impact.",
+            "ourValue": "Our Value",
+            "valueText": "A unified and empowered civil society across West Africa, working together to build resilient, inclusive, and sustainable communities."
+        },
+        "impact": {
+            "title": "Driving Change Across Nigeria, Benin, and The The Gambia",
+            "impactLabel": "IMPACT",
+            "countriesReach": "COUNTRIES REACH",
+            "csoOnboarded": "CSO ONBOARDED",
+            "partnershipCreated": "PARTNERSHIP CREATED",
+            "resourcesShared": "RESOURCES SHARED"
+        },
+        "coreValues": {
+            "title": "Our Core Values Driving Collaboration",
+            "collaboration": "Collaboration",
+            "inclusivity": "Inclusivity",
+            "transparency": "Transparency",
+            "innovation": "Innovation"
+        }
+    },
+    "contactPage": {
+        "hero": {
+            "badge": "Contact us",
+            "title": "Let's Build Connections Together",
+            "description": "Reach out for support, partnership inquiries, or any questions about our CSO collaboration platform."
+        },
+        "info": {
+            "title": "Your Questions Matter —",
+            "subtitle": "We're Here to Assist You!",
+            "ourEmail": "Our Email",
+            "ourPhone": "Our Phone",
+            "socialMedia": "You can also reach out to us on our social media"
+        },
+        "form": {
+            "fullName": "Full name",
+            "fullNamePlaceholder": "Input your name",
+            "email": "Email",
+            "emailPlaceholder": "Input email",
+            "phone": "Phone",
+            "phonePlaceholder": "+44123647837",
+            "optional": "optional",
+            "subject": "Subject",
+            "subjectPlaceholder": "What is subject of your message",
+            "message": "Message",
+            "messagePlaceholder": "Type you message here",
+            "sendMessage": "Send message",
+            "submitting": "Sending...",
+            "success": {
+                "title": "Message Sent Successfully!",
+                "description": "Thank you for reaching out. We'll get back to you within 24 hours.",
+                "sendAnother": "Send Another Message"
+            }
+        }
+    },
+    "faqPage": {
+        "hero": {
+            "title": "Frequently Asked Questions",
+            "description": "Find answers to common questions about our CSO collaboration platform and how it can help your organization connect and grow."
+        },
+        "faqs": {
+            "whatIsPlatform": {
+                "question": "What is the CSO Network for West Africa?",
+                "answer": "The CSO Network for West Africa is a digital platform designed to connect Civil Society Organisations (CSOs) across Nigeria, Benin, and The Gambia. Our platform enables organizations to discover partners, share resources, collaborate on projects, and access funding opportunities while building meaningful cross-border partnerships."
+            },
+            "whoCanJoin": {
+                "question": "Who can join the platform?",
+                "answer": "Our platform is open to Civil Society Organisations, NGOs, community-based organizations, donors, media personnel, policy makers, and anyone interested in supporting civil society work in West Africa. We have different user roles with appropriate access levels for each type of user."
+            },
+            "howToRegister": {
+                "question": "How do I register my organization?",
+                "answer": "To register your organization, click on 'Join as Organization' and complete our 5-step registration process: Basic Information, Contact Information, Organizational Details, Legal & Financial information, and Media & Documents. Once submitted, our team will review and approve your application."
+            },
+            "whatFeatures": {
+                "question": "What features does the platform offer?",
+                "answer": "Our platform offers organization discovery and networking, resource library access, project showcase and collaboration, community forum discussions, funding opportunity listings, event and webinar hosting, online course access, blog and news sharing, and multi-language support in English, French, and Spanish."
+            },
+            "isFree": {
+                "question": "Is the platform free to use?",
+                "answer": "Yes, the basic features of our platform are free for all registered Civil Society Organisations. This includes organization profile creation, resource sharing, forum participation, and access to funding opportunities. Some premium features may be introduced in the future."
+            },
+            "howToPartner": {
+                "question": "How can I find and connect with other organizations?",
+                "answer": "You can discover organizations using our advanced search and filter system by country (Nigeria, Benin, The Gambia), thematic areas, regions, and project types. Once you find relevant organizations, you can view their profiles, ongoing projects, and contact them directly through the platform."
+            },
+            "dataPrivacy": {
+                "question": "How is my organization's data protected?",
+                "answer": "We take data privacy seriously. Our platform uses advanced security measures including Row Level Security (RLS) policies, secure authentication, encrypted data transmission, and regular security audits. You control what information is public and what remains private to your organization."
+            },
+            "languages": {
+                "question": "What languages are supported?",
+                "answer": "Our platform supports three languages: English, French, and Spanish. You can switch between languages at any time, and all content including navigation, forms, and help text is available in your preferred language."
+            },
+            "technicalSupport": {
+                "question": "What if I need help using the platform?",
+                "answer": "We provide comprehensive support through multiple channels: detailed user guides and tutorials, email support for technical issues, community forum for peer assistance, and regular webinars for platform training. Our support team is committed to helping you succeed."
+            },
+            "contentModeration": {
+                "question": "How is content moderated on the platform?",
+                "answer": "All content is moderated by our admin team to ensure quality and relevance. We have community guidelines that promote respectful dialogue, accurate information sharing, and constructive collaboration. Users can also report inappropriate content for review."
+            }
+        }
+    },
+    "organisations": {
+        "registration": {
+            "steps": {
+                "basicInfo": {
+                    "title": "Basic Information",
+                    "description": "Organization name, type, size, and location"
+                },
+                "contactInfo": {
+                    "title": "Contact Information",
+                    "description": "Email, phone, website, and address details"
+                },
+                "details": {
+                    "title": "Organization Details",
+                    "description": "Mission, vision, and organizational information"
+                },
+                "legalFinancial": {
+                    "title": "Legal & Financial",
+                    "description": "Legal status, certifications, and budget information"
+                },
+                "media": {
+                    "title": "Media & Documents",
+                    "description": "Logo, cover image, and document uploads"
+                }
+            },
+            "form": {
+                "title": "Register Your Organization",
+                "editTitle": "Edit Organization",
+                "description": "Complete the following steps to register your organization",
+                "editDescription": "Update your organization information",
+                "step": "Step {current} of {total}",
+                "next": "Next",
+                "previous": "Previous",
+                "submit": "Submit Registration",
+                "update": "Update Organization",
+                "submitting": "Submitting...",
+                "updating": "Updating..."
+            },
+            "progress": {
+                "step": "Step",
+                "of": "of",
+                "complete": "complete"
+            },
+            "loading": {
+                "title": "Processing your request",
+                "description": "Please wait while we save your information"
+            },
+            "basicInfo": {
+                "title": "Basic Information",
+                "organizationName": "Organization Name",
+                "organizationNamePlaceholder": "Enter your organization's name",
+                "organizationType": "Organization Type",
+                "selectType": "Select organization type",
+                "organizationSize": "Organization Size",
+                "selectSize": "Select organization size",
+                "primaryCountry": "Primary Country",
+                "selectCountry": "Select your primary country",
+                "otherCountries": "Other Countries of Operation",
+                "addCountry": "Add another country",
+                "registrationNumber": "Registration Number",
+                "registrationNumberPlaceholder": "Enter registration number (optional)",
+                "establishmentYear": "Year of Establishment",
+                "establishmentYearPlaceholder": "Enter year (optional)"
+            },
+            "contactInfo": {
+                "title": "Contact Information",
+                "contactEmail": "Contact Email",
+                "contactEmailPlaceholder": "Enter contact email",
+                "contactPhone": "Contact Phone",
+                "contactPhonePlaceholder": "Enter contact phone number",
+                "websiteUrl": "Website URL",
+                "websiteUrlPlaceholder": "https://example.com",
+                "address": "Address",
+                "addressPlaceholder": "Enter full address",
+                "region": "Region",
+                "regionPlaceholder": "Enter region",
+                "stateProvince": "State/Province",
+                "stateProvincePlaceholder": "Enter state or province",
+                "city": "City",
+                "cityPlaceholder": "Enter city",
+                "socialLinks": "Social Media Links",
+                "languagesSpoken": "Languages Spoken",
+                "geographicCoverage": "Geographic Coverage"
+            }
+        },
+        "success": {
+            "registrationSuccessful": "Registration Successful!",
+            "registrationMessage": "Your organisation has been submitted for review. We'll notify you once it's approved.",
+            "gotIt": "Ok, got it!",
+            "updateSuccessful": "Update Successful!",
+            "updateMessage": "Your organisation information has been updated successfully."
+        },
+        "errors": {
+            "organizationNotFound": "Organisation Not Found",
+            "organizationNotFoundMessage": "The organisation you're looking for doesn't exist.",
+            "registrationFailed": "Registration failed",
+            "updateFailed": "Update failed",
+            "somethingWentWrong": "Something went wrong. Please try again."
+        },
+        "view": {
+            "alsoOperatesIn": "Also operates in:",
+            "editOrganisation": "Edit Organisation",
+            "missionVision": "Mission & Vision",
+            "mission": "Mission",
+            "vision": "Vision",
+            "geographicCoverage": "Geographic Coverage",
+            "focusAreas": "Focus Areas",
+            "targetPopulations": "Target Populations",
+            "mediaCommunications": "Media & Communications",
+            "mediaPlatforms": "Media Platforms",
+            "mediaWorkTypes": "Media Work Types",
+            "primaryWorkMethods": "Primary Work Methods",
+            "networkMemberships": "Network Memberships",
+            "partnerships": "Partnerships",
+            "awardsRecognition": "Awards & Recognition",
+            "contactInformation": "Contact Information",
+            "visitWebsite": "Visit Website",
+            "operationalLevels": "Operational Levels",
+            "organisationDetails": "Organisation Details",
+            "established": "Established",
+            "registration": "Registration",
+            "teamSize": "Team Size",
+            "staff": "Staff",
+            "volunteers": "Volunteers",
+            "annualBudget": "Annual Budget",
+            "languages": "Languages",
+            "legalStatus": "Legal Status",
+            "taxStatus": "Tax Status",
+            "taxExempt": "Tax Exempt",
+            "registeredOn": "Registered on",
+            "digitalTools": "Digital Tools",
+            "visitTool": "Visit Tool",
+            "certifications": "Certifications"
+        }
+    },
+    "organisationProjectsList": {
+        "loading": {
+            "loadingProjects": "Loading projects..."
+        },
+        "error": {
+            "failedToLoad": "Failed to load projects",
+            "errorMessage": "An error occurred while fetching projects",
+            "tryAgain": "Try Again"
+        },
+        "empty": {
+            "noProjectsYet": "No projects yet",
+            "noProjectsMessage": "This organisation hasn't published any projects yet."
+        },
+        "header": {
+            "projectsCount": "Projects ({count})"
+        },
+        "project": {
+            "noDescriptionAvailable": "No description available",
+            "notSpecified": "Not specified",
+            "notSet": "Not set",
+            "started": "Started: {date}",
+            "beneficiaries": "{count} beneficiaries",
+            "budget": "Budget: {amount}",
+            "location": "Location: {location}"
+        },
+        "details": {
+            "projectDetails": "Project Details",
+            "featured": "Featured",
+            "public": "Public",
+            "private": "Private",
+            "language": "Language: {lang}",
+            "startDate": "Start Date:",
+            "endDate": "End Date:",
+            "objectives": "Objectives",
+            "expectedOutcomes": "Expected Outcomes",
+            "contactInformation": "Contact Information",
+            "externalResources": "External Resources",
+            "projectWebsite": "Project Website",
+            "documents": "Documents ({count})",
+            "documentNumber": "Document {number}",
+            "moreDocuments": "+{count} more documents",
+            "secondarySectors": "Secondary Sectors",
+            "sustainableDevelopmentGoals": "Sustainable Development Goals",
+            "featuredImage": "Featured Image",
+            "gallery": "Gallery ({count})",
+            "moreGalleryImages": "+{count} more gallery images",
+            "mediaFiles": "Media Files ({count})",
+            "moreMediaFiles": "+{count} more media files",
+            "impactMetrics": "Impact Metrics",
+            "beneficiariesDemographics": "Beneficiaries Demographics",
+            "recentEvents": "Recent Events ({count})",
+            "virtual": "Virtual",
+            "eventType": "Type: {type}",
+            "moreEvents": "+{count} more events",
+            "milestones": "Milestones ({count})",
+            "deliverables": "Deliverables:",
+            "moreDeliverables": "+{count} more deliverables",
+            "progress": "Progress",
+            "due": "Due: {date}",
+            "completed": "Completed: {date}",
+            "moreMilestones": "+{count} more milestones"
+        },
+        "status": {
+            "ongoing": "ONGOING",
+            "completed": "COMPLETED",
+            "planning": "PLANNING",
+            "cancelled": "CANCELLED",
+            "onHold": "ON HOLD",
+            "unknown": "UNKNOWN"
+        },
+        "milestoneStatus": {
+            "achieved": "achieved",
+            "inProgress": "in progress",
+            "planned": "planned",
+            "delayed": "delayed",
+            "unknown": "unknown"
+        },
+        "eventStatus": {
+            "completed": "completed",
+            "scheduled": "scheduled"
+        }
+    },
+    "projects": {
+        "form": {
+            "tabs": {
+                "basic": "Basic Info",
+                "media": "Media",
+                "events": "Events",
+                "milestones": "Milestones"
+            },
+            "descriptions": {
+                "basic": "Project details, timeline, and contact information",
+                "media": "Images, documents, videos, and other files",
+                "events": "Workshops, meetings, and project activities",
+                "milestones": "Key milestones and deliverables"
+            },
+            "title": "Edit Project",
+            "createTitle": "Create New Project",
+            "saveChanges": "Save Changes",
+            "createProject": "Create Project",
+            "saving": "Saving...",
+            "creating": "Creating..."
+        },
+        "basicInfo": {
+            "title": "Project Information",
+            "projectTitle": "Project Title",
+            "projectTitlePlaceholder": "Enter project title",
+            "summary": "Summary",
+            "summaryPlaceholder": "Brief project summary",
+            "description": "Description",
+            "descriptionPlaceholder": "Detailed project description",
+            "status": "Status",
+            "selectStatus": "Select project status",
+            "location": "Location",
+            "locationPlaceholder": "Project location",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "budget": "Budget",
+            "budgetPlaceholder": "Enter budget amount",
+            "currency": "Currency",
+            "beneficiariesCount": "Number of Beneficiaries",
+            "beneficiariesPlaceholder": "Enter number of beneficiaries",
+            "contactPerson": "Contact Person",
+            "contactPersonPlaceholder": "Enter contact person name",
+            "contactEmail": "Contact Email",
+            "contactEmailPlaceholder": "Enter contact email",
+            "contactPhone": "Contact Phone",
+            "contactPhonePlaceholder": "Enter contact phone",
+            "projectWebsite": "Project Website",
+            "projectWebsitePlaceholder": "https://example.com",
+            "publicVisibility": "Public Visibility",
+            "objectives": "Objectives",
+            "outcomes": "Outcomes",
+            "sdgGoals": "SDG Goals"
+        },
+        "list": {
+            "title": "Projects",
+            "description": "Manage your organisation's projects",
+            "createProject": "Create Project",
+            "searchProjects": "Search projects...",
+            "filterByStatus": "Filter by status",
+            "sortBy": "Sort by",
+            "allStatus": "All Status",
+            "planning": "Planning",
+            "ongoing": "Ongoing",
+            "completed": "Completed",
+            "onHold": "On Hold",
+            "cancelled": "Cancelled",
+            "newestFirst": "Newest First",
+            "oldestFirst": "Oldest First",
+            "titleAZ": "Title A-Z",
+            "titleZA": "Title Z-A",
+            "startDateLatest": "Start Date (Latest)",
+            "startDateEarliest": "Start Date (Earliest)",
+            "failedToLoad": "Failed to load projects",
+            "tryAgain": "Try Again",
+            "noProjectsFound": "No projects found",
+            "noProjectsYet": "No projects yet",
+            "adjustCriteria": "Try adjusting your search or filter criteria.",
+            "getStarted": "Get started by creating your first project.",
+            "createFirstProject": "Create Your First Project",
+            "showingResults": "Showing {count} of {total} projects"
+        },
+        "card": {
+            "noDescription": "No description available",
+            "started": "Started:",
+            "beneficiaries": "beneficiaries",
+            "budget": "Budget:",
+            "notSpecified": "Not specified",
+            "notSet": "Not set",
+            "sdgMore": "+{count} more",
+            "viewDetails": "View Details"
+        }
+    },
+    "dashboard": {
+        "page": {
+            "title": "Dashboard",
+            "welcome": "Welcome back! Here's an overview of your organisation's activity.",
+            "noOrganisation": "No Organisation Found",
+            "noOrganisationDescription": "You need to join an organisation to manage blog posts.",
+            "loading": "Loading..."
+        },
+        "organisationStatus": {
+            "title": "Organisation Status",
+            "noOrganisationLinked": "No Organisation Linked",
+            "noOrganisationDescription": "Register your organisation or join an existing one to start collaborating with other CSOs in the region.",
+            "registerOrganisation": "Register Organisation",
+            "joinOrganisation": "Join Organisation",
+            "affiliationRequest": "Affiliation Request",
+            "refreshStatus": "Refresh Status",
+            "organisationRegistration": "Organisation Registration",
+            "pendingApproval": "Pending Approval",
+            "pendingApprovalDescription": "Your organisation registration is currently under review. You'll be notified once it's approved.",
+            "viewDetails": "View Details",
+            "myOrganisation": "My Organisation",
+            "organisation": "Organisation",
+            "staffMembers": "staff members",
+            "unableToLoadStatus": "Unable to load status",
+            "unableToLoadDescription": "There was an error loading your organisation status. Please try refreshing the page.",
+            "refreshPage": "Refresh Page",
+            "response": "Response"
+        },
+        "projects": {
+            "title": "Projects",
+            "noProjectsYet": "No Projects Yet",
+            "noProjectsDescription": "Create your first project to start tracking progress and impact.",
+            "createFirstProject": "Create First Project",
+            "active": "Active",
+            "completed": "Completed",
+            "totalProjects": "total projects",
+            "viewAll": "View All",
+            "beneficiaries": "beneficiaries"
+        },
+        "posts": {
+            "title": "Recent Posts",
+            "posts": "Posts"
+        },
+        "blogs": {
+            "title": "Blog Management",
+            "description": "Create, edit, and manage your organisation's blog posts.",
+            "totalPosts": "Total Posts",
+            "publishedDrafts": "published, {drafts} drafts",
+            "totalViews": "Total Views",
+            "acrossAllPublished": "Across all published posts",
+            "totalLikes": "Total Likes",
+            "commentsTotal": "{comments} comments total",
+            "thisMonth": "This Month",
+            "newPostsCreated": "New posts created",
+            "deleteBlogPost": "Delete Blog Post",
+            "deleteConfirmation": "Are you sure you want to delete this blog post? This action cannot be undone. All comments and likes associated with this post will also be deleted.",
+            "cancel": "Cancel",
+            "deletePost": "Delete Post",
+            "deleting": "Deleting...",
+            "createNewBlogPost": "Create New Blog Post",
+            "createNewBlogPostDescription": "Create a new blog post for your organisation"
+        }
+    },
+    "admin": {
+        "navigation": {
+            "dashboard": "Dashboard",
+            "manageOrganisations": "Manage Organisations",
+            "manageUsers": "Manage Users",
+            "manageBlogPosts": "Manage Blog Posts",
+            "managePosts": "Manage Posts",
+            "manageResourceLibrary": "Manage Resource Library",
+            "manageOnlineCourses": "Manage Online Courses",
+            "manageFundingOpportunities": "Manage Funding Opportunities",
+            "manageEvents": "Manage Events",
+            "myOrganisation": "My Organisation",
+            "manageProjects": "Manage Projects",
+            "manageBlogs": "Manage Blogs"
+        },
+        "pages": {
+            "organisations": {
+                "title": "Organisations Management",
+                "description": "Manage and moderate organisations in the system"
+            },
+            "users": {
+                "title": "User Management",
+                "description": "Manage user roles and organisation assignments"
+            },
+            "blogs": {
+                "title": "Blog Posts Management",
+                "description": "Manage, moderate, and monitor all blog posts across the platform. You can approve, flag, or reject posts, as well as feature them on the homepage."
+            },
+            "posts": {
+                "title": "Forum Posts Management",
+                "description": "Manage, moderate, and monitor all forum posts across the platform. You can approve, flag, or reject posts, as well as moderate their replies."
+            },
+            "events": {
+                "title": "Events Management",
+                "description": "Manage events and activities on the platform"
+            },
+            "funding": {
+                "title": "Funding Opportunities Management",
+                "description": "Manage grants, fellowships, and donor calls for CSO organizations"
+            },
+            "courses": {
+                "title": "Online Courses Management",
+                "description": "Manage online courses and training programs"
+            },
+            "resources": {
+                "title": "Resource Library Management",
+                "description": "Manage toolkits, research papers, and educational materials"
+            }
+        },
+        "common": {
+            "loading": "Loading...",
+            "search": "Search",
+            "searchPlaceholder": "Search...",
+            "filter": "Filter",
+            "all": "All",
+            "none": "None",
+            "create": "Create",
+            "edit": "Edit",
+            "delete": "Delete",
+            "save": "Save",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
+            "close": "Close",
+            "refresh": "Refresh",
+            "previous": "Previous",
+            "next": "Next",
+            "page": "Page",
+            "of": "of",
+            "showing": "Showing",
+            "results": "results",
+            "noResults": "No results found",
+            "actions": "Actions",
+            "status": "Status",
+            "created": "Created",
+            "updated": "Updated",
+            "name": "Name",
+            "title": "Title",
+            "description": "Description",
+            "type": "Type",
+            "category": "Category",
+            "date": "Date",
+            "author": "Author",
+            "organisation": "Organisation",
+            "visibility": "Visibility",
+            "featured": "Featured",
+            "moderation": "Moderation",
+            "approved": "Approved",
+            "flagged": "Flagged",
+            "rejected": "Rejected",
+            "pending": "Pending",
+            "draft": "Draft",
+            "published": "Published",
+            "archived": "Archived",
+            "visible": "Visible",
+            "hidden": "Hidden",
+            "active": "Active",
+            "inactive": "Inactive",
+            "public": "Public",
+            "private": "Private",
+            "yes": "Yes",
+            "no": "No",
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "online": "Online",
+            "offline": "Offline",
+            "virtual": "Virtual",
+            "inPerson": "In Person",
+            "hybrid": "Hybrid",
+            "grant": "Grant",
+            "fellowship": "Fellowship",
+            "scholarship": "Scholarship",
+            "award": "Award",
+            "contract": "Contract",
+            "open": "Open",
+            "closed": "Closed",
+            "upcoming": "Upcoming",
+            "ongoing": "Ongoing",
+            "completed": "Completed",
+            "cancelled": "Cancelled",
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced",
+            "expert": "Expert",
+            "government": "Government",
+            "ngo": "NGO",
+            "foundation": "Foundation",
+            "corporate": "Corporate",
+            "individual": "Individual",
+            "international": "International",
+            "national": "National",
+            "local": "Local",
+            "administrator": "Administrator",
+            "csoRepresentative": "CSO Representative",
+            "donor": "Donor",
+            "media": "Media",
+            "policyMaker": "Policy Maker",
+            "publicUser": "Public User",
+            "view": "View",
+            "moderated": "Moderated",
+            "stats": "Stats",
+            "clearFilters": "Clear Filters",
+            "unknown": "Unknown",
+            "previousModeration": "Previous Moderation",
+            "moderatedBy": "Moderated by",
+            "processing": "Processing...",
+            "for": "for",
+            "this": "this",
+            "user": "user",
+            "will": "will",
+            "affect": "affect",
+            "their": "their",
+            "permissions": "permissions",
+            "and": "and",
+            "access": "access",
+            "levels": "levels",
+            "updating": "Updating...",
+            "updateRole": "Update Role",
+            "opportunity": "Opportunity",
+            "opportunities": "opportunities",
+            "found": "found",
+            "types": "Types",
+            "donorCall": "Donor Call",
+            "loan": "Loan",
+            "closingSoon": "Closing Soon",
+            "postponed": "Postponed",
+            "funderType": "Funder Type",
+            "funders": "Funders",
+            "internationalOrg": "International Org",
+            "privateCorp": "Private Corp",
+            "multilateral": "Multilateral",
+            "bilateral": "Bilateral",
+            "university": "University",
+            "researchInstitute": "Research Institute",
+            "funder": "Funder",
+            "course": "Course",
+            "courses": "courses",
+            "difficultyLevel": "Difficulty Level",
+            "levels": "Levels",
+            "instructor": "Instructor",
+            "platform": "Platform",
+            "duration": "Duration",
+            "difficulty": "Difficulty",
+            "event": "Event",
+            "events": "Events",
+            "eventType": "Event Type",
+            "eventTypes": "Event Types",
+            "conference": "Conference",
+            "workshop": "Workshop",
+            "webinar": "Webinar",
+            "training": "Training",
+            "seminar": "Seminar",
+            "networking": "Networking",
+            "fundraiser": "Fundraiser",
+            "virtual": "Virtual",
+            "location": "Location",
+            "maxParticipants": "Max Participants",
+            "eventDate": "Event Date",
+            "title": "Title",
+            "description": "Description",
+            "tbd": "TBD",
+            "editEvent": "Edit Event",
+            "hideEvent": "Hide Event",
+            "showEvent": "Show Event",
+            "unfeatureEvent": "Unfeature Event",
+            "featureEvent": "Feature Event",
+            "deleteEvent": "Delete Event",
+            "deleteEventConfirm": "Are you sure you want to delete this event? This action cannot be undone.",
+            "deleting": "Deleting...",
+            "noEventsFound": "No events found",
+            "eventsFound": "events found",
+            "other": "Other",
+            "opportunityType": "Opportunity Type",
+            "network": "Network",
+            "coalition": "Coalition",
+            "association": "Association",
+            "cooperative": "Cooperative",
+            "country": "Country",
+            "countries": "Countries",
+            "organisations": "Organisations",
+            "cbo": "CBO",
+            "gotoAdmin": "Go to Admin",
+            "gotoDashboard": "Go to Dashboard"
+        },
+        "stats": {
+            "totalBlogs": "Total Blog Posts",
+            "publishedBlogs": "Published Posts",
+            "pendingBlogs": "Pending Posts",
+            "flaggedBlogs": "Flagged Posts",
+            "featuredBlogs": "Featured Posts",
+            "totalPosts": "Total Forum Posts",
+            "pendingPosts": "Pending Posts",
+            "flaggedPosts": "Flagged Posts",
+            "approvedPosts": "Approved Posts",
+            "totalUsers": "Total Users",
+            "activeUsers": "Active Users",
+            "adminUsers": "Admin Users",
+            "csoUsers": "CSO Users",
+            "totalOrganisations": "Total Organisations",
+            "approvedOrganisations": "Approved Organisations",
+            "pendingOrganisations": "Pending Organisations",
+            "flaggedOrganisations": "Flagged Organisations",
+            "totalEvents": "Total Events",
+            "upcomingEvents": "Upcoming Events",
+            "featuredEvents": "Featured Events",
+            "virtualEvents": "Virtual Events",
+            "totalFunding": "Total Funding Opportunities",
+            "openFunding": "Open Opportunities",
+            "featuredFunding": "Featured Opportunities",
+            "governmentFunding": "Government Funding",
+            "totalCourses": "Total Courses",
+            "publishedCourses": "Published Courses",
+            "featuredCourses": "Featured Courses",
+            "totalResources": "Total Resources",
+            "featuredResources": "Featured Resources",
+            "toolkitResources": "Toolkit Resources"
+        },
+        "modals": {
+            "moderation": {
+                "title": "Moderate Content",
+                "approve": "Approve",
+                "flag": "Flag",
+                "reject": "Reject",
+                "reason": "Reason",
+                "reasonPlaceholder": "Enter moderation reason...",
+                "confirmApproval": "Are you sure you want to approve this content?",
+                "confirmFlagging": "Are you sure you want to flag this content?",
+                "confirmRejection": "Are you sure you want to reject this content?",
+                "successApproved": "Content approved successfully",
+                "successFlagged": "Content flagged successfully",
+                "successRejected": "Content rejected successfully"
+            },
+            "delete": {
+                "title": "Confirm Deletion",
+                "message": "Are you sure you want to delete this item? This action cannot be undone.",
+                "confirm": "Yes, delete",
+                "cancel": "Cancel",
+                "success": "Item deleted successfully"
+            },
+            "feature": {
+                "title": "Feature Content",
+                "feature": "Feature",
+                "unfeature": "Remove from Featured",
+                "confirmFeature": "Are you sure you want to feature this content?",
+                "confirmUnfeature": "Are you sure you want to remove this content from featured?",
+                "successFeatured": "Content featured successfully",
+                "successUnfeatured": "Content removed from featured successfully"
+            },
+            "visibility": {
+                "title": "Change Visibility",
+                "makeVisible": "Make Visible",
+                "makeHidden": "Make Hidden",
+                "confirmVisible": "Are you sure you want to make this content visible?",
+                "confirmHidden": "Are you sure you want to hide this content?",
+                "successVisible": "Content made visible successfully",
+                "successHidden": "Content hidden successfully"
+            }
+        },
+        "forms": {
+            "create": "Create New",
+            "edit": "Edit",
+            "required": "Required",
+            "optional": "Optional",
+            "selectOption": "Select an option",
+            "noOptions": "No options available",
+            "selectRole": "Select Role",
+            "validation": {
+                "required": "This field is required",
+                "email": "Please enter a valid email address",
+                "url": "Please enter a valid URL",
+                "minLength": "Must be at least {min} characters",
+                "maxLength": "Must be no more than {max} characters",
+                "date": "Please enter a valid date",
+                "number": "Please enter a valid number"
+            }
+        },
+        "errors": {
+            "loading": "Error loading data",
+            "saving": "Error saving data",
+            "deleting": "Error deleting data",
+            "network": "Network error. Please check your connection.",
+            "unauthorized": "You are not authorized to perform this action",
+            "notFound": "Item not found",
+            "serverError": "Server error. Please try again later."
         }
     }
 }

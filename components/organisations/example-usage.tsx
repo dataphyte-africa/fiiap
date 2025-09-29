@@ -7,6 +7,7 @@ import { OrganisationView } from './organisation-view'
 import { OrganisationDashboard } from './organisation-dashboard'
 import { OrganisationFormData, Organisation } from './types'
 import { organisationService } from '@/client-services/organisations'
+import { useTranslations } from 'next-intl'
 // import { toast } from 'sonner' // Uncomment if using sonner for toasts
 
 export function OrganisationRegistrationExample() {
@@ -48,6 +49,7 @@ export function OrganisationRegistrationExample() {
 
 // Edit organisation example
 export function OrganisationEditExample({ organisationId }: { organisationId: string }) {
+  const t = useTranslations('organisations')
   const [isLoading, setIsLoading] = useState(false)
   const [organisation, setOrganisation] = useState<Organisation | null>(null)
   const [loadingOrg, setLoadingOrg] = useState(true)
@@ -100,8 +102,8 @@ export function OrganisationEditExample({ organisationId }: { organisationId: st
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Organisation Not Found</h2>
-          <p className="text-muted-foreground">The organisation you&apos;re looking for doesn&apos;t exist.</p>
+          <h2 className="text-2xl font-bold text-foreground mb-2">{t('errors.organizationNotFound')}</h2>
+          <p className="text-muted-foreground">{t('errors.organizationNotFoundMessage')}</p>
         </div>
       </div>
     )
@@ -121,6 +123,7 @@ export function OrganisationEditExample({ organisationId }: { organisationId: st
 
 // Alternative usage with custom success handling
 export function OrganisationRegistrationWithCustomSuccess( {existingOrganisation, mode = 'create'}: {existingOrganisation?: Organisation, mode?: 'create' | 'edit'}) {
+  const t = useTranslations('organisations')
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const router = useRouter()
@@ -156,15 +159,15 @@ export function OrganisationRegistrationWithCustomSuccess( {existingOrganisation
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-foreground">Registration Successful!</h2>
+          <h2 className="text-2xl font-bold text-foreground">{mode === 'edit' ? t('success.updateSuccessful') : t('success.registrationSuccessful')}</h2>
           <p className="text-muted-foreground">
-            Your organisation has been submitted for review. We&apos;ll notify you once it&apos;s approved.
+            {mode === 'edit' ? t('success.updateMessage') : t('success.registrationMessage')}
           </p>
           <button 
             onClick={() => router.push('/dashboard/organisation')}
             className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90"
           >
-            Ok, got it!
+            {t('success.gotIt')}
           </button>
         </div>
       </div>
@@ -185,7 +188,7 @@ export function OrganisationRegistrationWithCustomSuccess( {existingOrganisation
 
 // Organisation view example
 export function OrganisationViewExample({   organisation  }: { organisation: Organisation }) {
-
+  const t = useTranslations('organisations')
   const router = useRouter()
 
   
@@ -195,7 +198,7 @@ export function OrganisationViewExample({   organisation  }: { organisation: Org
   }
 
   if (!organisation) {
-    return <div>Organisation not found</div>
+    return <div>{t('errors.organizationNotFound')}</div>
   }
 
   return (

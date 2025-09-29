@@ -15,6 +15,7 @@ import { ProjectEventFormData, ProjectFullFormData, EVENT_TYPES, EVENT_STATUS_OP
 import { useMutation } from '@tanstack/react-query';
 import { updateProjectEvents } from '@/lib/data/projects';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 interface ProjectEventsSectionProps {
   onSave?: (data: ProjectEventFormData[]) => Promise<void>;
@@ -27,12 +28,15 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
     control,
     getValues,
     register,
+    setValue,
+    watch,
   } = useFormContext<ProjectFullFormData>();
 
   const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'events',
   });
+  console.log(fields, "💸 fields")
 
   const [expandedEvents, setExpandedEvents] = useState<{ [key: number]: boolean }>({});
 
@@ -42,10 +46,13 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
       await updateProjectEvents(projectId, dataToInsert);
     },
     onSuccess: () => {
-      console.log('Events saved successfully');
+      toast.success('Events saved successfully');
+      // console.log('Events saved successfully');
     },
     onError: (error) => {
-      toast.error('Error saving events');
+      toast.error('Error saving events:', {
+        description: error.message,
+      });
       console.error('Error saving events:', error);
     },
   });
@@ -80,7 +87,7 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
   };
 
   const toggleExpanded = (index: number) => {
-    setExpandedEvents(prev => ({ ...prev, [index]: !prev[index] }));
+    setExpandedEvents(prev => ({ ...prev, [index]: !!!prev[index] }));
   };
 
   const addTag = (index: number, tag: string) => {
@@ -96,7 +103,6 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
     const currentTags = event.tags || [];
     update(index, { ...event, tags: currentTags.filter(tag => tag !== tagToRemove) });
   };
-
 
   const formatDateTime = (dateString: string) => {
     if (!dateString) return '';
@@ -150,14 +156,14 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="h-4 w-4" />
                         <h4 className="font-medium">
-                          {field.title || `Event ${index + 1}`}
+                          {(watch(`events.${index}.title`)) || `Event ${index + 1}`}
                         </h4>
-                        {field.event_status && (
-                          <Badge variant={field.event_status === 'completed' ? 'default' : 'secondary'}>
-                            {EVENT_STATUS_OPTIONS.find(s => s.value === field.event_status)?.label || field.event_status}
+                        {watch(`events.${index}.event_status`) && (
+                          <Badge variant={watch(`events.${index}.event_status`) === 'completed' ? 'default' : 'secondary'}>
+                            {EVENT_STATUS_OPTIONS.find(s => s.value === watch(`events.${index}.event_status`))?.label || watch(`events.${index}.event_status`)}
                           </Badge>
                         )}
-                        {field.is_virtual && (
+                        {watch(`events.${index}.is_virtual`) && (
                           <Badge variant="outline">Virtual</Badge>
                         )}
                       </div>
@@ -222,9 +228,9 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                         <div>
                           <Label htmlFor={`event-type-${index}`}>Event Type</Label>
                           <Select
-                            {...register(`events.${index}.event_type`)}
-                            defaultValue={field.event_type}
-                            onValueChange={(value) => register(`events.${index}.event_type`).onChange({ target: { value } })}
+                           
+                            value={watch(`events.${index}.event_type`)}
+                            onValueChange={(value) => setValue(`events.${index}.event_type`, value, { shouldValidate: true })}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Select event type" />
@@ -242,9 +248,9 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                         <div>
                           <Label htmlFor={`event-status-${index}`}>Status</Label>
                           <Select
-                            {...register(`events.${index}.event_status`)}
-                            defaultValue={field.event_status}
-                            onValueChange={(value) => register(`events.${index}.event_status`).onChange({ target: { value } })}
+                        
+                            value={watch(`events.${index}.event_status`)}
+                            onValueChange={(value) => setValue(`events.${index}.event_status`, value, { shouldValidate: true })}
                           >
                             <SelectTrigger>
                               <SelectValue />
@@ -262,8 +268,8 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                         <div className="flex items-center space-x-2 pt-6">
                           <Checkbox
                             id={`event-virtual-${index}`}
-                            checked={field.is_virtual}
-                            onCheckedChange={(checked) => register(`events.${index}.is_virtual`).onChange({ target: { value: !!checked } })}
+                            checked={watch(`events.${index}.is_virtual`)}
+                            onCheckedChange={(checked) => setValue(`events.${index}.is_virtual`, !!checked, { shouldValidate: true })}
                           />
                           <Label htmlFor={`event-virtual-${index}`} className="text-sm">
                             Virtual Event
@@ -291,7 +297,18 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                           <Input
                             id={`event-date-${index}`}
                             type="datetime-local"
-                            {...register(`events.${index}.event_date`)}
+                            {...register(`events.${index}.event_date`, {
+                              setValueAs: (value) => {
+                                if(!value) return undefined;
+                                try {
+                                const correctvalue = format(new Date(value), "yyyy-MM-dd'T'HH:mm");
+                                return correctvalue;
+                                } catch (error) {
+                                  console.error('Error formatting date:', value, error);
+                                  return undefined;
+                                }
+                              },
+                            })}
                             
                           />
                         </div>
@@ -301,7 +318,18 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                           <Input
                             id={`event-end-date-${index}`}
                             type="datetime-local"
-                            {...register(`events.${index}.event_end_date`)}
+                            {...register(`events.${index}.event_end_date`, {
+                              setValueAs: (value) => {
+                                if(!value) return undefined;
+                                try {
+                                const correctvalue = format(new Date(value), "yyyy-MM-dd'T'HH:mm");
+                                return correctvalue;
+                                } catch (error) {
+                                  console.error('Error formatting date:', value, error);
+                                  return undefined;
+                                }
+                              },
+                            })}
                             
                           />
                         </div>
@@ -351,7 +379,18 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                           <Input
                             id={`event-registration-deadline-${index}`}
                             type="datetime-local"
-                            {...register(`events.${index}.registration_deadline`)}
+                            {...register(`events.${index}.registration_deadline`, {
+                              setValueAs: (value) => {
+                                if(!value) return undefined;
+                                  try {
+                                const correctvalue = format(new Date(value), "yyyy-MM-dd'T'HH:mm");
+                                return correctvalue;
+                                } catch (error) {
+                                  console.error('Error formatting date:', value, error);
+                                  return undefined;
+                                }
+                              },
+                            })}
                             
                           />
                         </div>
@@ -361,7 +400,13 @@ export function ProjectEventsSection({ projectId }: ProjectEventsSectionProps) {
                           <Input
                             id={`event-max-participants-${index}`}
                             type="number"
-                            {...register(`events.${index}.max_participants`)}
+                            {...register(`events.${index}.max_participants`, {
+                              valueAsNumber: true,
+                              setValueAs: (value) => {
+                                const num = Number(value)
+                                return value === '' || isNaN(num) ? undefined : num
+                              }
+                            })}
                             
                             placeholder="Unlimited"
                             min="1"
