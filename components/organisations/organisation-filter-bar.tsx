@@ -107,6 +107,7 @@ export function OrganisationFilterBar({
     }
 
     // Update URL
+    
     const newUrl = params.toString() ? `?${params.toString()}` : "";
     router.push(newUrl, { scroll: false });
   };
@@ -126,7 +127,7 @@ export function OrganisationFilterBar({
     params.delete("country");
     params.delete("region");
 
-    const newUrl = params.toString() ? `?${params.toString()}` : "";
+    const newUrl = params.toString() ? `?${params.toString()}` : "/organisations";
     router.push(newUrl, { scroll: false });
   };
 

@@ -36,12 +36,12 @@
                 },
                 "connectBorders": {
                     "title": "Connecter au-delà des Frontières",
-                    "description": "Briser les barrières géographiques et construire des partenariats durables qui génèrent un impact réel à travers le Nigeria, le Bénin et la Gambie."
+                    "description": "Briser les barrières géographiques et construire des partenariats durables qui génèrent un impact réel à travers l'Afrique de l'Ouest."
                 }
             }
         },
         "feature2": {
-            "title": "Connecter les OSC à travers le Nigeria, le Bénin et la Gambie",
+            "title": "Connecter les OSC à travers l'Afrique de l'Ouest",
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Bénin",
@@ -147,7 +147,7 @@
     "organisations-client": {
         "page": {
             "title": "Découvrir les Organisations",
-            "description": "Trouvez et connectez-vous avec les organisations de la société civile travaillant au Nigeria, au Bénin et en Gambie"
+            "description": "Trouvez et connectez-vous avec les organisations de la société civile travaillant en Afrique de l'Ouest"
         },
         "search": {
             "placeholder": "Rechercher des organisations...",

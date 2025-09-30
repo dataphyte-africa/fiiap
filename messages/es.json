@@ -36,12 +36,12 @@
                 },
                 "connectBorders": {
                     "title": "Conecta a Través de Fronteras",
-                    "description": "Rompe las barreras geográficas y construye asociaciones duraderas que generen impacto real en Nigeria, Benín y La Gambia."
+                    "description": "Rompe las barreras geográficas y construye asociaciones duraderas que generen impacto real en África Occidental."
                 }
             }
         },
         "feature2": {
-            "title": "Conectando OSCs en Nigeria, Benín y  La Gambia",
+            "title": "Conectando OSCs en África Occidental",
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Benín",
@@ -147,7 +147,7 @@
     "organisations-client": {
         "page": {
             "title": "Descubrir Organizaciones",
-            "description": "Encuentra y conecta con organizaciones de la sociedad civil trabajando en Nigeria, Benín y La Gambia"
+            "description": "Encuentra y conecta con organizaciones de la sociedad civil trabajando en África Occidental"
         },
         "search": {
             "placeholder": "Buscar organizaciones...",

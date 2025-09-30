@@ -36,12 +36,12 @@
                 },
                 "connectBorders": {
                     "title": "Connect Across Borders",
-                    "description": "Break geographic barriers and build lasting partnerships that drive real impact across Nigeria, Benin, and The Gambia."
+                    "description": "Break geographic barriers and build lasting partnerships that drive real impact across West Africa."
                 }
             }
         },
         "feature2": {
-            "title": "Connecting CSO Across Nigeria, Benin, and The Gambia",
+            "title": "Connecting COS Across West Africa",
             "countries": {
                 "nigeria": "Nigeria",
                 "benin": "Benin",
@@ -147,7 +147,7 @@
     "organisations-client": {
         "page": {
             "title": "Discover Organisations",
-            "description": "Find and connect with civil society organisations working across Nigeria, Benin, and The Gambia"
+            "description": "Find and connect with civil society organisations working across West Africa"
         },
         "search": {
             "placeholder": "Search organisations...",

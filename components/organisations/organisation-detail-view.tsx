@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Database } from "@/types/db";
 import { OrganisationProjectsList } from "./organisation-projects-list";
 import { OrganisationStoriesGrid } from "./organisation-stories-grid";
+import { BlogShareModal } from "../blogs";
 
 type Organisation = Database['public']['Tables']['organisations']['Row'];
 
@@ -111,10 +112,16 @@ export function OrganisationDetailView({ organisation }: OrganisationDetailViewP
 
             {/* Action Buttons */}
             <div className="flex gap-2">
-              <Button variant="secondary" size="sm">
-                <Share2 className="w-4 h-4 mr-2" />
-                {t('header.shareProfile')}
-              </Button>
+              <BlogShareModal
+                title={organisation.name}
+                url={`/organisations/${organisation.id}`}
+                trigger={
+                  <Button variant="secondary" size="sm">
+                    <Share2 className="w-4 h-4 mr-2" />
+                    {t('header.shareProfile')}
+                  </Button>
+                }
+              />
             </div>
           </div>
         </div>

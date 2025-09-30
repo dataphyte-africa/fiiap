@@ -86,10 +86,10 @@ export const Footer = async () => {
             <div className='space-y-4'>
               <h3 className='font-semibold text-white'>{t('footer.search')}</h3>
               <div className='space-y-2 text-sm text-white/70'>
-                <div className='hover:text-white cursor-pointer'>Nigeria</div>
-                <div className='hover:text-white cursor-pointer'>Benin</div>
-                <div className='hover:text-white cursor-pointer'>Gambia</div>
-              </div>
+                <div className='hover:text-white cursor-pointer'><Link href="/organisations?country=nigeria">Nigeria</Link></div>
+                <div className='hover:text-white cursor-pointer'><Link href="/organisations?country=benin">Benin</Link></div>
+                <div className='hover:text-white cursor-pointer'><Link href="/organisations?country=the+gambia">The Gambia</Link></div>
+              </div>  
             </div>
             
             {/* Company Column */}
@@ -98,7 +98,7 @@ export const Footer = async () => {
               <div className='space-y-2 text-sm text-white/70'>
                 <div className='hover:text-white cursor-pointer'> <Link href="/about">{t('footer.aboutUs')}</Link></div>
                 <div className='hover:text-white cursor-pointer'> <Link href="/faq">{t('footer.faq')}</Link></div>
-                <div className='hover:text-white cursor-pointer'>{t('footer.contact')}</div>
+                <div className='hover:text-white cursor-pointer'><Link href="/contact">{t('footer.contact')}</Link></div>
               </div>
             </div>
             

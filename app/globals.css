@@ -177,3 +177,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.bn-block-content[data-content-type="paragraph"] {
+  @apply mb-4;
+}
+
+.bn-block-content[data-content-type="image"] {
+  @apply mb-4;
+}
+
+.bn-block-content[data-content-type="table"] {
+  @apply mb-4;
+}
+

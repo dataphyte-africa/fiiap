@@ -60,7 +60,13 @@ export function OrganisationsGrid() {
 
         const filters = {
           name: searchParams.get('name') || undefined,
-          countries: searchParams.get('country') ? searchParams.get('country')!.split(',').map(c => c.charAt(0).toUpperCase() + c.slice(1).toLowerCase()) : undefined,
+          countries: searchParams.get('country') ? searchParams.get('country')!.split(',').map(c => {
+            //decode url encoded string
+            const decoded = decodeURIComponent(c);
+            // capitalize fhe first letter of every word
+            const capitalized = decoded.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            return capitalized;
+          }) : undefined,
           thematic_areas: searchParams.get('thematic_area') ? searchParams.get('thematic_area')!.split(',') : undefined,
           regions: searchParams.get('region') ? searchParams.get('region')!.split(',') : undefined,
           sortBy: (searchParams.get('sortBy') as 'name' | 'created_at' | 'updated_at') || 'created_at',

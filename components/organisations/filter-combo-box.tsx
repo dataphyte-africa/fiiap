@@ -43,7 +43,7 @@ export function FilterComboBox({
 }: FilterComboBoxProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const t = useTranslations('organisations.filters');
+  const t = useTranslations('organisations-client.filters');
   
   // Determine if component is controlled
   const isControlled = value !== undefined;
