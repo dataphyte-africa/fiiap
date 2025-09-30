@@ -15,7 +15,7 @@ const countryConfig = {
   },
   'Benin': {
     flag: "🇧🇯", 
-    image: "benin.png"
+    image: "Benin.png"
   },
   'The Gambia': {
     flag: "🇬🇲",
