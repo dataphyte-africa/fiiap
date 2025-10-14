@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,6 +29,7 @@ export function SignUpForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -40,6 +42,12 @@ export function SignUpForm({
 
     if (password !== repeatPassword) {
       setError(t('passwordsNoMatch'));
+      setIsLoading(false);
+      return;
+    }
+
+    if (!acceptTerms) {
+      setError(t('mustAcceptTerms'));
       setIsLoading(false);
       return;
     }
@@ -123,6 +131,28 @@ export function SignUpForm({
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
+              </div>
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  id="terms"
+                  checked={acceptTerms}
+                  onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+                  required
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {t('acceptTermsPart1')}{" "}
+                  <Link 
+                    href="/terms-of-use" 
+                    className="underline underline-offset-4 hover:text-primary"
+                    target="_blank"
+                  >
+                    {t('termsOfUse')}
+                  </Link>
+                  {t('acceptTermsPart2')}
+                </label>
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>

@@ -62,9 +62,144 @@ export const Footer = async () => {
           </div>
         </div>
         
+        {/* Partners Section */}
+        <div className='mb-16'>
+          <h3 className='text-white text-center text-2xl font-semibold mb-8'>
+            {t('footer.partners')}
+          </h3>
+          <div className='relative overflow-hidden'>
+            {/* Gradient overlays for fade effect */}
+            <div className='absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-primary to-transparent z-10' />
+            <div className='absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-primary to-transparent z-10' />
+            
+            {/* Scrolling container */}
+            <div className='flex gap-12 animate-scroll'>
+              {/* First set of logos */}
+              <div className='flex gap-12 items-center shrink-0'>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/co-funded-european-union.png" 
+                    alt="European Union"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/ECOWAS_logo_(cropped).png" 
+                    alt="ECOWAS"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/EPSG logo.png" 
+                    alt="EPSG"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/Expertise-france-logo.png" 
+                    alt="Expertise France"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/FIAP.jpg" 
+                    alt="FIAP"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/Germany-Ecowas.jpeg" 
+                    alt="Germany ECOWAS"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/GIZ logo.png" 
+                    alt="GIZ"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+              </div>
+              
+              {/* Duplicate set for seamless loop */}
+              <div className='flex gap-12 items-center shrink-0'>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/co-funded-european-union.png" 
+                    alt="European Union"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/ECOWAS_logo_(cropped).png" 
+                    alt="ECOWAS"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/EPSG logo.png" 
+                    alt="EPSG"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/Expertise-france-logo.png" 
+                    alt="Expertise France"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/FIAP.jpg" 
+                    alt="FIAP"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/Germany-Ecowas.jpeg" 
+                    alt="Germany ECOWAS"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+                <div className='h-20 w-32 relative flex items-center justify-center bg-white rounded-lg p-4'>
+                  <Image 
+                    src="/partners/GIZ logo.png" 
+                    alt="GIZ"
+                    fill
+                    className='object-contain p-2'
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         {/* Footer */}
         <footer className='text-white'>
-          <div className='grid grid-cols-1 md:grid-cols-4 gap-8 mb-8'>
+          <div className='grid grid-cols-1 md:grid-cols-5 gap-8 mb-8'>
             {/* Logo and Description */}
             <div className='md:col-span-1 space-y-4'>
               <div className='flex items-center space-x-2'>
@@ -99,6 +234,15 @@ export const Footer = async () => {
                 <div className='hover:text-white cursor-pointer'> <Link href="/about">{t('footer.aboutUs')}</Link></div>
                 <div className='hover:text-white cursor-pointer'> <Link href="/faq">{t('footer.faq')}</Link></div>
                 <div className='hover:text-white cursor-pointer'><Link href="/contact">{t('footer.contact')}</Link></div>
+              </div>
+            </div>
+            
+            {/* Legal Column */}
+            <div className='space-y-4'>
+              <h3 className='font-semibold text-white'>{t('footer.legal')}</h3>
+              <div className='space-y-2 text-sm text-white/70'>
+                <div className='hover:text-white cursor-pointer'><Link href="/terms-of-use">{t('footer.termsOfUse')}</Link></div>
+                <div className='hover:text-white cursor-pointer'><Link href="/privacy-policy">{t('footer.privacyPolicy')}</Link></div>
               </div>
             </div>
             

@@ -15,6 +15,7 @@ export default function LanguageSwitcher({cookieLang}: {cookieLang: string}) {
          <SelectItem value="en" > 🏴󠁧󠁢󠁥󠁮󠁧󠁿 EN</SelectItem>
          <SelectItem value="fr" > 🇫🇷 FR</SelectItem>
          <SelectItem value="es" > 🇪🇸 ES</SelectItem>
+         <SelectItem value="pt" > 🇵🇹 PT</SelectItem>
       </SelectContent>
    </Select>
   )
