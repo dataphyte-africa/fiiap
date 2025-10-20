@@ -503,13 +503,13 @@
         "hero": {
             "title": "Empowering Civil Society Through Collaboration & Connectivity",
             "subtitle": "Collaboration & Connectivity",
-            "description": "Our platform is designed to connect Civil Society Organisations (CSOs), donors, and stakeholders across Nigeria, Benin, and The Gambia — enabling meaningful partnerships and shared impact.",
+            "description": "Our platform is designed to connect Civil Society Organisations (CSOs), donors, and stakeholders across West Africa — enabling meaningful partnerships and shared impact.",
             "aboutButton": "About us"
         },
         "mission": {
             "title": "Bridging Gaps and Connecting Civil Society",
             "subtitle": "for Greater Impact Across West Africa",
-            "description": "We built this platform to empower Civil Society Organisations by fostering collaboration, resource sharing, and cross-border partnerships across Nigeria, Benin, and The Gambia."
+            "description": "We built this platform to empower Civil Society Organisations by fostering collaboration, resource sharing, and cross-border partnerships across West Africa."
         },
         "missionValue": {
             "ourMission": "Our mission",
@@ -518,7 +518,7 @@
             "valueText": "A unified and empowered civil society across West Africa, working together to build resilient, inclusive, and sustainable communities."
         },
         "impact": {
-            "title": "Driving Change Across Nigeria, Benin, and The The Gambia",
+            "title": "Driving Change Across West Africa",
             "impactLabel": "IMPACT",
             "countriesReach": "COUNTRIES REACH",
             "csoOnboarded": "CSO ONBOARDED",
@@ -575,7 +575,7 @@
         "faqs": {
             "whatIsPlatform": {
                 "question": "What is the CSO Network for West Africa?",
-                "answer": "The CSO Network for West Africa is a digital platform designed to connect Civil Society Organisations (CSOs) across Nigeria, Benin, and The Gambia. Our platform enables organizations to discover partners, share resources, collaborate on projects, and access funding opportunities while building meaningful cross-border partnerships."
+                "answer": "The CSO Network for West Africa is a digital platform designed to connect Civil Society Organisations (CSOs) across West Africa. Our platform enables organizations to discover partners, share resources, collaborate on projects, and access funding opportunities while building meaningful cross-border partnerships."
             },
             "whoCanJoin": {
                 "question": "Who can join the platform?",
@@ -595,7 +595,7 @@
             },
             "howToPartner": {
                 "question": "How can I find and connect with other organizations?",
-                "answer": "You can discover organizations using our advanced search and filter system by country (Nigeria, Benin, The Gambia), thematic areas, regions, and project types. Once you find relevant organizations, you can view their profiles, ongoing projects, and contact them directly through the platform."
+                "answer": "You can discover organizations using our advanced search and filter system by country, thematic areas, regions, and project types. Once you find relevant organizations, you can view their profiles, ongoing projects, and contact them directly through the platform."
             },
             "dataPrivacy": {
                 "question": "How is my organization's data protected?",

@@ -269,7 +269,10 @@ export function CreateProjectModal({ children }: CreateProjectModalProps) {
                     id="budget"
                     type="number"
                     step="0.01"
-                    {...register('budget', { valueAsNumber: true })}
+                    {...register('budget', { setValueAs: (value) => {
+                      const num = Number(value)
+                      return value === '' || isNaN(num) ? undefined : num
+                    } })}
                     placeholder="0.00"
                   />
                   {errors.budget && (
@@ -298,7 +301,10 @@ export function CreateProjectModal({ children }: CreateProjectModalProps) {
                   <Input
                     id="beneficiaries_count"
                     type="number"
-                    {...register('beneficiaries_count', { valueAsNumber: true })}
+                    {...register('beneficiaries_count', { setValueAs: (value) => {
+                      const num = Number(value)
+                      return value === '' || isNaN(num) ? undefined : num
+                    } })}
                     placeholder="Expected number of beneficiaries"
                   />
                   {errors.beneficiaries_count && (

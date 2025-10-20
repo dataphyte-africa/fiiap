@@ -12,9 +12,10 @@ import { useTranslations } from 'next-intl';
 
 interface ProjectCardProps {
   project: ProjectWithOrganisation;
+  onDelete: ({projectId, projectTitle}: {projectId: string, projectTitle: string}) => void;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, onDelete }: ProjectCardProps) {
   const t = useTranslations('projects.card')
   
   const formatCurrency = (amount: number | null, currency: string | null) => {
@@ -121,12 +122,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
       </CardContent>
 
-      <CardFooter className="pt-3">
+      <CardFooter className="pt-3 gap-2">
         <Link href={`/dashboard/projects/${project.id}`} className="w-full">
           <Button variant="outline" className="w-full">
             {t('viewDetails')}
           </Button>
         </Link>
+        <Button variant="destructive" className="w-full" onClick={() => onDelete({projectId: project.id, projectTitle: project.title})}>
+          Delete
+        </Button>
       </CardFooter>
     </Card>
   );

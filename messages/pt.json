@@ -503,13 +503,13 @@
         "hero": {
             "title": "Empoderando a Sociedade Civil Através da Colaboração e Conectividade",
             "subtitle": "Colaboração e Conectividade",
-            "description": "Nossa plataforma foi projetada para conectar Organizações da Sociedade Civil (OSCs), doadores e partes interessadas na Nigéria, Benin e Gâmbia — permitindo parcerias significativas e impacto compartilhado.",
+            "description": "Nossa plataforma foi projetada para conectar Organizações da Sociedade Civil (OSCs), doadores e partes interessadas em toda a África Ocidental — permitindo parcerias significativas e impacto compartilhado.",
             "aboutButton": "Sobre nós"
         },
         "mission": {
             "title": "Eliminando Lacunas e Conectando a Sociedade Civil",
             "subtitle": "para Maior Impacto em Toda a África Ocidental",
-            "description": "Construímos esta plataforma para empoderar Organizações da Sociedade Civil, promovendo colaboração, compartilhamento de recursos e parcerias transfronteiriças na Nigéria, Benin e Gâmbia."
+            "description": "Construímos esta plataforma para empoderar Organizações da Sociedade Civil, promovendo colaboração, compartilhamento de recursos e parcerias transfronteiriças em toda a África Ocidental."
         },
         "missionValue": {
             "ourMission": "Nossa missão",
@@ -518,7 +518,7 @@
             "valueText": "Uma sociedade civil unificada e empoderada em toda a África Ocidental, trabalhando juntos para construir comunidades resilientes, inclusivas e sustentáveis."
         },
         "impact": {
-            "title": "Impulsionando Mudanças na Nigéria, Benin e Gâmbia",
+            "title": "Impulsionando Mudanças em Toda a África Ocidental",
             "impactLabel": "IMPACTO",
             "countriesReach": "ALCANCE DE PAÍSES",
             "csoOnboarded": "OSC CADASTRADAS",
@@ -575,7 +575,7 @@
         "faqs": {
             "whatIsPlatform": {
                 "question": "O que é a Rede de OSC para a África Ocidental?",
-                "answer": "A Rede de OSC para a África Ocidental é uma plataforma digital projetada para conectar Organizações da Sociedade Civil (OSCs) na Nigéria, Benin e Gâmbia. Nossa plataforma permite que as organizações descubram parceiros, compartilhem recursos, colaborem em projetos e acessem oportunidades de financiamento enquanto constroem parcerias transfronteiriças significativas."
+                "answer": "A Rede de OSC para a África Ocidental é uma plataforma digital projetada para conectar Organizações da Sociedade Civil (OSCs) em toda a África Ocidental. Nossa plataforma permite que as organizações descubram parceiros, compartilhem recursos, colaborem em projetos e acessem oportunidades de financiamento enquanto constroem parcerias transfronteiriças significativas."
             },
             "whoCanJoin": {
                 "question": "Quem pode se juntar à plataforma?",
@@ -595,7 +595,7 @@
             },
             "howToPartner": {
                 "question": "Como posso encontrar e me conectar com outras organizações?",
-                "answer": "Você pode descobrir organizações usando nosso sistema avançado de busca e filtro por país (Nigéria, Benin, Gâmbia), áreas temáticas, regiões e tipos de projeto. Uma vez que você encontre organizações relevantes, pode visualizar seus perfis, projetos em andamento e contatá-las diretamente através da plataforma."
+                "answer": "Você pode descobrir organizações usando nosso sistema avançado de busca e filtro por país, áreas temáticas, regiões e tipos de projeto. Uma vez que você encontre organizações relevantes, pode visualizar seus perfis, projetos em andamento e contatá-las diretamente através da plataforma."
             },
             "dataPrivacy": {
                 "question": "Como os dados da minha organização são protegidos?",

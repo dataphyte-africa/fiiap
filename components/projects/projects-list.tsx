@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -10,10 +10,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { SearchIcon, PlusIcon } from 'lucide-react';
 import { ProjectCard } from './project-card';
 import Link from 'next/link';
-import { getProjectsForUserOrganisation, type ProjectFilters } from '@/lib/data/projects';
+import { deleteProject, getProjectsForUserOrganisation, type ProjectFilters } from '@/lib/data/projects';
 import type { Database } from '@/types/db';
 import { CreateProjectModal } from './create-project-modal';
 import { useTranslations } from 'next-intl';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogHeader, DialogFooter } from '@/components/ui/dialog';
+import { toast } from 'sonner';
 
 interface ProjectsListProps {
   showCreateButton?: boolean;
@@ -28,11 +30,38 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
     sortBy: 'created_at',
     sortOrder: 'desc',
   });
-
+  const queryClient  = useQueryClient()
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    projectId: string | null;
+    projectTitle: string;
+  }>({
+    isOpen: false,
+    projectId: null,
+    projectTitle: '',
+  });
   const { data: projects, isLoading, error, refetch } = useQuery({
     queryKey: ['projects', 'user-organisation', filters],
     queryFn: () => getProjectsForUserOrganisation(organisationId),
   });
+
+  const deleteProjectMutation = useMutation({
+    mutationFn: deleteProject,
+    onSuccess: () => {
+      setDeleteModal({ projectId: null, projectTitle: '', isOpen: false });
+      toast.success('Project deleted successfully!');
+      queryClient.invalidateQueries({ queryKey: ['projects', 'user-organisation', filters] });
+    },
+    onError: (error) => {
+      toast.error('Failed to delete project:', {
+        description: error.message,
+      });
+    },
+  });
+
+  const handleDeleteProject = (projectId: string) => {
+    deleteProjectMutation.mutate(projectId);
+  };  
 
   const handleSearchChange = (value: string) => {
     setFilters(prev => ({ ...prev, search: value }));
@@ -208,17 +237,24 @@ export function ProjectsList({ showCreateButton = true, organisationId }: Projec
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sortedProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} onDelete={({projectId, projectTitle}) => setDeleteModal({ projectId, projectTitle, isOpen: true })} />
           ))}
         </div>
       )}
-
-      {/* Results count */}
-      {!isLoading && sortedProjects.length > 0 && (
-        <div className="text-center text-sm text-muted-foreground">
-          {t('showingResults', { count: sortedProjects.length, total: projects?.length || 0 })}
-        </div>
-      )}
-    </div>
+    <Dialog open={deleteModal.isOpen} onOpenChange={(open) => setDeleteModal({ ...deleteModal, isOpen: open })}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Project</DialogTitle>
+        </DialogHeader>
+        <DialogDescription>
+          Are you sure you want to delete &quot;{deleteModal.projectTitle}&quot;? This action cannot be undone.
+        </DialogDescription>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setDeleteModal({ projectId: null, projectTitle: '', isOpen: false })}>Cancel</Button>
+          <Button variant="destructive" onClick={() => deleteModal.projectId && handleDeleteProject(deleteModal.projectId)}>Delete</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  </div>
   );
 }

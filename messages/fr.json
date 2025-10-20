@@ -503,13 +503,13 @@
         "hero": {
             "title": "Autonomiser la Société Civile par",
             "subtitle": "la Collaboration et la Connectivité",
-            "description": "Notre plateforme est conçue pour connecter les Organisations de la Société Civile (OSC), les donateurs et les parties prenantes au Nigeria, au Bénin et en Gambie — permettant des partenariats significatifs et un impact partagé.",
+            "description": "Notre plateforme est conçue pour connecter les Organisations de la Société Civile (OSC), les donateurs et les parties prenantes en Afrique de l'Ouest — permettant des partenariats significatifs et un impact partagé.",
             "aboutButton": "À propos de nous"
         },
         "mission": {
             "title": "Combler les Lacunes et Connecter la Société Civile",
             "subtitle": "pour un Plus Grand Impact en Afrique de l'Ouest",
-            "description": "Nous avons construit cette plateforme pour autonomiser les Organisations de la Société Civile en favorisant la collaboration, le partage de ressources et les partenariats transfrontaliers au Nigeria, au Bénin et en Gambie."
+            "description": "Nous avons construit cette plateforme pour autonomiser les Organisations de la Société Civile en favorisant la collaboration, le partage de ressources et les partenariats transfrontaliers en Afrique de l'Ouest."
         },
         "missionValue": {
             "ourMission": "Notre mission",
@@ -518,7 +518,7 @@
             "valueText": "Une société civile unifiée et autonomisée en Afrique de l'Ouest, travaillant ensemble pour construire des communautés résilientes, inclusives et durables."
         },
         "impact": {
-            "title": "Impulser le Changement au Nigeria, au Bénin et en Gambie",
+            "title": "Impulser le Changement en Afrique de l'Ouest",
             "impactLabel": "IMPACT",
             "countriesReach": "PORTÉE DES PAYS",
             "csoOnboarded": "OSC INTÉGRÉES",
@@ -575,7 +575,7 @@
         "faqs": {
             "whatIsPlatform": {
                 "question": "Qu'est-ce que le Réseau OSC pour l'Afrique de l'Ouest ?",
-                "answer": "Le Réseau OSC pour l'Afrique de l'Ouest est une plateforme numérique conçue pour connecter les Organisations de la Société Civile (OSC) au Nigeria, au Bénin et en Gambie. Notre plateforme permet aux organisations de découvrir des partenaires, partager des ressources, collaborer sur des projets et accéder aux opportunités de financement tout en construisant des partenariats transfrontaliers significatifs."
+                "answer": "Le Réseau OSC pour l'Afrique de l'Ouest est une plateforme numérique conçue pour connecter les Organisations de la Société Civile (OSC) en Afrique de l'Ouest. Notre plateforme permet aux organisations de découvrir des partenaires, partager des ressources, collaborer sur des projets et accéder aux opportunités de financement tout en construisant des partenariats transfrontaliers significatifs."
             },
             "whoCanJoin": {
                 "question": "Qui peut rejoindre la plateforme ?",
@@ -595,7 +595,7 @@
             },
             "howToPartner": {
                 "question": "Comment puis-je trouver et me connecter avec d'autres organisations ?",
-                "answer": "Vous pouvez découvrir des organisations en utilisant notre système avancé de recherche et de filtres par pays (Nigeria, Bénin, Gambie), domaines thématiques, régions et types de projets. Une fois que vous trouvez des organisations pertinentes, vous pouvez consulter leurs profils, projets en cours et les contacter directement via la plateforme."
+                "answer": "Vous pouvez découvrir des organisations en utilisant notre système avancé de recherche et de filtres par pays, domaines thématiques, régions et types de projets. Une fois que vous trouvez des organisations pertinentes, vous pouvez consulter leurs profils, projets en cours et les contacter directement via la plateforme."
             },
             "dataPrivacy": {
                 "question": "Comment les données de mon organisation sont-elles protégées ?",

@@ -377,3 +377,17 @@ export function getProjectStatusColor(status: Database["public"]["Enums"]["proje
   
   return colorMap[status] || 'secondary';
 }
+
+export async function deleteProject(projectId: string): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase
+    .from('projects')
+    .delete()
+    .eq('id', projectId);
+
+  if (error) {
+    console.error('Error deleting project:', error);
+    throw new Error(`Failed to delete project: ${error.message}`);
+  }
+  return;
+}
